@@ -16,7 +16,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content padding class="registrar">
 	
   <ion-list no-lines>
     <form>
@@ -34,14 +34,16 @@
         <ion-label stacked>Código generado</ion-label>
         <ion-input disabled="true"  type="text" [(ngModel)]="registro.codigo" name="codigo"></ion-input>
       </ion-item>
-      <br><br>
+      
+      <br>
+      <br>
+      
       <center>
         <button (click)="scan()">Leer QR</button> 
         <button type="submit" secondary>Confirmar</button>
-      </center>>
+      </center>
+    
     </form>
-    </ion-list>
+  </ion-list>
 
-
-	<div padding> </div>
 </ion-content>

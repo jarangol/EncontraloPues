@@ -9,12 +9,12 @@ export class AService{
 	}
 
 	getObjeto(id){
-		Let objeto = this.http.get(`https://api.github.com/users/${id}`);
+		let objeto = this.http.get(`https://api.github.com/users/${id}`);
 		return objeto;
 	}
 
 	getRepos(username){
-		Let repos = this.http.get(`https://api.github.com/users/${username}/repos`);
-		return RegExpConstructor;
+		let repos = this.http.get(`https://api.github.com/users/${username}/repos`);
+		return repos;
 	}
 }

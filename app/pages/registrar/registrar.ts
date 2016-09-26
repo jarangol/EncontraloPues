@@ -28,13 +28,13 @@ export class RegistrarPage {
     }
 
     scan() {
-        this.platform.ready().then(() => {       
-			BarcodeScanner.scan().then((barcodeData) => {
-				 alert(barcodeData.text);
-			}, (err) => {
-			    alert("Ha ocurrido un error: "+err);
-			}); 
-        });
+      this.platform.ready().then(() => {       
+  			BarcodeScanner.scan().then((barcodeData) => {
+  				 alert(barcodeData.text);
+  			}, (err) => {
+  			    alert("Ha ocurrido un error: "+err);
+  			});   
+      });
     }
 
 }

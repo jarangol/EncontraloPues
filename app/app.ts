@@ -4,6 +4,7 @@ import { StatusBar } from 'ionic-native';
 
 import { Page1 } from './pages/page1/page1';
 import { Page2 } from './pages/page2/page2';
+import { RegistrarPage} from './pages/registrar/registrar';
 
 @Component({
   templateUrl: 'build/app.html'
@@ -11,7 +12,7 @@ import { Page2 } from './pages/page2/page2';
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = Page1;
+  rootPage: any = RegistrarPage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -20,8 +21,10 @@ class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Page uno', component: Page1 },
+      { title: 'Inicio', component: Page1 },
+      { title: 'Registrar', component: RegistrarPage},
       { title: 'Page dos', component: Page2 }
+
     ];
 
   }

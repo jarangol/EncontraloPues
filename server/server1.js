@@ -22,16 +22,115 @@ app.use(function(req, res, next) {
    next();
 });
 
-//Models
-//consulta de prueba
-var Prueba = mongoose.model('prueba',{text : String});
 
-app.get('/api/prueba', function(req,res){
-  Prueba.find(function(err, pruebas){
-    if(err) res.send(err);
-    res.json(pruebas);
-  });
+//Schema
+var usuariosSchema = new mongoose.Schema({
+  correoElectronico : String,
+  contraseña : String,
+  nombre : String,
+  celular : String,
+  objetosPersonales : [
+    {
+      codigoQR : String,
+      tags: [],
+      notificaciones: []
+    }
+  ],
+  trabajadoresActuales:[
+    {
+      correoElectronico : String,
+      contraseña : String,
+      nombre : String,
+      numeroId : String
+    }
+  ],
+  puntosRecoleccion : [
+     {
+        nombre : String,
+        telefono : String,
+        direccion : String,
+        objetosRegistrados : [
+           {
+             //_id : false,
+             codigoBusqueda : Number,
+             codigoRetiro : Number,
+             tags : [],
+             descripcionOculta : String,
+             fechaRegistro : {
+               año : String,
+               mes : String,
+               dia : String
+             },
+             usuarioDueño : {
+               correoElectronico : String,
+               nombre : String,
+               celular : String
+             },
+             nombreTrabajador : String,
+             idTrabajador : String
+           }
+        ]
+     }
+  ]
 });
+
+var contadoresSchema = new mongoose.Schema({
+    _id : String,
+    seq : Number,
+    sequence_value : Number
+});
+
+contadoresSchema.statics.findAndModify = function (query, sort, doc, options, callback) {
+  return this.collection.findAndModify(query, sort, doc, options, callback);
+};
+
+//Model
+var usuario = mongoose.model('usuarios',usuariosSchema);
+var contador = mongoose.model('contadores',contadoresSchema);
+
+//Function
+function incrementarValor (sequenceName){
+
+   contador.findOneAndUpdate(
+    {_id: sequenceName},
+    {$inc:{sequence_value:1}},
+    {new:true},
+    function(err, valor){
+        return valor.sequence_value;
+    }
+  );
+}
+
+app.post('/api/registros',function(req,res){
+
+  fecha = new Date();
+
+  codBus = contador.findOneAndUpdate(
+   {_id: "codigoBusqueda"},
+   {$inc:{sequence_value:1}},
+   {new:true}).exec()
+
+   codBus.then(function(codigo){
+     usuario.update({correoElectronico:
+       "a",'puntosRecoleccion.nombre':"a"},
+       {$push: {'puntosRecoleccion.0.objetosRegistrados':{
+         codigoBusqueda: codigo.sequence_value,
+         tags:req.body.tags,
+         descripcionOculta:req.body.descripcionOculta,
+         fechaRegistro:{
+           año: fecha.getFullYear().toString(),
+           mes: fecha.getMonth().toString(),
+           dia: fecha.getDate().toString()
+         },
+         nombreTrabajador:1,
+         idTrabajador:1
+       }}},
+       function(err,usuarios){
+         if(err) res.send(err);
+         res.send("updated");
+       });
+     })
+   });
 //
 
 

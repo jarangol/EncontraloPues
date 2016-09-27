@@ -1,4 +1,5 @@
 // Set up
+
 var express  = require('express');
 var app      = express();                               // create our app w/ express
 var mongoose = require('mongoose');                     // mongoose for mongodb
@@ -22,16 +23,16 @@ app.use(function(req, res, next) {
 });
 
 //Models
-var Prueba = mongoose.model('Prueba',{text : String});
+//consulta de prueba
+var Prueba = mongoose.model('prueba',{text : String});
 
-app.get('/api/pruebas', function(req,res){
+app.get('/api/prueba', function(req,res){
   Prueba.find(function(err, pruebas){
-    if(err) res.send(err)
-
+    if(err) res.send(err);
     res.json(pruebas);
   });
 });
-
+//
 
 
 

@@ -5,6 +5,9 @@
   Ionic pages and navigation.
 -->
 <script src="./registrar.ts"></script>
+<script src="angular.min.js"></script> 
+<script src="ng-tags-input.min.js"></script> 
+<link rel="stylesheet" type="text/css" href="ng-tags-input.min.css">
 
 <ion-header>
   <ion-navbar>
@@ -16,23 +19,26 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="add-registro">
 	
   <ion-list no-lines>
     <form>
       <ion-item>
         <ion-label stacked>Tags</ion-label>
-        <ion-input type="text" [(ngModel)]="registro.tags" name="tags" ></ion-input>
+        <tags-input ng-model="registro.tags2"></tags-input>
+        
+      </tags-input>
+        <ion-input type="text" [(ngModel)]="tags" name="tags" ></ion-input>
       </ion-item>
       
       <ion-item>
         <ion-label stacked>Descripción oculta</ion-label>
-        <ion-textarea [(ngModel)]="registro.descripcion" name="descripcion"></ion-textarea>
+        <ion-textarea [(ngModel)]="descripcion" name="descripcion"></ion-textarea>
       </ion-item>
       
       <ion-item>
         <ion-label stacked>Código generado</ion-label>
-        <ion-input disabled="true"  type="text" [(ngModel)]="registro.codigo" name="codigo"></ion-input>
+        <ion-input disabled="true"  type="text" [(ngModel)]="codigo" name="codigo"></ion-input>
       </ion-item>
       <br><br>
       <center>

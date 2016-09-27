@@ -17,7 +17,10 @@
     "zone.js": "0.6.12"
   },
   "devDependencies": {
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
     "del": "2.2.0",
+    "express": "^4.14.0",
     "gulp": "3.9.1",
     "gulp-watch": "4.3.5",
     "ionic-gulp-browserify-typescript": "2.0.0",
@@ -26,8 +29,11 @@
     "ionic-gulp-sass-build": "^1.0.0",
     "ionic-gulp-scripts-copy": "^2.0.0",
     "ionic-gulp-tslint": "^1.0.0",
-    "tslint-ionic-rules": "0.0.4",
-    "run-sequence": "1.1.5"
+    "method-override": "^2.3.6",
+    "mongoose": "^4.6.1",
+    "morgan": "^1.7.0",
+    "run-sequence": "1.1.5",
+    "tslint-ionic-rules": "0.0.4"
   },
   "name": "encontralopues",
   "description": "EncontraloPues: An Ionic project",

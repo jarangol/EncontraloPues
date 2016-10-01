@@ -17,7 +17,25 @@ export class Registros {
 		this.data=null;
 	}
 
+	getData(){
+		return "getData";
+	}
+
 	getRegistros(){
+		let registro1= {
+	        tags: 'tags1',
+	        descripcion: 'descripcion1'
+	     };
+
+      let registro2 = {
+        tags: 'tags2',
+        descripcion: 'descripcion2'
+      };
+
+      return this.data = {registro1, registro2};
+
+
+		/*
 		if(this.data){
 			return Promise.resolve(this.data);
 		}
@@ -30,9 +48,11 @@ export class Registros {
 				resolve(this.data);
 			});
 		});
+		*/
 	}
 		
 	createRegistro(registro){
+		/*
 		let headers = new Headers();
 		headers.append('Content-Type','application/json');
 
@@ -40,12 +60,15 @@ export class Registros {
 			.subscribe(res => {
 				console.log(res.json())
 			});
+			*/
 	}	
 
 	deleteReview(id){
+		/*
 		this.http.delete('http://localhost:8080/api/registros/'+id).subscribe((res) => {
     	  console.log(res.json());
     	});
+    	*/
 	}
 				
 }

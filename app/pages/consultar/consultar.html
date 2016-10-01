@@ -17,17 +17,14 @@
 <ion-content class="consultar">
     
     <ion-list no-lines> 
-     
-      <!--<ion-item-sliding *ngFor="let registro of registros"> -->
-        
-        <ion-item ngFor="let registro of registros">
-            <!-- <h2>{{registro.title}}</h2> meter {{review.rating}} -->
-            <p>{{registro.descripcion}}</p>
-            <!--{{review.rating}} -->
+      
+      <ion-item-sliding *ngFor="let registro of registros">   
+          <ion-item>
+            <h2>{{registros.tags}}</h2> 
+            <p>{{registros.descripcion}}</p>
         </ion-item>
+      </ion-item-sliding>
 
-      <!--</ion-item-sliding>-->
- 
     </ion-list>
 	
 </ion-content>

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController,Page, Platform, Alert, ViewController} from 'ionic-angular';
+import { NavController,Page, Platform, Alert} from 'ionic-angular';
 import {Validators, FormBuilder } from '@angular/forms';
 import {BarcodeScanner} from 'ionic-native';
+import {Registros} from '../../providers/registros/registros';
 
 @Component({
   templateUrl: 'build/pages/registrar/registrar.html',
@@ -12,15 +13,17 @@ export class RegistrarPage {
  descripcion: any;
  codigo: any;
 
+   /* 
  	logForm(form) {
       console.log(form.value)
  	} 
+   */
 
    static get parameters() {
      return [[Platform], [NavController]];
 	}    
   	
- 	constructor(public platform: Platform, public navCtrl: NavController){//,public view: ViewController) {
+ 	constructor(public platform: Platform, public navCtrl: NavController,private registroService: Registros){
         this.codigo='00000';
     }
 
@@ -35,12 +38,11 @@ export class RegistrarPage {
     }
 
     confirmar(): void {
-      console.log("Si");
       let registro = {
         tags: this.tags,
         descripcion: this.descripcion
       };
-      //this.view.dismiss(registro);
+      this.registroService.createRegistro(registro);
     }
 
 }

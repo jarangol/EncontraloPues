@@ -16,19 +16,17 @@ class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
-
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform) {
     this.initializeApp();
-
+    
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Inicio', component: HomePage },
       { title: 'Registrar', component: RegistrarPage},
       { title: 'Consultar', component: ConsultarPage},
-      { title: 'Page dos', component: Page2 }
-
+      { title: 'Page2', component: Page2 }
     ];
 
   }

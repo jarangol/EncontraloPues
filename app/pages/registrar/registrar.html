@@ -4,10 +4,11 @@
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+
 <script src="./registrar.ts"></script>
-<script src="angular.min.js"></script> 
+<!--<script src="angular.min.js"></script> 
 <script src="ng-tags-input.min.js"></script> 
-<link rel="stylesheet" type="text/css" href="ng-tags-input.min.css">
+<link rel="stylesheet" type="text/css" href="ng-tags-input.min.css">-->
 
 <ion-header>
   <ion-navbar>
@@ -19,35 +20,34 @@
 </ion-header>
 
 
-<ion-content class="add-registro">
+
+<ion-content class="registrar">
 	
   <ion-list no-lines>
-    <form>
+  <!--
+ <tags-input ng-model="registro.tags2"></tags-input>
+name="tags"
+name="descripcion"
+ name="codigo"
+ -->
+
       <ion-item>
-        <ion-label stacked>Tags</ion-label>
-        <tags-input ng-model="registro.tags2"></tags-input>
-        
-      </tags-input>
-        <ion-input type="text" [(ngModel)]="tags" name="tags" ></ion-input>
+       <ion-label stacked> Tags </ion-label>      
+        <ion-input  [(ngModel)]="tags" type="text"></ion-input>
       </ion-item>
       
       <ion-item>
         <ion-label stacked>Descripción oculta</ion-label>
-        <ion-textarea [(ngModel)]="descripcion" name="descripcion"></ion-textarea>
+        <ion-textarea [(ngModel)]="descripcion"></ion-textarea>
       </ion-item>
-      
-      <ion-item>
-        <ion-label stacked>Código generado</ion-label>
-        <ion-input disabled="true"  type="text" [(ngModel)]="codigo" name="codigo"></ion-input>
-      </ion-item>
-      <br><br>
-      <center>
-        <button (click)="scan()">Leer QR</button> 
-        <button type="submit" secondary>Confirmar</button>
-      </center>>
-    </form>
+
     </ion-list>
+	 
+   <br><br>
+   <center>
+     <button (click)="scan()">Leer QR</button> 
+      <button type="submit" secondary>Confirmar</button>
+    </center>
 
-
-	<div padding> </div>
 </ion-content>
+

@@ -34,16 +34,16 @@ export class Registros {
 		
 	createRegistro(registro){
 		let headers = new Headers();
-		headers.append('Conten-Type','application/json');
+		headers.append('Content-Type','application/json');
 
-		this.http.post('http:localhost:8080/api/registros/', JSON.stringify(registro), {headers: headers})
-			.subscribe(res =>{
+		this.http.post('http:localhost:8080/api/registros', JSON.stringify(registro), {headers: headers})
+			.subscribe(res => {
 				console.log(res.json())
 			});
 	}	
 
 	deleteReview(id){
-		this.http.delete('http://localhost:8080/api/registros/' + id).subscribe((res) => {
+		this.http.delete('http://localhost:8080/api/registros/'+id).subscribe((res) => {
     	  console.log(res.json());
     	});
 	}

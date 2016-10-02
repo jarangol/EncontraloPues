@@ -14,7 +14,7 @@ router.get('/', function(req, res) {
    res.send("Hello World!");
 });
 
-
+  console.log("App server listening on port 8080");
 //
 // app.use(router);
 //

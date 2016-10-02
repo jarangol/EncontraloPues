@@ -1,74 +1,67 @@
+
 import { Injectable } from '@angular/core';
-import { Http , Headers } from '@angular/http';
+import { Http , Headers, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 
-/*
-  Generated class for the Registros provider.
+// emulando servidor
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
+//clase con datos de un registro
+import { Registro } from '../../registro'; 
+
 @Injectable()
 export class Registros {
-	
+	private registrosUrl = 'api/registros';
 	data: any;
 	
 	constructor(private http: Http) {
 		this.data=null;
 	}
 
-	getData(){
-		return "getData";
+	public getData(): Promise<Registro[]>{
+		return this.http.get(this.registrosUrl).toPromise().then(response => response.json().data as Registro[]).catch(this.handleError);	
 	}
 
-	getRegistros(){
-		let registro1= {
-	        tags: 'tags1',
-	        descripcion: 'descripcion1'
-	     };
+	private handleError(error: any): Promise<any> {
+ 		 console.error('An error occurred', error); // for demo purposes only
+  		return Promise.reject(error.message || error);
+	}
 
-      let registro2 = {
-        tags: 'tags2',
-        descripcion: 'descripcion2'
-      };
+	public getRegistros(){
+		console.log("Trayendo registros");
 
-      return this.data = {registro1, registro2};
-
-
-		/*
-		if(this.data){
+		/*if(this.data){
 			return Promise.resolve(this.data);
 		}
 
 		return new Promise(resolve => {
-			this.http.get('http:localhost:8080/api/registros')
+			this.http.get('http:localhost:8080/api/registros1')
 			.map(res => res.json())
 			.subscribe(data => {
 				this.data = data;
 				resolve(this.data);
 			});
-		});
-		*/
+		});	*/
 	}
 		
 	createRegistro(registro){
-		/*
+		let body = JSON.stringify({registro});
 		let headers = new Headers();
 		headers.append('Content-Type','application/json');
 
-		this.http.post('http:localhost:8080/api/registros', JSON.stringify(registro), {headers: headers})
+		this.http.post('http:localhost:8080/api/registros', body, {headers: headers})
 			.subscribe(res => {
 				console.log(res.json())
 			});
-			*/
+		
 	}	
 
-	deleteReview(id){
-		/*
+	deleteRegistro(id){
+		
 		this.http.delete('http://localhost:8080/api/registros/'+id).subscribe((res) => {
     	  console.log(res.json());
     	});
-    	*/
+    	
 	}
 				
 }

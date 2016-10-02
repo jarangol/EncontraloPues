@@ -1,44 +1,55 @@
 import { Component } from '@angular/core';
 import { NavController,Page, Platform, Alert} from 'ionic-angular';
+//service: 
 import {Registros} from '../../providers/registros/registros';
+//clase con datos de un registro:
+import {Registro} from '../../registro';
+
 
 @Component({ 
    templateUrl: 'build/pages/consultar/consultar.html'
 })
 
+
+
 export class ConsultarPage {
-	registros: any;
+	errorMessage: string;
+  registros: Registro[];
+  mode = 'Observable';
   
+  
+
+
   static get parameters() {
      return [[Platform], [NavController]];
   }
 
 
   //al recibir registroService deja de funcionar
-    constructor(public navCtrl: NavController, private registroService: Registros) {
-      
-      let registro1= {
-        tags: 'tags1',
-        descripcion: 'descripcion1'
-      };
-
-      let registro2 = {
-        tags: 'tags2',
-        descripcion: 'descripcion2'
-      };
-
-      var nose = {registro1, registro2};
+    constructor(public navCtrl: NavController, public registroService: Registros){
      
   }
   
+  getData():void{
+      this.registroService.getData().then(registros => this.registros = registros);
+  }
   
-	ionViewLoaded(){
+	boton(){
 		//this.registroService.getData().then((data) => {
-    this.registroService.getRegistros().then((data) => {
-            console.log(data);
-            this.registros = data; 
-      });
+      alert("boton presionado");
+      console.log("Consultar oprimido");
+      
+      this.registroService.deleteRegistro("hola");//;.then((data) => {
+            //console.log(data);
+            //this.registros = data; 
+      //});
+      console.log("Consultar oprimido2");
+      
    }
+
+   ionViewLoaded(){
+       this.getData();
+    }
 	
  }
 

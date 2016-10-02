@@ -15,16 +15,17 @@
 
 
 <ion-content class="consultar">
-    
+    <button (click)="boton()">consultar</button> 
+    <h3>Registros:</h3>
+
     <ion-list no-lines> 
-      
-      <ion-item-sliding *ngFor="let registro of registros">   
-          <ion-item>
-            <h2>{{registros.tags}}</h2> 
-            <p>{{registros.descripcion}}</p>
+
+      <ion-item-sliding *ngFor="let registro of registros">  
+        <ion-item>
+            <h2>{{registro.descripcion}}</h2> 
         </ion-item>
       </ion-item-sliding>
 
     </ion-list>
-	
+	<div class="error" *ngIf="errorMessage">{{errorMessage}}</div>
 </ion-content>

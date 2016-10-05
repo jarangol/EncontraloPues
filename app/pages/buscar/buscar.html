@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+      <ion-title>Buscar objeto</ion-title>
+  </ion-navbar>
+</ion-header>
+
+    <ion-content padding>
+		       
+  		<ion-list no-lines>      
+          <ion-item>         
+            <ion-label fixed>Lugar</ion-label>
+             <ion-select [(ngModel)]="lugares">
+                <ion-option value="EAFIT">EAFIT</ion-option>
+                <ion-option value="UPB">UPB</ion-option>
+                <ion-option value="UdeA">UdeA</ion-option>
+                <ion-option value="UdeM">UdeM</ion-option>
+                <ion-option value="ITM">ITM</ion-option>
+                <ion-option value="J.I.C">J.I.C</ion-option>
+                <ion-option value="Metro">Metro</ion-option>
+              </ion-select>
+          </ion-item>
+
+          <ion-item> 
+              <ion-label fixed>Código</ion-label>
+              <ion-input  type="text"></ion-input>
+          </ion-item>
+
+          <ion-item> 
+              <ion-label stacked>Tags</ion-label>
+              <ion-input type="text"></ion-input>
+          </ion-item>
+      </ion-list>
+      <button ion-button block secondary>Buscar</button>
+  </ion-content>

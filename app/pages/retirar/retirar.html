@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+  	 <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+     	<ion-title>Retirar</ion-title>
+  </ion-navbar>
+</ion-header>
+
+    <ion-content class="retirar" padding="true">
+      
+      <ion-label>
+      <i class="icon ion-search placeholder-icon"></i>
+        <input type="search" placeholder="Codigo">
+      </ion-label>
+        
+
+        <ion-list no-lines>
+  	      <ion-item>
+  	       <ion-label stacked> Código </ion-label>      
+  	        <ion-input  [(ngModel)]="codigo" type="text"></ion-input>
+  	      </ion-item>
+    	 </ion-list>
+
+    	<button ion-button block  color="secondary">Buscar</button>
+    	<br>
+        <button ion-button block>Leer QR</button>
+    </ion-content>

@@ -1,11 +1,23 @@
 import { Component, ViewChild } from '@angular/core';
 import { ionicBootstrap, Platform, Nav} from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
+
+//paginas
+import { BuscarPage} from './pages/buscar/buscar';
+import { ConfirmarRetiroPage} from './pages/confirmar-retiro/confirmar-retiro';
+import { ConsultarPage} from './pages/consultar/consultar';
+import { DetalleRetiroPage} from './pages/detalle-retiro/detalle-retiro';
 import { HomePage } from './pages/home/home';
+import { IdentificarPage } from './pages/identificar/identificar';
 import { Page2 } from './pages/page2/page2';
 import { RegistrarPage} from './pages/registrar/registrar';
-import { ConsultarPage} from './pages/consultar/consultar';
+import { RetirarPage} from './pages/retirar/retirar';
+
+
+//providers
 import { Registros} from './providers/registros/registros';
+
+
 
 @Component({
   templateUrl: 'build/app.html'
@@ -14,7 +26,7 @@ import { Registros} from './providers/registros/registros';
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = ConsultarPage;
+  rootPage: any = HomePage;
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform) {
@@ -23,9 +35,14 @@ class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Inicio', component: HomePage },
-      { title: 'Registrar', component: RegistrarPage},
-      { title: 'Consultar', component: ConsultarPage},
-      { title: 'Page2', component: Page2 }
+      { title: 'Buscar', component: BuscarPage},
+      //{ title: 'Confirmar retiro', component:  ConfirmarRetiroPage},
+      //{ title: 'Consultar', component: ConsultarPage},
+      { title: 'Detalle Retiro', component: DetalleRetiroPage},
+      { title: 'Identificar', component: IdentificarPage},
+      //{ title: 'Page2', component: Page2 },
+      //{ title: 'Registrar', component: RegistrarPage},
+      { title: 'Retirar', component: RetirarPage}
     ];
 
   }

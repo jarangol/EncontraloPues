@@ -14,7 +14,19 @@ import {Registro} from '../../registro';
 
 export class ConsultarPage {
 	errorMessage: string;
-  registros: Registro[];
+  registros =[
+      { tags: 'tags', descripcion: 'Mr. Nice' },
+      { tags: 'tags', descripcion: 'Narco' },
+      { tags: 'tags', descripcion: 'Bombasto' },
+      { tags: 'tags', descripcion: 'Celeritas' },
+      { tags: 'tags', descripcion: 'Magneta' },
+      { tags: 'tags', descripcion: 'RubberMan' },
+      { tags: 'tags', descripcion: 'Dynama' },
+      { tags: 'tags', descripcion: 'Dr IQ' },
+      { tags: 'tags', descripcion: 'Magma' },
+      { tags: 'tags', descripcion: 'Tornado' }
+
+  ];
   mode = 'Observable';
   
   
@@ -48,7 +60,7 @@ export class ConsultarPage {
    }
 
    ionViewLoaded(){
-       this.getData();
+       //this.getData();
     }
 	
  }

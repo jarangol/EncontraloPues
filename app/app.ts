@@ -16,7 +16,7 @@ import { RetirarPage} from './pages/retirar/retirar';
 
 //providers
 import { Registros} from './providers/registros/registros';
-
+import { RegistroService} from './providers/registro-service/registro-service';
 
 
 @Component({
@@ -35,14 +35,13 @@ class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Inicio', component: HomePage },
-      { title: 'Buscar', component: BuscarPage},
+      //{ title: 'Buscar', component: BuscarPage},
       //{ title: 'Confirmar retiro', component:  ConfirmarRetiroPage},
-      //{ title: 'Consultar', component: ConsultarPage},
-      { title: 'Detalle Retiro', component: DetalleRetiroPage},
-      { title: 'Identificar', component: IdentificarPage},
+      { title: 'Consultar', component: ConsultarPage},
+      //{ title: 'Detalle Retiro', component: DetalleRetiroPage},
+      //{ title: 'Identificar', component: IdentificarPage},
       //{ title: 'Page2', component: Page2 },
-      //{ title: 'Registrar', component: RegistrarPage},
-      { title: 'Retirar', component: RetirarPage}
+     // { title: 'Retirar', component: RetirarPage}
     ];
 
   }

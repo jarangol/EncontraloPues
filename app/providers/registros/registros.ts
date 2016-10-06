@@ -1,9 +1,8 @@
-
 import { Injectable } from '@angular/core';
 import { Http , Headers, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-
+import {Alert} from 'ionic-angular';
 // emulando servidor
 
 //clase con datos de un registro
@@ -27,15 +26,20 @@ export class Registros {
   		return Promise.reject(error.message || error);
 	}
 
-	public getRegistros(){
+	getRegistros(){
 		console.log("Trayendo registros");
-
-		/*if(this.data){
+		alert("llego al metodo");
+		this.http.get('http:localhost:8080/api/registros1');
+		/*
+		if(this.data){
 			return Promise.resolve(this.data);
 		}
 
+
+		
 		return new Promise(resolve => {
-			this.http.get('http:localhost:8080/api/registros1')
+			this.http.get('http:localhost:8080/api/registros1')})};
+			
 			.map(res => res.json())
 			.subscribe(data => {
 				this.data = data;
@@ -57,12 +61,13 @@ export class Registros {
 	}	
 
 	deleteRegistro(id){
-		
+		alert("llego al metodo delete en el provider");
 		this.http.delete('http://localhost:8080/api/registros/'+id).subscribe((res) => {
     	  console.log(res.json());
     	});
     	
 	}
-				
+	
+	load(){}			
 }
 

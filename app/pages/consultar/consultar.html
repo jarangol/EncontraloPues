@@ -1,9 +1,3 @@
-<!--
-  Generated template for the ConsultarPage page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   <ion-navbar>
   	 <button menuToggle>
@@ -15,18 +9,15 @@
 
 
 <ion-content class="consultar">
-    <button (click)="boton()">consultar</button> 
+    <button (click)="consultar()"> consultar </button> 
+    <button (click)="delete()" secondary> delete </button> 
     <h3>Registros:</h3>
 
     <ion-list no-lines> 
-
-      <ion-item-sliding *ngFor="let registro of registros">  
-        <ion-item>
-            <h2>{{registro.tags}}</h2> 
-             <h2>{{registro.descripcion}}</h2> 
-        </ion-item>
-      </ion-item-sliding>
-
+      <ion-item *ngFor="let registro of registros">  
+            <h2>{{registro.name.first}}</h2>
+             <p>{{registro.email}}</p> 
+      </ion-item>
     </ion-list>
-	<div class="error" *ngIf="errorMessage">{{errorMessage}}</div>
+
 </ion-content>

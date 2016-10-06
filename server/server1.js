@@ -16,131 +16,201 @@ app.use(methodOverride());
 app.use(cors());
 
 app.use(function(req, res, next) {
-   res.header("Access-Control-Allow-Origin", "*");
-   res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
-   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-   next();
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
 
 
-//Schema
-var usuariosSchema = new mongoose.Schema({
-  correoElectronico : String,
+var personasSchema = new mongoose.Schema({
+  correoElectronico : {type: String, index: {unique: true}},
   contraseña : String,
   nombre : String,
-  celular : String,
-  objetosPersonales : [
-    {
-      codigoQR : String,
-      tags: [],
-      notificaciones: []
-    }
-  ],
-  trabajadoresActuales:[
-    {
-      correoElectronico : String,
-      contraseña : String,
-      nombre : String,
-      numeroId : String
-    }
-  ],
-  puntosRecoleccion : [
-     {
+  usuario : new mongoose.Schema({
+    celular : String,
+    objetosPersonales : [
+      {
+        _id : false,
+        codigoQR : String,
+        tags : [String],
+        notificaciones : [
+          {
+            correoElectronicoLugar : String,
+            nombrePuntoRecolecion : String,
+            objetosCodigoBusqueda : Number,
+            retirado : Boolean
+          },
+          {
+            correoElectronicoUsuario : String,
+            fechaRegistro : {
+              año : Number,
+              mes : Number,
+              dia : Number
+            }
+          }
+        ],
+        disponible : Boolean
+      }
+    ]
+  }),
+  lugar : new mongoose.Schema({
+    trabajadores : [String],
+    puntosRecoleccion : [
+      {
         nombre : String,
         telefono : String,
         direccion : String,
-        objetosRegistrados : [
-           {
-             //_id : false,
-             codigoBusqueda : Number,
-             codigoRetiro : Number,
-             tags : [],
-             descripcionOculta : String,
-             fechaRegistro : {
-               año : String,
-               mes : String,
-               dia : String
-             },
-             usuarioDueño : {
-               correoElectronico : String,
-               nombre : String,
-               celular : String
-             },
-             nombreTrabajador : String,
-             idTrabajador : String
-           }
+        disponible : Boolean,
+        objetos : [
+          {
+            codigoBusqueda : Number,
+            correoTrabajadorRegistro : String,
+            fechaRegistro : {
+              año : Number,
+              mes : Number,
+              dia : Number
+            },
+            sinCodigoQR : new mongoose.Schema({
+              tags : [String],
+              descripcionOculta : String
+            }),
+            CodigoQR : new mongoose.Schema({
+              correoUsuario : String,
+              objetoPersonalCodigoQR : String,
+              codigoRetiro : Number,
+            }),
+            retirado : new mongoose.Schema({
+              correoTrabajadorRetiro : String,
+              fechaRetiro : {
+                año : Number,
+                mes : Number,
+                dia : Number
+              },
+              personaReclamo : new mongoose.Schema({
+                numeroId : String,
+                nombre : String,
+                celular : String
+              })
+            }),
+            donado : new mongoose.Schema({
+              fechaDonado : {
+                año : Number,
+                mes : Number,
+                dia : Number
+              }
+            })
+          }
         ]
-     }
-  ]
+      }
+    ]
+  }),
+  trabajador : new mongoose.Schema({
+    numeroId : Number
+  })
 });
 
 var contadoresSchema = new mongoose.Schema({
-    _id : String,
-    seq : Number,
-    sequence_value : Number
+  _id : String,
+  seq : Number,
+  sequence_value : Number
 });
 
-contadoresSchema.statics.findAndModify = function (query, sort, doc, options, callback) {
-  return this.collection.findAndModify(query, sort, doc, options, callback);
-};
-
 //Model
-var usuario = mongoose.model('usuarios',usuariosSchema);
+var persona = mongoose.model('personas',personasSchema);
 var contador = mongoose.model('contadores',contadoresSchema);
 
 //Function
 function incrementarValor (sequenceName){
 
-   contador.findOneAndUpdate(
+  contador.findOneAndUpdate(
     {_id: sequenceName},
     {$inc:{sequence_value:1}},
     {new:true},
     function(err, valor){
-        return valor.sequence_value;
+      return valor.sequence_value;
     }
   );
 }
 
-app.post('/api/registros',function(req,res){
+// registrarUsuarioComun
+app.post('/api/registrarUsuario',function(req,res){
+  (new persona({
+    correoElectronico : req.body.correoUsuario,
+    contraseña : req.body.contraseña,
+    nombre : req.body.nombre,
+    usuario : {
+      celular : req.body.celular,
+      objetosPersonales : []
+    }
+  })).save(function (err,resu) {
+    if (err) res.send(false);
+    res.send(true);
+  });
+});
 
-  fecha = new Date();
+//registrarUsuarioLugar
+app.post('/api/registrarLugar',function(req,res){
+  (new persona({
+    correoElectronico : req.body.correoLugar,
+    contraseña : req.body.contraseña,
+    nombre : req.body.nombre,
+    lugar : {
+      trabajadoresActuales : [],
+      puntosRecoleccion : []
+    }
+  })).save(function (err,resu) {
+    if (err) res.send(false);
+    res.send(true);
+  });
+});
 
-  codBus = contador.findOneAndUpdate(
-   {_id: "codigoBusqueda"},
-   {$inc:{sequence_value:1}},
-   {new:true}).exec()
+app.post('/api/registrarTrabajador',function(req,res){
+  (new persona({
+    correoElectronico : req.body.correoTrabajador,
+    contraseña : req.body.contraseña,
+    nombre : req.body.nombre,
+    trabajador : {
+      numeroId : req.body.numeroId,
+    }
+  })).save(function (err,resu) {
+    if (err) res.send(false);
+    persona.update({correoElectronico: req.body.correoLugar},
+      {$push: {"lugar.trabajadores" : req.body.correoTrabajador}},
+      function(err,doc) {
+        if (err) res.send(false);
+        res.send(true);
+      });
+    });
+  });
 
-   codBus.then(function(codigo){
-     usuario.update({correoElectronico:
-       "a",'puntosRecoleccion.nombre':"a"},
-       {$push: {'puntosRecoleccion.0.objetosRegistrados':{
-         codigoBusqueda: codigo.sequence_value,
-         tags:req.body.tags,
-         descripcionOculta:req.body.descripcionOculta,
-         fechaRegistro:{
-           año: fecha.getFullYear().toString(),
-           mes: fecha.getMonth().toString(),
-           dia: fecha.getDate().toString()
-         },
-         nombreTrabajador:1,
-         idTrabajador:1
-       }}},
-       function(err,usuarios){
-         if(err) res.send(err);
-         res.send("updated");
-       });
-     })
-   });
-//
+  app.post('/api/registrarObjetoPersonal',function(req,res){
+    persona.findOneAndUpdate(
+      {correoElectronico: req.body.correoUsuario},
+      {$push : {
+        "usuario.objetosPersonales" : {
+          codigoQR : mongoose.Types.ObjectId(),
+          tags : req.body.arregloTags,
+          notificaciones:[] }
+        }
+      },
+      function(err,doc) {
+        if (err) res.send(false);
+        res.send(true);
+      });
+    });
 
+    app.get('/api/prueba',function(req,res){
+        persona.find({}, function (err, docs) {
+          res.send(docs);
+        });
+    });
 
+    var mongodbUri = 'mongodb://user:user@ds035776.mlab.com:35776/encontralopues';
+    mongoose.connect(mongodbUri);
 
+    var db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
 
-var mongodbUri = 'mongodb://user:user@ds035776.mlab.com:35776/encontralopues';
-mongoose.connect(mongodbUri);
-
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-
-app.listen(8080);
+    app.listen(8080);
     console.log("App listening on port 8080");

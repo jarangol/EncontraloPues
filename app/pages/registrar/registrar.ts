@@ -24,7 +24,7 @@ export class RegistrarPage {
   	
  	constructor(public platform: Platform, public navCtrl: NavController,private registroService: Registros){
         this.codigo='0000100';     
-         this.tags = ['termo','rojo'];
+         this.tags = ['tag'];
     }
 
     scan(): string {
@@ -56,7 +56,6 @@ export class RegistrarPage {
     activarQR(){
       if(this.qr){
           let code=this.scan();
-          alert("leyo: "+code);
        }
     }
 

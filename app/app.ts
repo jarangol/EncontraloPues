@@ -26,7 +26,7 @@ import { RegistroService} from './providers/registro-service/registro-service';
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = RegistrarPage
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform) {
@@ -34,14 +34,15 @@ class MyApp {
     
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Inicio', component: HomePage },
+      //{ title: 'Inicio', component: HomePage },
       //{ title: 'Buscar', component: BuscarPage},
       //{ title: 'Confirmar retiro', component:  ConfirmarRetiroPage},
-      { title: 'Consultar', component: ConsultarPage},
+      //{ title: 'Consultar', component: ConsultarPage},
       //{ title: 'Detalle Retiro', component: DetalleRetiroPage},
       //{ title: 'Identificar', component: IdentificarPage},
       //{ title: 'Page2', component: Page2 },
      // { title: 'Retirar', component: RetirarPage}
+      { title: 'Registrar', component: RegistrarPage}
     ];
 
   }

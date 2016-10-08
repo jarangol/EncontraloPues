@@ -22,7 +22,6 @@ export class ConsultarPage {
   
   //al recibir registroService deja de funcionar
     constructor(private navCtrl: NavController, public registroService: RegistroService){
-     this.loadRegistros();
   }
   
   getData():void{
@@ -32,7 +31,7 @@ export class ConsultarPage {
 	consultar(){
     alert("consultar .ts");
 		/*
-    this.registroService.getRegistros().then((data) => {       
+    this.registroService.getRegistros().then(data => {       
         console.log(data);
         this.registros = data; 
       });

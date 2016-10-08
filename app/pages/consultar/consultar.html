@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+  	 <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>consultar</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content class="consultar">
+    <h3>Registros:</h3>
+    <ion-list no-lines> 
+      <ion-item *ngFor="let registro of registros">  
+            <h2>{{registro.nombre}}</h2>
+      </ion-item>
+    </ion-list>
+
+</ion-content>

@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+  	 <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Objeto</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+	<ion-list no-lines>
+		  <ion-item>
+		    <ion-label fixed >Código:</ion-label>
+		    <ion-input type="text" value="201133" disabled></ion-input>
+		  </ion-item>
+
+		  <ion-item>
+		    <ion-label fixed>Fecha:</ion-label>
+		    <ion-input type="date" disabled></ion-input>
+		  </ion-item>
+
+		  <ion-item>
+		    <ion-label fixed>Tags:</ion-label>
+		    <ion-input type="text" disabled></ion-input>
+		  </ion-item>
+
+		 <ion-item>
+	        <ion-label fixed>Descripción:</ion-label>
+	    	  <ion-textarea [(ngModel)]="descripcion" disabled> Disabled</ion-textarea>
+		</ion-item>
+	</ion-list>
+	
+	<button (click)="retirar()" secondary block>Retirar</button>
+
+</ion-content>

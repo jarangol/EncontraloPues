@@ -27,16 +27,7 @@ export class RegistrarPage {
          this.tags = ['tag'];
     }
 
-<<<<<<< HEAD
-    scan() {
-      this.platform.ready().then(() => {       
-  			BarcodeScanner.scan().then((barcodeData) => {
-  				 alert(barcodeData.text);
-  			}, (err) => {
-  			    alert("Ha ocurrido un error: "+err);
-  			});   
-      });
-=======
+
     scan(): string {
         this.platform.ready().then(() => {       
 			BarcodeScanner.scan().then((barcodeData) => {
@@ -47,7 +38,6 @@ export class RegistrarPage {
 			}); 
         });
         return "";
->>>>>>> Julian
     }
 
     /**

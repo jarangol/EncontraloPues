@@ -34,6 +34,7 @@ var personasSchema = new mongoose.Schema({
         _id : false,
         codigoQR : String,
         tags : [String],
+        disponible : Boolean,
         notificaciones : [
           {
             correoElectronicoLugar : String,
@@ -49,8 +50,7 @@ var personasSchema = new mongoose.Schema({
               dia : Number
             }
           }
-        ],
-        disponible : Boolean
+        ]
       }
     ]
   }),
@@ -58,11 +58,32 @@ var personasSchema = new mongoose.Schema({
     trabajadores : [String],
     puntosRecoleccion : [
       {
+        _id : false,
         nombre : String,
         telefono : String,
         direccion : String,
         disponible : Boolean,
-        objetos : [
+        objetosPerdidos : [
+          {
+            codigoBusqueda : Number,
+            correoTrabajadorRegistro : String,
+            fechaRegistro : {
+              año : Number,
+              mes : Number,
+              dia : Number
+            },
+            sinCodigoQR : new mongoose.Schema({
+              tags : [String],
+              descripcionOculta : String
+            }),
+            codigoQR : new mongoose.Schema({
+              correoUsuario : String,
+              objetoPersonalCodigoQR : String,
+              codigoRetiro : Number
+            })
+          }
+        ],
+        objetosRetirados : [
           {
             codigoBusqueda : Number,
             correoTrabajadorRegistro : String,
@@ -91,14 +112,14 @@ var personasSchema = new mongoose.Schema({
                 numeroId : String,
                 nombre : String,
                 celular : String
+              }),
+              donado : new mongoose.Schema({
+                fechaDonado : {
+                  año : Number,
+                  mes : Number,
+                  dia : Number
+                }
               })
-            }),
-            donado : new mongoose.Schema({
-              fechaDonado : {
-                año : Number,
-                mes : Number,
-                dia : Number
-              }
             })
           }
         ]
@@ -121,17 +142,14 @@ var persona = mongoose.model('personas',personasSchema);
 var contador = mongoose.model('contadores',contadoresSchema);
 
 //Function
-function incrementarValor (sequenceName){
-
+function incrementarValor (sequenceName, callback){
   contador.findOneAndUpdate(
-    {_id: sequenceName},
-    {$inc:{sequence_value:1}},
-    {new:true},
-    function(err, valor){
-      return valor.sequence_value;
-    }
-  );
-}
+      {_id: sequenceName},
+      {$inc:{sequence_value:1}},
+      {new:true},
+      callback
+    );
+  }
 
 // registrarUsuarioComun
 app.post('/api/registrarUsuario',function(req,res){
@@ -175,7 +193,7 @@ app.post('/api/registrarTrabajador',function(req,res){
     }
   })).save(function (err,resu) {
     if (err) res.send(false);
-    persona.update({correoElectronico: req.body.correoLugar},
+    persona.findOneAndUpdate({correoElectronico: req.body.correoLugar},
       {$push: {"lugar.trabajadores" : req.body.correoTrabajador}},
       function(err,doc) {
         if (err) res.send(false);
@@ -191,6 +209,7 @@ app.post('/api/registrarTrabajador',function(req,res){
         "usuario.objetosPersonales" : {
           codigoQR : mongoose.Types.ObjectId(),
           tags : req.body.arregloTags,
+          disponible : true,
           notificaciones:[] }
         }
       },
@@ -200,17 +219,114 @@ app.post('/api/registrarTrabajador',function(req,res){
       });
     });
 
-    app.get('/api/prueba',function(req,res){
+    app.post('/api/registrarPuntoRecoleccion',function(req,res){
+      persona.findOneAndUpdate(
+        {correoElectronico: req.body.correoLugar},
+        {$push: {
+          "lugar.puntosRecoleccion": {
+            nombre:req.body.nombre,
+            telefono:req.body.telefono,
+            direccion:req.body.direccion,
+            disponible : true,
+            objetos:[] }
+          }
+        },
+        function(err,doc) {
+          if (err) res.send(false);
+          res.send(true);
+        })
+      });
+
+      app.post('/api/registrarObjetoPerdido',function(req,res){
+
+        fecha = new Date();
+
+        incrementarValor('codigoBusqueda',function (err,valor) {
+          persona.findOneAndUpdate(
+            {correoElectronico : req.body.correoLugar,
+              'lugar.puntosRecoleccion.nombre': req.body.nombrePunto},
+              {$push: {'lugar.puntosRecoleccion.0.objetosPerdidos': {
+                codigoBusqueda : valor.sequence_value,
+                correoTrabajadorRegistro : req.body.correoTrabajador,
+                fechaRegistro : {
+                  año: fecha.getFullYear(),
+                  mes: fecha.getMonth(),
+                  dia: fecha.getDate()
+                },
+                sinCodigoQR : {
+                  tags : req.body.tags,
+                  descripcionOculta : req.body.descripcionOculta
+                }
+              }}},
+              function(err,doc) {
+                if (err) res.send(false);
+                res.send(true);
+              });
+            })
+          });
+
+
+
+          app.post('/api/registrarObjetoPerdidoQR',function(req,res){
+
+            fecha = new Date();
+
+            persona.findOne({usuario : {$exists: true },
+              'usuario.objetosPersonales.codigoQR' : req.body.codigoQR},
+              function (err, cuenta) {
+                if (cuenta){
+                  persona.findOne({lugar : {$exists: true },
+                    'lugar.puntosRecoleccion.objetosPerdidos.codigoQR.objetoPersonalCodigoQR': req.body.codigoQR},
+                  function(err,lugarObjetoPerdido){
+                    if (!lugarObjetoPerdido){
+                      incrementarValor('codigoBusqueda',function (err1,codigoBusqueda) {
+                        incrementarValor('codigoRetiro',function (err2,codigoRetiro) {
+                          persona.findOneAndUpdate(
+                            {correoElectronico : req.body.correoLugar,
+                              'lugar.puntosRecoleccion.nombre': req.body.nombrePunto},
+                              {$push: {'lugar.puntosRecoleccion.0.objetosPerdidos': {
+                                codigoBusqueda : codigoBusqueda.sequence_value,
+                                correoTrabajadorRegistro : req.body.correoTrabajador,
+                                fechaRegistro : {
+                                  año: fecha.getFullYear(),
+                                  mes: fecha.getMonth(),
+                                  dia: fecha.getDate()
+                                },
+                                codigoQR : {
+                                  correoUsuario : cuenta.correoElectronico,
+                                  objetoPersonalCodigoQR : req.body.codigoQR,
+                                  codigoRetiro : codigoRetiro.sequence_value
+                                }
+                              }}},
+                              function(err,doc) {
+                                if (err) res.send("Ya se encuentra el objeto");
+                                res.send(true);
+                              });
+                            })
+                          })
+                        }else{
+                          // AGRUPGAR ESTAS RETURN
+                          res.send(lugarObjetoPerdido.nombre);
+                          res.send(lugarObjetoPerdido.lugar.puntosRecoleccion.nombre);
+                        }
+                        });
+                      }else{
+                        res.send("No se encuentra el codigo QR");
+                      }
+                    })
+                  });
+
+      app.get('/api/prueba',function(req,res){
         persona.find({}, function (err, docs) {
           res.send(docs);
         });
-    });
+      });
 
-    var mongodbUri = 'mongodb://user:user@ds035776.mlab.com:35776/encontralopues';
-    mongoose.connect(mongodbUri);
+      var mongodbUri = 'mongodb://user:user@ds035776.mlab.com:35776/encontralopues';
+      mongoose.connect(mongodbUri);
 
-    var db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error:'));
+      var db = mongoose.connection;
+      db.on('error', console.error.bind(console, 'connection error:'));
 
-    app.listen(8080);
-    console.log("App listening on port 8080");
+      app.listen(8080);
+      console.log("App listening on port 8080");

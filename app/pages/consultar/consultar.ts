@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { NavController,Platform, Alert} from 'ionic-angular';
+import { NavController,Platform, Alert, Page} from 'ionic-angular';
 
 //service: 
-import {Registros} from '../../providers/registros/registros';
+//import {Registros} from '../../providers/registros/registros';
+
 import { RegistroService} from '../../providers/registro-service/registro-service';
 
 //clase con datos de un registro:
-import {Registro} from '../../registro';
+import {RegistroQR} from '../../registroQR';
 
 
 @Component({ 
@@ -22,10 +23,7 @@ export class ConsultarPage {
   
   //al recibir registroService deja de funcionar
     constructor(private navCtrl: NavController, public registroService: RegistroService){
-  }
-  
-  getData():void{
-      //this.registroService.getData().then(registros => this.registros = registros);
+      this.loadRegistros();
   }
   
 	consultar(){
@@ -46,12 +44,8 @@ export class ConsultarPage {
       */
    }
 
-   ionViewLoaded(){
-       //this.getData();
-    }
 	  
    loadRegistros(){
-     alert("lo llama");
       this.registroService.load()
       .then(data => {
         this.registros = data;

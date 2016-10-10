@@ -21,6 +21,7 @@ import { RegistroService} from './providers/registro-service/registro-service';
 
 @Component({
   templateUrl: 'build/app.html'
+  ,providers: [RegistroService]
 })
 
 class MyApp {
@@ -29,7 +30,7 @@ class MyApp {
   rootPage: any = RegistrarPage
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform) {
+  constructor(public platform: Platform, public registroService: RegistroService) {
     this.initializeApp();
     
     // used for an example of ngFor and navigation
@@ -37,7 +38,7 @@ class MyApp {
       //{ title: 'Inicio', component: HomePage },
       //{ title: 'Buscar', component: BuscarPage},
       //{ title: 'Confirmar retiro', component:  ConfirmarRetiroPage},
-      //{ title: 'Consultar', component: ConsultarPage},
+      { title: 'Consultar', component: ConsultarPage},
       //{ title: 'Detalle Retiro', component: DetalleRetiroPage},
       //{ title: 'Identificar', component: IdentificarPage},
       //{ title: 'Page2', component: Page2 },
@@ -54,6 +55,10 @@ class MyApp {
       StatusBar.styleDefault();
     });
   }
+
+
+   ionViewLoaded(){
+    }
 
   openPage(page) {
     // Reset the content nav to have just this page

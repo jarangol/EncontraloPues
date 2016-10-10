@@ -4,31 +4,53 @@ import {Validators, FormBuilder } from '@angular/forms';
 import {BarcodeScanner} from 'ionic-native';
 
 //proveedor del service
-import {Registros} from '../../providers/registros/registros';
+import { RegistroService} from '../../providers/registro-service/registro-service';
 
+//clase para registroQR
+import {RegistroQR} from '../../registroQR';
 
 @Component({
   templateUrl: 'build/pages/registrar/registrar.html',
+  providers: [RegistroService]
 })
 
 export class RegistrarPage { 
- private tags: Array<String>;
- descripcion: any;
- codigo: any;
- qr: any;
- tag:any;
+ tag: any;//tag para agregar
+ qr: any; //toggle tag
+ 
+ private registroQR: RegistroQR;
 
+ codigoQR: string;
+ correoLugar: string;
+ nombrePunto: string;
+ correoTrabajador: string;
+
+ private tags: Array<String>;
+ descripcionOculta: string;
+ codigo: any;
+  
+  /*
    static get parameters() {
-     return [[Platform], [NavController]];
-	}    
+     return [[Platform], [NavController],[RegistroService]];
+	} 
+  */   
   	
- 	constructor(public platform: Platform, public navCtrl: NavController,private registroService: Registros){
+ 	constructor(public platform: Platform, private navCtrl: NavController,public registroService: RegistroService){
         this.codigo='0000100';     
          this.tags = ['tag'];
+
+         //ejemplo de registro con QR
+         this.correoLugar="n";
+         this.nombrePunto="m";
+         this.correoTrabajador="m";
+         this.codigoQR="57f4bc2305ce30bc346183b0";
+
+         this.registroQR= new RegistroQR(this.codigoQR,this.correoLugar,this.nombrePunto,this.correoTrabajador);
     }
 
 
-    scan(): string {
+   public scan(): string {
+
         this.platform.ready().then(() => {       
 			BarcodeScanner.scan().then((barcodeData) => {
 				 alert(barcodeData.text);
@@ -43,10 +65,14 @@ export class RegistrarPage {
     /**
     * Es llamado para confirmar registro manual.
     **/
-    confirmar(): void {
+    public confirmar(): void {
+      alert(this.descripcionOculta);
       let registro = {
         tags: this.tags,
-        descripcion: this.descripcion
+        descripcionOculta: this.descripcionOculta,
+        correoLugar: this.correoLugar,
+        nombrePunto: this.nombrePunto,
+        correoTrabajador: this.correoTrabajador
       };
       this.registroService.createRegistro(registro);
     }
@@ -54,10 +80,17 @@ export class RegistrarPage {
     /**
     * Método llamado al modificar el toggle de la parte principal.
     **/
-    activarQR(){
+    public activarQR(){
+      
       if(this.qr){
-          let code=this.scan();
-       }
+           let registroQR = {
+              codigoQR: this.codigoQR,
+              correoLugar: this.correoLugar,
+              nombrePunto: this.nombrePunto,
+              correoTrabajador: this.correoTrabajador
+            };
+          this.registroService.createRegistroQR(registroQR);
+      }   
     }
 
 
@@ -77,9 +110,5 @@ export class RegistrarPage {
     // Delete the tag in that index
     this.tags.splice(index, 1);
   } 
-
-  alert(){
-    alert(this.tag);
-  }
 
 }

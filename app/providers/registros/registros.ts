@@ -6,7 +6,7 @@ import {Alert} from 'ionic-angular';
 // emulando servidor
 
 //clase con datos de un registro
-import { Registro } from '../../registro'; 
+import { RegistroQR } from '../../registroQR'; 
 
 @Injectable()
 export class Registros {
@@ -17,8 +17,8 @@ export class Registros {
 		this.data=null;
 	}
 
-	public getData(): Promise<Registro[]>{
-		return this.http.get(this.registrosUrl).toPromise().then(response => response.json().data as Registro[]).catch(this.handleError);	
+	public getData(): Promise<RegistroQR[]>{
+		return this.http.get(this.registrosUrl).toPromise().then(response => response.json().data as RegistroQR[]).catch(this.handleError);	
 	}
 
 	private handleError(error: any): Promise<any> {
@@ -49,7 +49,7 @@ export class Registros {
 	}
 		
 	createRegistro(registro){
-		let body = JSON.stringify({registro});
+		let body = JSON.stringify(registro);
 		let headers = new Headers();
 		headers.append('Content-Type','application/json');
 

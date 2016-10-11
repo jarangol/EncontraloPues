@@ -38,28 +38,37 @@ export class RegistroService {
     });
   }
 
-  public createRegistroQR(registroQR):void{
+  public createRegistroQR(registroQR){
     let body = JSON.stringify(registroQR);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
 
-    this.http.post("http://localhost:8080/api/registrarObjetoPerdidoQR", body, {headers: headers})
-      .subscribe(res => {
-        console.log(res.json());
+    return new Promise(resolve => {
+      this.http.post("http://localhost:8080/api/registrarObjetoPerdidoQR", body, {headers: headers})
+        .map(res => res.json())
+        .subscribe(data => {
+          this.data = data;
+          resolve(this.data);
+           alert(data.codigoObjeto);
+          alert("Registro exitoso.");
+        });
       });
       
   }
 
-  public createRegistro(registro):void{
-
+  public createRegistro(registro){
     let body = JSON.stringify(registro);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-
-    this.http.post("http://localhost:8080/api/registrarObjetoPerdido", body, {headers: headers})
-      .subscribe(res => {
-        console.log(res.json());
-        alert("se ha registrado");
+    
+    return new Promise(resolve => {
+      this.http.post("http://localhost:8080/api/registrarObjetoPerdido", body, {headers: headers})
+        .map(res => res.json())
+        .subscribe(res => {
+          console.log(res);
+          alert(res.codigoObjeto);
+          alert("Registro exitoso.");
+        });
       });
   }  
 

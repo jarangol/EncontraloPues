@@ -17,7 +17,9 @@ import {RegistroQR} from '../../registroQR';
 export class RegistrarPage { 
  tag: any;//tag para agregar
  qr: any; //toggle tag
- 
+ codigoBusqueda: any; //retornado al hacer el registro
+ registro: any;
+
  private registroQR: RegistroQR;
 
  codigoQR: string;
@@ -28,13 +30,7 @@ export class RegistrarPage {
  private tags: Array<String>;
  descripcionOculta: string;
  codigo: any;
-  
-  /*
-   static get parameters() {
-     return [[Platform], [NavController],[RegistroService]];
-	} 
-  */   
-  	
+
  	constructor(public platform: Platform, private navCtrl: NavController,public registroService: RegistroService){
         this.codigo='0000100';     
          this.tags = ['tag'];
@@ -65,8 +61,7 @@ export class RegistrarPage {
     /**
     * Es llamado para confirmar registro manual.
     **/
-    public confirmar(): void {
-      alert(this.descripcionOculta);
+    public confirmar(){
       let registro = {
         tags: this.tags,
         descripcionOculta: this.descripcionOculta,
@@ -74,7 +69,13 @@ export class RegistrarPage {
         nombrePunto: this.nombrePunto,
         correoTrabajador: this.correoTrabajador
       };
-      this.registroService.createRegistro(registro);
+      this.registroService.createRegistro(registro)
+      .then(data => {
+            this.registro = data;
+            alert("data:"+data);
+            console.log(data);
+       });
+      //alert(this.registro);
     }
 
     /**
@@ -89,7 +90,10 @@ export class RegistrarPage {
               nombrePunto: this.nombrePunto,
               correoTrabajador: this.correoTrabajador
             };
-          this.registroService.createRegistroQR(registroQR);
+          this.registroService.createRegistroQR(registroQR)
+          .then(data => {
+            this.registro= data;
+         });
       }   
     }
 

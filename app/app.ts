@@ -12,7 +12,7 @@ import { IdentificarPage } from './pages/identificar/identificar';
 import { Page2 } from './pages/page2/page2';
 import { RegistrarPage} from './pages/registrar/registrar';
 import { RetirarPage} from './pages/retirar/retirar';
-
+import {  GeneradorqrPage } from './pages/generadorqr/generadorqr';
 
 //providers
 import { Registros} from './providers/registros/registros';
@@ -36,6 +36,7 @@ class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       //{ title: 'Inicio', component: HomePage },
+      { title: 'Generar', component: GeneradorqrPage} ,
       { title: 'Buscar', component: BuscarPage},
       { title: 'Confirmar retiro', component:  ConfirmarRetiroPage},
       { title: 'Consultar', component: ConsultarPage},

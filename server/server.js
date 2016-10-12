@@ -260,7 +260,7 @@ app.post('/api/registrarObjetoPerdido',function(req,res){
         }}},
         function(err,doc) {
           if (err) res.send(false);
-          res.send(true);
+          res.send(valor.sequence_value);
         });
       })
 });
@@ -301,7 +301,7 @@ app.post('/api/registrarObjetoPerdidoQR',function(req,res){
                         }
                       }}},
                       function(err,doc) {
-                        res.send(true);
+                        res.send(codigoBusqueda.sequence_value);
                       });
                     })
                   })
@@ -315,7 +315,7 @@ app.post('/api/registrarObjetoPerdidoQR',function(req,res){
           })
 });
 
-app.post('/api/consultarObjetosPerdidos',function(req,res){
+app.post('/api/consultarObjetosPerdidosUsuario',function(req,res){
   consultaNombreLugar = {};
   consultaCodigoBusqueda = {};
   consultaTags = {};
@@ -345,6 +345,88 @@ app.post('/api/consultarObjetosPerdidos',function(req,res){
         res.send(objetosPerdidos);
       })
 });
+
+app.post('/api/consultarObjetosPerdidosTrabajador',function(req,res){
+
+  persona.aggregate(
+    {$match : {correoElectronico : req.body.correoLugar}},
+    {$unwind : "$lugar.puntosRecoleccion"},
+    {$unwind : "$lugar.puntosRecoleccion.objetosPerdidos"},
+    {$match : {$and : [{"lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.año":req.body.añoRegistro},{
+      "lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.mes":req.body.mesRegistro},{
+      "lugar.puntosRecoleccion.objetosPerdidos.codigoBusqueda" : req.body.codigoBusqueda}]}},
+    {$project: { nombre :1,
+        'lugar.puntosRecoleccion.nombre':1,
+        'lugar.puntosRecoleccion.telefono':1,
+        'lugar.puntosRecoleccion.direccion':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.codigoBusqueda':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.codigoQR':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.descripcionOculta':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.año':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.mes':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.dia':1}},
+      function(err,objetosPerdidos){
+
+        if(!objetosPerdidos.length) res.send(objetosPerdidos);
+
+        if(objetosPerdidos[0].lugar.puntosRecoleccion.objetosPerdidos.codigoQR){
+          res.send("El objeto se registro escaneando su codigoQR");
+        }else{
+          res.send(objetosPerdidos[0]);
+        }
+      })
+});
+
+app.post('/api/consultarObjetosPerdidosLugar',function(req,res){
+  consultaNombrePuntoRecoleccion = {};
+  consultaCodigoBusqueda = {};
+  consultaTags = {};
+  if(req.body.nombrePuntoRecoleccion) consultaNombrePuntoRecoleccion = {'lugar.puntoRecoleccion.nombre' : req.body.nombrePuntoRecoleccion};
+  if(req.body.codigoBusqueda) consultaCodigoBusqueda = {'lugar.puntosRecoleccion.objetosPerdidos.codigoBusqueda' : req.body.codigoBusqueda};
+  if(req.body.tags) consultaTags = {'lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags' : {$in : req.body.tags}};
+
+  persona.aggregate(
+    {$match : {correoElectronico : req.body.correoLugar}},
+    {$unwind : "$lugar.puntosRecoleccion"},
+    {$unwind : "$lugar.puntosRecoleccion.objetosPerdidos"},
+    {$match : {$and : [{"lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.año":req.body.añoRegistro},{
+      "lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.mes":req.body.mesRegistro},
+      consultaNombrePuntoRecoleccion,
+      consultaCodigoBusqueda,
+      consultaTags]}},
+    {$lookup: {
+              "from": "personas",
+              "localField": "lugar.puntosRecoleccion.objetosPerdidos.codigoQR.correoUsuario",
+              "foreignField": "correoElectronico",
+              "as": "lugar.puntosRecoleccion.objetosPerdidos.codigoQR.usuario"}},
+    {$lookup: { "from": "personas",
+                "localField": "lugar.puntosRecoleccion.objetosPerdidos.correoTrabajadorRegistro",
+                "foreignField": "correoElectronico",
+                "as": "lugar.puntosRecoleccion.objetosPerdidos.trabajadorRegistro"}},
+    {$unwind : "$lugar.puntosRecoleccion.objetosPerdidos.codigoQR.usuario"},
+    {$unwind : "$lugar.puntosRecoleccion.objetosPerdidos.trabajadorRegistro"},
+    {$project: { nombre : 1,
+        'lugar.puntosRecoleccion.nombre':1,
+        'lugar.puntosRecoleccion.telefono':1,
+        'lugar.puntosRecoleccion.direccion':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.codigoBusqueda':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.trabajadorRegistro.nombre':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.trabajadorRegistro.trabajador.numeroId':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.codigoQR.usuario.correoElectronico':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.codigoQR.usuario.nombre':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.codigoQR.usuario.usuario.celular':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.descripcionOculta':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.año':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.mes':1,
+        'lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.dia':1}},
+        function(err,objetosPerdidos){
+            res.send(objetosPerdidos);
+        })
+});
+
+
 
 var mongodbUri = 'mongodb://user:user@ds035776.mlab.com:35776/encontralopues';
 mongoose.connect(mongodbUri);

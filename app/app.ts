@@ -17,20 +17,20 @@ import {  GeneradorqrPage } from './pages/generadorqr/generadorqr';
 //providers
 import { Registros} from './providers/registros/registros';
 import { RegistroService} from './providers/registro-service/registro-service';
-
+import { RetirarService} from './providers/retirar-service/retirar-service';
 
 @Component({
   templateUrl: 'build/app.html'
-  ,providers: [RegistroService]
+  ,providers: [RegistroService, RetirarService]
 })
 
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = RegistrarPage
+  rootPage: any = RetirarPage;
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public registroService: RegistroService) {
+  constructor(public platform: Platform) {
     this.initializeApp();
     
     // used for an example of ngFor and navigation
@@ -38,7 +38,7 @@ class MyApp {
       //{ title: 'Inicio', component: HomePage },
       { title: 'Generar', component: GeneradorqrPage} ,
       { title: 'Buscar', component: BuscarPage},
-      { title: 'Confirmar retiro', component:  ConfirmarRetiroPage},
+      //{ title: 'Confirmar retiro', component:  ConfirmarRetiroPage},
       { title: 'Consultar', component: ConsultarPage},
       { title: 'Detalle Retiro', component: DetalleRetiroPage},
       //{ title: 'Identificar', component: IdentificarPage},

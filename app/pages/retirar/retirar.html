@@ -7,22 +7,24 @@
   </ion-navbar>
 </ion-header>
 
-    <ion-content class="retirar" padding="true">
-      
-      <ion-label>
-      <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Codigo">
-      </ion-label>
-        
+<ion-content padding="true">
+  
+  <ion-list no-lines>
+    <ion-item>
+      <ion-label>Leer QR</ion-label>
+      <ion-toggle [(ngModel)]="qrToggle" value="foo" checked="false"    
+      (ionChange)="activarQR()"></ion-toggle>
+    </ion-item>
+    <br>
 
-        <ion-list no-lines>
-  	      <ion-item>
-  	       <ion-label stacked> Código </ion-label>      
-  	        <ion-input  [(ngModel)]="codigo" type="text"></ion-input>
-  	      </ion-item>
-    	 </ion-list>
+     <ion-item>
+      <ion-input [(ngModel)]="codigoObjeto" type="search" placeholder="Codigo" clearInput></ion-input>
+    </ion-item>
 
-    	<button ion-button block  color="secondary">Buscar</button>
-    	<br>
-        <button ion-button block>Leer QR</button>
-    </ion-content>
+  </ion-list>
+
+	<button ion-button block  color="secondary" (click)="buscar()">
+    <ion-icon ios="ios-search" md="md-search"></ion-icon> 
+    Buscar 
+  </button>
+</ion-content>

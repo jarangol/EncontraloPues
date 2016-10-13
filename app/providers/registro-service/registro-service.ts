@@ -49,8 +49,8 @@ export class RegistroService {
         .subscribe(data => {
           this.data = data;
           resolve(this.data);
-           alert(data.codigoObjeto);
-          alert("Registro exitoso.");
+          //alert(data.codigoObjeto);
+          //alert("Registro exitoso.");
         });
       });
       

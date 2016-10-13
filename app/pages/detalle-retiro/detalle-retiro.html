@@ -11,18 +11,16 @@
 <ion-content padding>
 	<ion-list no-lines>
 		  <ion-item>
-		    <ion-label fixed >Código:</ion-label>
-		    <ion-input type="text" value="201133" disabled></ion-input>
-		  </ion-item>
-
-		  <ion-item>
-		    <ion-label fixed>Fecha:</ion-label>
-		    <ion-input type="date" disabled></ion-input>
+		    <ion-label>Fecha:</ion-label>
+		    <ion-input [(ngModel)]="fecha" type="date" disabled></ion-input>
 		  </ion-item>
 
 		  <ion-item>
 		    <ion-label fixed>Tags:</ion-label>
-		    <ion-input type="text" disabled></ion-input>
+		    <span class="tag" *ngFor="let tag of tags">
+		      {{ tag }}
+		      <ion-icon name="close" (click)="deleteTag(tag)"></ion-icon>
+		    </span>
 		  </ion-item>
 
 		 <ion-item>

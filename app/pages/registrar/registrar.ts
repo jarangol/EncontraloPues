@@ -16,7 +16,7 @@ import {RegistroQR} from '../../registroQR';
 
 export class RegistrarPage { 
  tag: any;//tag para agregar
- qr: any; //toggle tag
+ qrToggle: any; //toggle tag
  codigoBusqueda: any; //retornado al hacer el registro
  registro: any;
 
@@ -31,8 +31,7 @@ export class RegistrarPage {
  descripcionOculta: string;
  codigo: any;
 
- 	constructor(public platform: Platform, private navCtrl: NavController,public registroService: RegistroService){
-        this.codigo='0000100';     
+ 	constructor(public platform: Platform, private navCtrl: NavController,public registroService: RegistroService){   
          this.tags = ['tag'];
 
          //ejemplo de registro con QR
@@ -46,10 +45,11 @@ export class RegistrarPage {
 
 
    public scan(): string {
-
         this.platform.ready().then(() => {       
-			BarcodeScanner.scan().then((barcodeData) => {
-				 alert(barcodeData.text);
+			   BarcodeScanner.scan().then((barcodeData) => {
+				 alert("scan");
+         alert(barcodeData.text);
+         this.codigoQR=barcodeData.text;
          return barcodeData.text;
 			}, (err) => {
 			    alert("Ha ocurrido un error: "+err);
@@ -81,19 +81,28 @@ export class RegistrarPage {
     /**
     * Método llamado al modificar el toggle de la parte principal.
     **/
-    public activarQR(){
+    public activarQR(): void{   
       
-      if(this.qr){
-           let registroQR = {
-              codigoQR: this.codigoQR,
-              correoLugar: this.correoLugar,
-              nombrePunto: this.nombrePunto,
-              correoTrabajador: this.correoTrabajador
-            };
-          this.registroService.createRegistroQR(registroQR)
-          .then(data => {
-            this.registro= data;
-         });
+      if(this.qrToggle){
+        this.platform.ready().then(() => {       
+           BarcodeScanner.scan().then((barcodeData) => {
+             
+              let registroQR = {
+                codigoQR: barcodeData.text,
+                correoLugar: this.correoLugar,
+                nombrePunto: this.nombrePunto,
+                correoTrabajador: this.correoTrabajador
+              };
+
+              this.registroService.createRegistroQR(registroQR)
+              .then(data => {
+                this.registro= data;
+              });
+
+          }, (err) => {
+              alert("Ha ocurrido un error: "+err);
+          }); 
+        });        
       }   
     }
 

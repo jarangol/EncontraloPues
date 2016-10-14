@@ -66,8 +66,7 @@ export class RegistroService {
         .map(res => res.json())
         .subscribe(res => {
           console.log(res);
-          alert(res.codigoObjeto);
-          alert("Registro exitoso.");
+          alert(res);
         });
       });
   }  

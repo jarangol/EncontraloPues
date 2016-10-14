@@ -10,15 +10,21 @@ import { ConfirmarRetiroPage } from '../confirmar-retiro/confirmar-retiro';
 })
 export class DetalleRetiroPage {
 
+//me los pasan como navParams desde la vista retirar
+private correoLugar: any;
+private nombrePunto: any;
+private codigoBusqueda: any;
+private registro: any;
+private correoTrabajador: any;
+
+//pertenecen a registro
 private tags:any;
 private descripcion: string;
 private fecha: any;
-private registro: any;
-private codigoBusqueda: any;
 
   constructor(private navCtrl: NavController,public navParams: NavParams) {
   // 	this.registro=navParams.get('registro');
-	//	this.codigoObjeto=navParams.get('codigoBusqueda');  	
+	//	this.codigoBusqueda=navParams.get('codigoBusqueda');  	
 
   // 	this.tags=this.registro.tags; 
   // 	this.descripcion=this.registro.descripcion;

@@ -11,14 +11,25 @@ import { RetirarService } from '../../providers/retirar-service/retirar-service'
 @Component({
   templateUrl: 'build/pages/retirar/retirar.html',
 })
+
+
 export class RetirarPage {
-private qrToggle: any;
-private qrCode: string;
-private codigoBusqueda: string;
-private registro: any;
+
+private qrToggle: any; //variable de la interfaz 
+private qrCode: string; //codigo escaneado
+
+private registro: any; //devuelve de la consulta por codigo de búsqueda
+
+//necesarios para el insert de un retiro
+private correoLugar: string;
+private nombrePunto: string;
+private codigoBusqueda: string; //ingresado por el usuario
+private correoTrabajador: string; 
 
   constructor(public platform: Platform, private navCtrl: NavController,public retirarService: RetirarService,public alertCtrl: AlertController) {
-
+  	  this.correoLugar="n";
+      this.nombrePunto="m";
+      this.correoTrabajador="m";
   }
 
   public scan(): string {
@@ -85,8 +96,13 @@ private registro: any;
     	});
  
 	  	this.navCtrl.push(DetalleRetiroPage,{
+	  	 	
+	  	 	correoLugar: this.correoLugar,
+	  	 	nombrePunto: this.nombrePunto,
+	  	 	codigoBusqueda: this.codigoBusqueda,
 	  	 	registro: this.registro,
-	  	 	codigoBusqueda: this.codigoBusqueda
+	  	 	correoTrabajador: this.correoTrabajador
+
 	  	});
 	  }
 

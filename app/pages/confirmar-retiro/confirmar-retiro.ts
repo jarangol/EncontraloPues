@@ -10,16 +10,29 @@ import { RetirarService } from '../../providers/retirar-service/retirar-service'
 })
 
 export class ConfirmarRetiroPage {
-private codigoBusqueda: any; 
+
+//pertenecen a esta vista
 private id: any;
 private nombre: any;
 private telefono: any;
+
+//me los pasan como navParams desde la vista retirar
+private correoLugar: any;
+private nombrePunto: any;
+private codigoBusqueda: any;
+private registro: any;
+private correoTrabajador: any;
+
+//pertenecen a registro
+private tags:any;
+private descripcion: string;
+private fecha: any;
 
   constructor(private navCtrl: NavController,public navParams: NavParams,public retirarService: RetirarService) {
   	this.codigoBusqueda=navParams.get('codigoBusqueda');
   }
 
   confirmar(){
-  	//this.retirarService.createRegistro(codigo,id,nombre,telefono,nombrelugar,correoLugar,correoTrabajador);
+  	//this.retirarService.createRegistro(codigoBusqueda,id,nombre,telefono,nombrelugar,correoLugar,correoTrabajador);
   }
 }

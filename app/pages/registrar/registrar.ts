@@ -35,8 +35,8 @@ export class RegistrarPage {
          this.tags = ['tag'];
 
          //ejemplo de registro con QR
-         this.correoLugar="n";
-         this.nombrePunto="m";
+         this.correoLugar="Eafit@";
+         this.nombrePunto="c";
          this.correoTrabajador="m";
          this.codigoQR="57f4bc2305ce30bc346183b0";
 
@@ -69,13 +69,14 @@ export class RegistrarPage {
         nombrePunto: this.nombrePunto,
         correoTrabajador: this.correoTrabajador
       };
-      this.registroService.createRegistro(registro)
-      .then(data => {
-            this.registro = data;
-            alert("data:"+data);
-            console.log(data);
-       });
-      //alert(this.registro);
+      this.registroService.createRegistro(registro);
+      // .subscribe(res => {
+      //       alert("res:"+res);
+      //       console.log(res.json());
+      //       console.log(res);
+      //  });
+      this.tags = [];
+      this.descripcionOculta="";
     }
 
     /**
@@ -94,10 +95,10 @@ export class RegistrarPage {
                 correoTrabajador: this.correoTrabajador
               };
 
-              this.registroService.createRegistroQR(registroQR)
-              .then(data => {
-                this.registro= data;
-              });
+              this.registroService.createRegistroQR(registroQR);
+              // .then(data => {
+              //   alert(data);
+              // });
 
           }, (err) => {
               alert("Ha ocurrido un error: "+err);

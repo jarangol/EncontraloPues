@@ -10,6 +10,7 @@ import { RetirarService } from '../../providers/retirar-service/retirar-service'
 
 @Component({
   templateUrl: 'build/pages/retirar/retirar.html',
+    providers: [RetirarService]
 })
 
 
@@ -27,9 +28,9 @@ private codigoBusqueda: string; //ingresado por el usuario
 private correoTrabajador: string; 
 
   constructor(public platform: Platform, private navCtrl: NavController,public retirarService: RetirarService,public alertCtrl: AlertController) {
-  	  this.correoLugar="n";
-      this.nombrePunto="m";
-      this.correoTrabajador="m";
+  	 this.correoLugar="Eafit@";
+     this.nombrePunto="c";
+     this.correoTrabajador="m";
   }
 
   public scan(): string {
@@ -89,12 +90,15 @@ private correoTrabajador: string;
 
   public buscar(){
   	if(this.codigoBusqueda){
-	  	this.retirarService.consultarCodigo(this.codigoBusqueda)
+  		let consulta = {
+  			codigoBusqueda: this.codigoBusqueda,
+  			correoLugar: this.correoLugar
+  		}
+	  	this.retirarService.consultarCodigo(consulta)
 	  	.then((data) => {
-      		console.log(data);
+      		console.log("buscar result "+data);
       		this.registro = data;
     	});
- 
 	  	this.navCtrl.push(DetalleRetiroPage,{
 	  	 	
 	  	 	correoLugar: this.correoLugar,

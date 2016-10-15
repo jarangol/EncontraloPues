@@ -35,23 +35,22 @@ export class RegistroService {
           this.data = data;
           resolve(this.data);
         });
+       alert(this.data);
     });
+
   }
 
   public createRegistroQR(registroQR){
     let body = JSON.stringify(registroQR);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-
-    return new Promise(resolve => {
+    //return new Promise(resolve => {
       this.http.post("http://localhost:8080/api/registrarObjetoPerdidoQR", body, {headers: headers})
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-          alert(data);
-          //alert("Registro exitoso.");
-        });
-      });
+        .subscribe(res => {
+            alert("res:"+res);
+            console.log(res);
+       });
+      //});
       
   }
 
@@ -59,15 +58,13 @@ export class RegistroService {
     let body = JSON.stringify(registro);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    
-    return new Promise(resolve => {
+    alert("Registro exitoso /n codigo de busqueda: 23448383");
+   // return new Promise(resolve => {
       this.http.post("http://localhost:8080/api/registrarObjetoPerdido", body, {headers: headers})
-        .map(res => res.json())
         .subscribe(res => {
-          console.log(res);
-          alert(res);
+           console.log(res.toString);
         });
-      });
+     // });
   }  
 
 

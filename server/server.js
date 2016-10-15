@@ -259,7 +259,9 @@ app.post('/api/registrarObjetoPerdido',function(req,res){
         }}},
         function(err,doc) {
           if (err) res.send(err);
-          res.send(valor.sequence_value);
+          else res.send("Registro Exitoso \n" + 
+                    "Codigo de Busqueda del objeto: "); 
+                    //+ valor.sequence_value);
         });
       })
 });

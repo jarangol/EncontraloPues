@@ -1,4 +1,4 @@
-// Set up
+ // Set up
 
 var express  = require('express');
 var app      = express();                               // create our app w/ express
@@ -58,7 +58,6 @@ var personasSchema = new mongoose.Schema({
     trabajadores : [String],
     puntosRecoleccion : [
       {
-        _id : false,
         nombre : String,
         telefono : String,
         direccion : String,
@@ -245,7 +244,7 @@ app.post('/api/registrarObjetoPerdido',function(req,res){
     persona.findOneAndUpdate(
       {correoElectronico : req.body.correoLugar,
         'lugar.puntosRecoleccion.nombre': req.body.nombrePunto},
-        {$push: {'lugar.puntosRecoleccion.0.objetosPerdidos': {
+        {$push: {'lugar.puntosRecoleccion.$.objetosPerdidos': {
           codigoBusqueda : valor.sequence_value,
           correoTrabajadorRegistro : req.body.correoTrabajador,
           fechaRegistro : {
@@ -259,7 +258,7 @@ app.post('/api/registrarObjetoPerdido',function(req,res){
           }
         }}},
         function(err,doc) {
-          if (err) res.send(false);
+          if (err) res.send(err);
           res.send(valor.sequence_value);
         });
       })
@@ -286,7 +285,7 @@ app.post('/api/registrarObjetoPerdidoQR',function(req,res){
                   persona.findOneAndUpdate(
                     {correoElectronico : req.body.correoLugar,
                       'lugar.puntosRecoleccion.nombre': req.body.nombrePunto},
-                      {$push: {'lugar.puntosRecoleccion.0.objetosPerdidos': {
+                      {$push: {'lugar.puntosRecoleccion.$.objetosPerdidos': {
                         codigoBusqueda : codigoBusqueda.sequence_value,
                         correoTrabajadorRegistro : req.body.correoTrabajador,
                         fechaRegistro : {
@@ -301,12 +300,16 @@ app.post('/api/registrarObjetoPerdidoQR',function(req,res){
                         }
                       }}},
                       function(err,doc) {
-                        res.send(codigoBusqueda.sequence_value);
+                        res.send("Registro Exitoso \n" +
+                        "Codigo de Busqueda del objeto: " + codigoBusqueda.sequence_value);
                       });
                     })
                   })
                 }else{
-                  res.send(lugarObjetoPerdido[0]);
+                  lugarObjetoPerdido = lugarObjetoPerdido[0];
+                res.send("El Objeto ya esta registrado como perdido" +
+                "\n Nombre del Lugar: " + lugarObjetoPerdido.nombre +
+                "\n Nombre del Punto de Recoleccion: " + lugarObjetoPerdido.lugar.puntosRecoleccion.nombre);
                 }
               });
             }else{
@@ -426,7 +429,92 @@ app.post('/api/consultarObjetosPerdidosLugar',function(req,res){
         })
 });
 
+app.post('/api/retirarObjetoPerdido',function(req,res){
 
+  persona.aggregate(
+    {$match : {correoElectronico : req.body.correoLugar}},
+    {$unwind : "$lugar.puntosRecoleccion"},
+    {$unwind : "$lugar.puntosRecoleccion.objetosPerdidos"},
+    {$match : {$and : [{"lugar.puntosRecoleccion.objetosPerdidos.codigoBusqueda" : req.body.codigoBusqueda},{
+      "lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR":{$exists:true}}]}},
+    {$project: {
+      'lugar.puntosRecoleccion.nombre' : 1,
+      'lugar.puntosRecoleccion.objetosPerdidos' : 1}},
+    function(err,objetoPerdido){
+      if (objetoPerdido.length) {
+        objetoPerdido = objetoPerdido[0].lugar.puntosRecoleccion;
+        if (objetoPerdido.nombre == req.body.nombrePunto) {
+          fecha = new Date();
+          objetoPerdido = objetoPerdido.objetosPerdidos;
+          objetoPerdido.retirado = {
+            correoTrabajadorRetiro : req.body.correoTrabajador,
+            fechaRetiro : {
+              año: fecha.getFullYear(),
+              mes: fecha.getMonth(),
+              dia: fecha.getDate()
+            },
+            personaReclamo : {
+              numeroId : req.body.numeroIdPersona,
+              nombre : req.body.nombrePersona,
+              celular : req.body.celularPersona
+            }
+          };
+          persona.findOneAndUpdate({correoElectronico : req.body.correoLugar,
+            "lugar.puntosRecoleccion.nombre":req.body.nombrePunto},
+            {$push:{"lugar.puntosRecoleccion.$.objetosRetirados" : objetoPerdido},
+            $pull:{"lugar.puntosRecoleccion.$.objetosPerdidos" :{codigoBusqueda:req.body.codigoBusqueda}}},function(){});
+            res.send("El objeto fue retirado Exitosamente");
+          }else{
+            res.send("El objeto se encuentra en el punto de Recoleccion: " + objetoPerdido.nombre);
+          }
+        }else{
+          res.send("El objeto ya fue retirado");
+        }
+      })
+});
+
+app.post('/api/retirarObjetoPerdidoQR',function(req,res){
+
+  persona.aggregate(
+    {$match : {correoElectronico : req.body.correoLugar}},
+    {$unwind : "$lugar.puntosRecoleccion"},
+    {$unwind : "$lugar.puntosRecoleccion.objetosPerdidos"},
+    {$match : {"lugar.puntosRecoleccion.objetosPerdidos.codigoQR.objetoPersonalCodigoQR" : req.body.codigoQR}},
+    {$project: {
+      'lugar.puntosRecoleccion.nombre' : 1,
+      'lugar.puntosRecoleccion.objetosPerdidos' : 1}},
+    function(err,objetoPerdido){
+      if (objetoPerdido.length) {
+        objetoPerdido = objetoPerdido[0].lugar.puntosRecoleccion;
+        if (objetoPerdido.nombre == req.body.nombrePunto) {
+          objetoPerdido = objetoPerdido.objetosPerdidos;
+          if (objetoPerdido.codigoQR.codigoRetiro == req.body.codigoQR){
+            fecha = new Date();
+            objetoPerdido.retirado = {
+              correoTrabajadorRetiro : req.body.correoTrabajador,
+              fechaRetiro : {
+                año: fecha.getFullYear(),
+                mes: fecha.getMonth(),
+                dia: fecha.getDate()
+              }
+            };
+            persona.findOneAndUpdate({correoElectronico : req.body.correoLugar,
+              "lugar.puntosRecoleccion.nombre":req.body.nombrePunto},
+              {$push:{"lugar.puntosRecoleccion.$.objetosRetirados" : objetoPerdido},
+              $pull:{"lugar.puntosRecoleccion.$.objetosPerdidos" :{codigoBusqueda:req.body.codigoBusqueda}}},function(){});
+              res.send("El objeto fue retirado Exitosamente");
+            }else{
+              res.send("El codigo de retiro es incorrecto");
+            }
+          }else{
+            res.send("El objeto se encuentra en el punto de Recoleccion: " + objetoPerdido.nombre);
+          }
+        }else{
+          res.send("El codigo QR no esta registrado en EncontraloPues");
+        }
+    })
+
+})
 
 var mongodbUri = 'mongodb://user:user@ds035776.mlab.com:35776/encontralopues';
 mongoose.connect(mongodbUri);

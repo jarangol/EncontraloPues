@@ -45,11 +45,10 @@ export class RegistroService {
 
     return new Promise(resolve => {
       this.http.post("http://localhost:8080/api/registrarObjetoPerdidoQR", body, {headers: headers})
-        .map(res => res.json())
         .subscribe(data => {
           this.data = data;
           resolve(this.data);
-          //alert(data.codigoObjeto);
+          alert(data);
           //alert("Registro exitoso.");
         });
       });

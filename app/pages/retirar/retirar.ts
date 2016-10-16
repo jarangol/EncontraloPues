@@ -10,7 +10,7 @@ import { RetirarService } from '../../providers/retirar-service/retirar-service'
 
 @Component({
   templateUrl: 'build/pages/retirar/retirar.html',
-    providers: [RetirarService]
+  providers: [RetirarService],
 })
 
 
@@ -96,18 +96,20 @@ private correoTrabajador: string;
   		}
 	  	this.retirarService.consultarCodigo(consulta)
 	  	.then((data) => {
-      		console.log("buscar result "+data);
+      		console.log("Resultado "+data);
       		this.registro = data;
-    	});
-	  	this.navCtrl.push(DetalleRetiroPage,{
-	  	 	
-	  	 	correoLugar: this.correoLugar,
-	  	 	nombrePunto: this.nombrePunto,
-	  	 	codigoBusqueda: this.codigoBusqueda,
-	  	 	registro: this.registro,
-	  	 	correoTrabajador: this.correoTrabajador
+   		 });
 
-	  	});
+	  	// this.navCtrl.push(DetalleRetiroPage,{
+	  	 	
+	  	//  	correoLugar: this.correoLugar,
+	  	//  	nombrePunto: this.nombrePunto,
+	  	//  	codigoBusqueda: this.codigoBusqueda,
+	  	//  	registro: this.registro,
+	  	//  	correoTrabajador: this.correoTrabajador
+
+	  	// });
+	  	  	this.codigoBusqueda="";
 	  }
 
   }

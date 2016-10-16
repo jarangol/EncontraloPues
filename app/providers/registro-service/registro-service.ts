@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Http , Headers, Response } from '@angular/http';
-import {Alert} from 'ionic-angular';
 
 import 'rxjs/add/operator/map';
 
@@ -35,7 +34,6 @@ export class RegistroService {
           this.data = data;
           resolve(this.data);
         });
-       alert(this.data);
     });
 
   }
@@ -58,13 +56,15 @@ export class RegistroService {
     let body = JSON.stringify(registro);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    alert("Registro exitoso /n codigo de busqueda: 23448383");
-   // return new Promise(resolve => {
+     return new Promise(resolve => {
       this.http.post("http://localhost:8080/api/registrarObjetoPerdido", body, {headers: headers})
         .subscribe(res => {
-           console.log(res.toString);
+           console.log(res.text());
+           this.data=res.text();
+           resolve(this.data);
         });
-     // });
+     
+     });
   }  
 
 

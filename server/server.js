@@ -258,10 +258,12 @@ app.post('/api/registrarObjetoPerdido',function(req,res){
           }
         }}},
         function(err,doc) {
-          if (err) res.send(err);
-          else res.send("Registro Exitoso \n" + 
-                    "Codigo de Busqueda del objeto: "); 
-                    //+ valor.sequence_value);
+          if (err) 
+            res.send(err);
+          else 
+            res.send("Registro Exitoso \n" + 
+                    "Codigo de Busqueda del objeto: "
+                    + valor.sequence_value);
         });
       })
 });
@@ -373,12 +375,12 @@ app.post('/api/consultarObjetosPerdidosTrabajador',function(req,res){
         'lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.dia':1}},
       function(err,objetosPerdidos){
 
-        if(!objetosPerdidos.length) res.send(objetosPerdidos);
-
-        if(objetosPerdidos[0].lugar.puntosRecoleccion.objetosPerdidos.codigoQR){
+        if(!objetosPerdidos.length){
+         res.send("No se encontro un objeto.");
+        }else if(objetosPerdidos[0].lugar.puntosRecoleccion.objetosPerdidos.codigoQR){
           res.send("El objeto se registro escaneando su codigoQR");
         }else{
-          res.send(objetosPerdidos[0]);
+          res.json(objetosPerdidos[0]);
         }
       })
 });

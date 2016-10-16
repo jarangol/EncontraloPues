@@ -27,20 +27,16 @@ private data: any;
     if (this.data) {
       return Promise.resolve(this.data);
     }
-    //return new Promise(resolve => {
+    return new Promise(resolve => {
+    
       this.http.post('http://localhost:8080/api/consultarObjetosPerdidosTrabajador',body, {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
-          // we've got back the raw data, now generate the core schedule data
-          // and save the data for later reference
-          this.data = data;
-          console.log("consultarCodigo: "+data);
-          //resolve(this.data);
-        });
-  //  });
+          this.data = data.text();
+          console.log("consultarCodigo: "+data.text());
+          resolve(this.data);
+      });
+    });  
   }
-  //create retiro 
-  
-
 }
 

@@ -32,7 +32,7 @@ export class RegistrarPage {
  codigo: any;
 
  	constructor(public platform: Platform, private navCtrl: NavController,public registroService: RegistroService){   
-         this.tags = ['tag'];
+         this.tags = [];
 
          //ejemplo de registro con QR
          this.correoLugar="Eafit@";
@@ -40,7 +40,7 @@ export class RegistrarPage {
          this.correoTrabajador="m";
          this.codigoQR="57f4bc2305ce30bc346183b0";
 
-         this.registroQR= new RegistroQR(this.codigoQR,this.correoLugar,this.nombrePunto,this.correoTrabajador);
+         //this.registroQR= new RegistroQR(this.codigoQR,this.correoLugar,this.nombrePunto,this.correoTrabajador);
     }
 
 
@@ -62,21 +62,23 @@ export class RegistrarPage {
     * Es llamado para confirmar registro manual.
     **/
     public confirmar(){
-      let registro = {
-        tags: this.tags,
-        descripcionOculta: this.descripcionOculta,
-        correoLugar: this.correoLugar,
-        nombrePunto: this.nombrePunto,
-        correoTrabajador: this.correoTrabajador
-      };
-      this.registroService.createRegistro(registro);
-      // .subscribe(res => {
-      //       alert("res:"+res);
-      //       console.log(res.json());
-      //       console.log(res);
-      //  });
-      this.tags = [];
-      this.descripcionOculta="";
+      if(this.descripcionOculta && this.tags.length > 0){ 
+        let registro = {
+          tags: this.tags,
+          descripcionOculta: this.descripcionOculta,
+          correoLugar: this.correoLugar,
+          nombrePunto: this.nombrePunto,
+          correoTrabajador: this.correoTrabajador
+        };
+        this.registroService.createRegistro(registro)
+        .then((res) => {
+          alert(res);
+          this.registro = res;
+        });
+
+        this.tags = [];
+        this.descripcionOculta="";
+      }
     }
 
     /**

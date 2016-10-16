@@ -42,13 +42,15 @@ export class RegistroService {
     let body = JSON.stringify(registroQR);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    //return new Promise(resolve => {
+    
+    return new Promise(resolve => {
       this.http.post("http://localhost:8080/api/registrarObjetoPerdidoQR", body, {headers: headers})
         .subscribe(res => {
-            alert("res:"+res);
-            console.log(res);
+           console.log("createRegistroQR():"+res.text());
+           this.data=res.text();
+           resolve(this.data);
        });
-      //});
+     });
       
   }
 
@@ -56,10 +58,11 @@ export class RegistroService {
     let body = JSON.stringify(registro);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-     return new Promise(resolve => {
+    
+    return new Promise(resolve => {
       this.http.post("http://localhost:8080/api/registrarObjetoPerdido", body, {headers: headers})
         .subscribe(res => {
-           console.log(res.text());
+           console.log("createRegistro():" +res.text());
            this.data=res.text();
            resolve(this.data);
         });

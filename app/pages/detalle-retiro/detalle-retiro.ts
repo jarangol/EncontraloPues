@@ -33,8 +33,12 @@ private fecha: any;
 }
 
   retirar(){
-  	this.navCtrl.push(ConfirmarRetiroPage,{
-  		codigoBusqueda: this.codigoBusqueda
+  	this.navCtrl.push(ConfirmarRetiroPage,{           
+      //    correoLugar: this.correoLugar,
+      //    nombrePunto: this.nombrePunto,
+      //    correoTrabajador: this.correoTrabajador
+            //    codigoBusqueda: this.codigoBusqueda,
+
   	});
   }
 }

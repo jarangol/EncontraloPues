@@ -97,10 +97,11 @@ export class RegistrarPage {
                 correoTrabajador: this.correoTrabajador
               };
 
-              this.registroService.createRegistroQR(registroQR);
-              // .then(data => {
-              //   alert(data);
-              // });
+              this.registroService.createRegistroQR(registroQR)
+               .then((res) => {
+                alert(res);
+                this.registro = res;
+              });
 
           }, (err) => {
               alert("Ha ocurrido un error: "+err);

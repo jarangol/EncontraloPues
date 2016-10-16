@@ -24,6 +24,7 @@ private registro: any; //devuelve de la consulta por codigo de búsqueda
 //necesarios para el insert de un retiro
 private correoLugar: string;
 private nombrePunto: string;
+private nombreLugar: string;
 private codigoBusqueda: string; //ingresado por el usuario
 private correoTrabajador: string; 
 
@@ -31,6 +32,7 @@ private correoTrabajador: string;
   	 this.correoLugar="Eafit@";
      this.nombrePunto="c";
      this.correoTrabajador="m";
+     this.nombreLugar="d";
   }
 
   public scan(): string {
@@ -109,7 +111,7 @@ private correoTrabajador: string;
 	  	//  	correoTrabajador: this.correoTrabajador
 
 	  	// });
-	  	  	this.codigoBusqueda="";
+	  	  	//this.codigoBusqueda="";
 	  }
 
   }

@@ -30,9 +30,24 @@ private fecha: any;
 
   constructor(private navCtrl: NavController,public navParams: NavParams,public retirarService: RetirarService) {
   	this.codigoBusqueda=navParams.get('codigoBusqueda');
+  	     //    correoLugar: this.correoLugar,
+      //    nombrePunto: this.nombrePunto,
+      //    correoTrabajador: this.correoTrabajador
+            //    codigoBusqueda: this.codigoBusqueda,
   }
 
   confirmar(){
-  	//this.retirarService.createRegistro(codigoBusqueda,id,nombre,telefono,nombrelugar,correoLugar,correoTrabajador);
+  	let retiro={
+  		codigoBusqueda:this.codigoBusqueda,
+  		id: this.id,
+  		nombre: this.nombre,
+  		telefono: this.telefono,
+  		// nico esto si? nombrelugar: this.nombrelugar,
+  		correoLugar: this.correoLugar ,
+  		correoTrabajador: this.correoTrabajador 
+  	};
+
+
+  	//this.retirarService.createRetiro(retiro);
   }
 }

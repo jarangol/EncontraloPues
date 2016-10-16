@@ -23,20 +23,41 @@ private data: any;
   public consultarCodigo(consulta) {
     let body = JSON.stringify(consulta);
     let headers = new Headers();
-     headers.append('Content-Type','application/json');
+    headers.append('Content-Type','application/json');
+    
     if (this.data) {
       return Promise.resolve(this.data);
     }
+    
     return new Promise(resolve => {
     
       this.http.post('http://localhost:8080/api/consultarObjetosPerdidosTrabajador',body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data.text();
-          console.log("consultarCodigo: "+data.text());
+        //.map(res => res.json())
+        .subscribe(res => {
+          this.data = res.text();
+          console.log("consultarCodigo: "+res.text());
           resolve(this.data);
       });
     });  
   }
+
+
+  public createRetiro(retiro){
+    let body = JSON.stringify(retiro);
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    
+    // return new Promise(resolve => {
+    //   this.http.post("http://localhost:8080/api/registrarObjetoPerdidoQR", body, {headers: headers})
+    //     .subscribe(res => {
+    //        console.log("createRetiro():"+res.text());
+    //        this.data=res.text();
+    //        resolve(this.data);
+    //    });
+    //  });
+      
+  } 
+
+
 }
 

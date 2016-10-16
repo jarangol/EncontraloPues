@@ -27,7 +27,7 @@ import { RetirarService} from './providers/retirar-service/retirar-service';
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = RetirarPage;
+  rootPage: any = BuscarPage;
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform) {

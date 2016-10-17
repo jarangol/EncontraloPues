@@ -23,14 +23,18 @@ private descripcion: string;
 private fecha: any;
 
   constructor(private navCtrl: NavController,public navParams: NavParams) {
-  // 	this.registro=navParams.get('registro');
-	//	this.codigoBusqueda=navParams.get('codigoBusqueda');  	
+      this.correoLugar = navParams.get('correoLugar');
+      this.nombrePunto = navParams.get('nombrePunto');
+      this.codigoBusqueda = navParams.get('codigoBusqueda');  
+      this.registro = navParams.get('registro');
+	    this.correoTrabajador = navParams.get('correoTrabajador');
 
-  // 	this.tags=this.registro.tags; 
-  // 	this.descripcion=this.registro.descripcion;
-  // 	this.fecha=this.registro.fecha; 
-  // }
-}
+     if(this.registro){   
+    	this.tags = this.registro.tags; 
+    	this.descripcion = this.registro.descripcion;
+    	this.fecha = this.registro.fecha; 
+    }
+  }
 
   retirar(){
   	this.navCtrl.push(ConfirmarRetiroPage,{           

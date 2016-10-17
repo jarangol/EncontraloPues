@@ -35,7 +35,6 @@ private data: any;
         //.map(res => res.json())
         .subscribe(res => {
           this.data = res.text();
-          console.log("consultarCodigo: "+res.text());
           resolve(this.data);
       });
     });  

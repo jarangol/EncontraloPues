@@ -25,8 +25,9 @@ private registro: any; //devuelve de la consulta por codigo de búsqueda
 private correoLugar: string;
 private nombrePunto: string;
 private nombreLugar: string;
-private codigoBusqueda: number; //ingresado por el usuario
+private codigoBusqueda: any; //ingresado por el usuario
 private correoTrabajador: string; 
+private data1: any;
 
   constructor(public platform: Platform, private navCtrl: NavController,public retirarService: RetirarService,public alertCtrl: AlertController) {
   	 this.correoLugar="Eafit@";
@@ -94,25 +95,28 @@ private correoTrabajador: string;
   public buscar(){
   	if(this.codigoBusqueda){
   		let consulta = {
-  			codigoBusqueda: this.correoLugar,
-  			correoLugar: this.correoLugar
+  			codigoBusqueda: this.codigoBusqueda,
+  			correoLugar: this.correoLugar,
+  			nombrePunto: this.nombrePunto
   		}
 	  	this.retirarService.consultarCodigo(consulta)
 	  	.then((data) => {
-      		console.log("Resultado "+data);
       		this.registro = data;
+      		console.log("Resultado "+ this.registro);
+      		
+      		this.data1=JSON.parse(data);
+      		console.log("parseado "+ this.data1[0].nombre);
    		 });
 
-	  	// this.navCtrl.push(DetalleRetiroPage,{
-	  	 	
-	  	//  	correoLugar: this.correoLugar,
-	  	//  	nombrePunto: this.nombrePunto,
-	  	//  	codigoBusqueda: this.codigoBusqueda,
-	  	//  	registro: this.registro,
-	  	//  	correoTrabajador: this.correoTrabajador
+	  	this.navCtrl.push(DetalleRetiroPage,{ 	 	
+	  	 	// correoLugar: this.correoLugar,
+	  	 	// nombrePunto: this.nombrePunto,
+	  	 	// codigoBusqueda: this.codigoBusqueda,
+	  	 	// registro: this.registro,
+	  	 	// correoTrabajador: this.correoTrabajador
 
-	  	// });
-	  	  	//this.codigoBusqueda="";
+	  	});
+	  	  	this.codigoBusqueda="";
 	  }
 
   }

@@ -359,9 +359,8 @@ app.post('/api/consultarObjetosPerdidosTrabajador',function(req,res){
     {$match : {correoElectronico : req.body.correoLugar}},
     {$unwind : "$lugar.puntosRecoleccion"},
     {$unwind : "$lugar.puntosRecoleccion.objetosPerdidos"},
-    {$match : {$and : [{"lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.año":req.body.añoRegistro},{
-      "lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.mes":req.body.mesRegistro},{
-      "lugar.puntosRecoleccion.objetosPerdidos.codigoBusqueda" : req.body.codigoBusqueda}]}},
+    {$match : {
+      "lugar.puntosRecoleccion.objetosPerdidos.codigoBusqueda" : req.body.codigoBusqueda}},
     {$project: { nombre :1,
         'lugar.puntosRecoleccion.nombre':1,
         'lugar.puntosRecoleccion.telefono':1,

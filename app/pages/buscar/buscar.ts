@@ -12,9 +12,10 @@ import { NavController } from 'ionic-angular';
 })
 export class BuscarPage {
 	private tags: any;
-	private codigoObjeto: any;
-	private fechaRegistro: any;
-
+	private codigoBusqueda: any;
+	private añoRegistro: any;
+  private mesRegistro: any;
+  
   constructor(private navCtrl: NavController) {
   	this.tags = [];
   }
@@ -39,8 +40,9 @@ export class BuscarPage {
 
   public buscar(){
   	let busqueda={
-  		fechaRegistro: this.fechaRegistro,
-  		codigoObjeto: this.codigoObjeto,
+  		añoRegistro: this.añoRegistro,
+      mesRegistro: this.mesRegistro,
+  		codigoObjeto: this.codigoBusqueda,
   		tags: this.tags
   	};
   	//this.busquedaService.buscar(busqueda);

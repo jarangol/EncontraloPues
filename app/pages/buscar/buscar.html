@@ -8,14 +8,19 @@
 </ion-header>
 
     <ion-content padding>
-		  <ion-item>
-        <ion-label>Fecha de registro (MM/AAAA)  </ion-label>
-        <ion-datetime displayFormat="M/YYYY" pickerFormat="MMMM YYYY" [(ngModel)]="fechaRegistro">
-         <!-- monthNames="Enero, Febrero, mar\u00e7o, ..."  -->
-        </ion-datetime>
-      </ion-item> 
+		
+  		<ion-list no-lines>
+        
+        <ion-item>
+          <ion-label>Año de registro</ion-label>
+          <ion-datetime displayFormat="MM/ YYYY" pickerFormat="YYYY"></ion-datetime>
+        </ion-item>
 
-  		<ion-list no-lines>      
+         <ion-item>
+          <ion-label>Mes de registro</ion-label>
+          <ion-datetime displayFormat="M" pickerFormat="M"></ion-datetime>
+        </ion-item>
+
         <ion-item>         
           <ion-label fixed>Lugar</ion-label>
            <ion-select [(ngModel)]="lugares">
@@ -32,12 +37,12 @@
   
 
           <ion-item>
-              <ion-input [(ngModel)]="codigoObjeto" type="search" placeholder="Código de Objeto" clearInput></ion-input>
+              <ion-input [(ngModel)]="codigoBusqueda" type="search" placeholder="Código de Busqueda" clearInput></ion-input>
           </ion-item>
 
-        <ion-item>
-          <ion-label stacked>Tags</ion-label>
-        </ion-item> 
+        
+        <ion-label stacked>Tags</ion-label>
+         
         
         <ion-item>     
             <ion-input  #ntag type="text" placeholder="Escriba aquí la etiqueta"></ion-input>
@@ -55,8 +60,7 @@
           </span>
           </div>
         </ion-item>
-
-
       </ion-list>
+
       <button ion-button block secondary (click)="buscar()">Buscar</button>
   </ion-content>

@@ -25,11 +25,12 @@ private registro: any; //devuelve de la consulta por codigo de búsqueda
 private correoLugar: string;
 private nombrePunto: string;
 private nombreLugar: string;
-private codigoBusqueda: string; //ingresado por el usuario
+private codigoBusqueda: number; //ingresado por el usuario
 private correoTrabajador: string; 
 
   constructor(public platform: Platform, private navCtrl: NavController,public retirarService: RetirarService,public alertCtrl: AlertController) {
   	 this.correoLugar="Eafit@";
+
      this.nombrePunto="c";
      this.correoTrabajador="m";
      this.nombreLugar="d";
@@ -93,7 +94,7 @@ private correoTrabajador: string;
   public buscar(){
   	if(this.codigoBusqueda){
   		let consulta = {
-  			codigoBusqueda: this.codigoBusqueda,
+  			codigoBusqueda: this.correoLugar,
   			correoLugar: this.correoLugar
   		}
 	  	this.retirarService.consultarCodigo(consulta)

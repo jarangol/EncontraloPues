@@ -15,7 +15,6 @@ import { RetirarPage} from './pages/retirar/retirar';
 import {  GeneradorqrPage } from './pages/generadorqr/generadorqr';
 
 //providers
-import { Registros} from './providers/registros/registros';
 import { RegistroService} from './providers/registro-service/registro-service';
 import { RetirarService} from './providers/retirar-service/retirar-service';
 
@@ -35,16 +34,17 @@ class MyApp {
     
     // used for an example of ngFor and navigation
     this.pages = [
+      { title: 'Registrar', component: RegistrarPage},
+      { title: 'Retirar', component: RetirarPage},
       //{ title: 'Inicio', component: HomePage },
-      //{ title: 'Generar', component: GeneradorqrPage} ,
+      { title: 'Generar', component: GeneradorqrPage} ,
       { title: 'Buscar', component: BuscarPage},
       //{ title: 'Confirmar retiro', component:  ConfirmarRetiroPage},
       //{ title: 'Consultar', component: ConsultarPage},
       //{ title: 'Detalle Retiro', component: DetalleRetiroPage},
       //{ title: 'Identificar', component: IdentificarPage},
       //{ title: 'Page2', component: Page2 },
-       { title: 'Retirar', component: RetirarPage},
-      { title: 'Registrar', component: RegistrarPage}
+     
     ];
 
   }

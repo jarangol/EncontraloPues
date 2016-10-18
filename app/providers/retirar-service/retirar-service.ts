@@ -10,10 +10,12 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class RetirarService {
+
 private data: any;
-
+private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
+  
   constructor(private http: Http){
-
+    this.data = null;
   }
 
 
@@ -31,32 +33,47 @@ private data: any;
     
     return new Promise(resolve => {
     
-      this.http.post('http://localhost:8080/api/consultarObjetosPerdidosTrabajador',body, {headers: headers})
-        //.map(res => res.json())
+      this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajador',body, {headers: headers})
         .subscribe(res => {
-          this.data = res.text();
+          this.data = res;
+          console.log(res);
           resolve(this.data);
       });
     });  
   }
 
-
+   
   public createRetiro(retiro){
     let body = JSON.stringify(retiro);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     
-    // return new Promise(resolve => {
-    //   this.http.post("http://localhost:8080/api/registrarObjetoPerdidoQR", body, {headers: headers})
-    //     .subscribe(res => {
-    //        console.log("createRetiro():"+res.text());
-    //        this.data=res.text();
-    //        resolve(this.data);
-    //    });
-    //  });
-      
+    return new Promise(resolve => {
+      this.http.post(this.serverURL + '/api/retirarObjetoPerdido', body, {headers: headers})
+        .subscribe(res => {
+           this.data = res.text();
+           resolve(this.data);
+       });
+     });  
   } 
 
+
+  public createRetiroQR(retiroQR){
+    
+    let body = JSON.stringify(retiroQR);
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    
+    return new Promise(resolve => {
+      this.http.post(this.serverURL + '/api/retirarObjetoPerdidoQR', body, {headers: headers})
+        .subscribe(res => {
+           console.log("createRetiro():"+res.text());
+           this.data=res.text();
+           resolve(this.data);
+       });
+     });
+      
+  } 
 
 }
 

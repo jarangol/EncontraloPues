@@ -11,8 +11,13 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class RegistroService {
-	data: any;
-  constructor(private http: Http) {}
+	
+  private data: any;
+  private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
+
+  constructor(private http: Http) {
+    this.data = null;
+  }
 
 
   /**
@@ -26,7 +31,7 @@ export class RegistroService {
       // We're using Angular HTTP provider to request the data,
       // then on the response, it'll map the JSON data to a parsed JS object.
       // Next, we process the data and resolve the promise with the new data.
-      this.http.get('http://localhost:8080/api/prueba')
+      this.http.get(this.serverURL + '/api/prueba')
         .map(res => res.json())
         .subscribe(data => {
           // we've got back the raw data, now generate the core schedule data
@@ -44,7 +49,7 @@ export class RegistroService {
     headers.append('Content-Type','application/json');
     
     return new Promise(resolve => {
-      this.http.post("http://localhost:8080/api/registrarObjetoPerdidoQR", body, {headers: headers})
+      this.http.post(this.serverURL + '/api/registrarObjetoPerdidoQR', body, {headers: headers})
         .subscribe(res => {
            console.log("createRegistroQR():"+res.text());
            this.data=res.text();
@@ -60,10 +65,9 @@ export class RegistroService {
     headers.append('Content-Type','application/json');
     
     return new Promise(resolve => {
-      this.http.post("http://localhost:8080/api/registrarObjetoPerdido", body, {headers: headers})
+      this.http.post('https://afternoon-crag-97293.herokuapp.com/api/registrarObjetoPerdido', body, {headers: headers})
         .subscribe(res => {
-           console.log("createRegistro():" +res.text());
-           this.data=res.text();
+           this.data = res.text();
            resolve(this.data);
         });
      

@@ -12,7 +12,7 @@
     <ion-list no-lines>    
 	    <ion-item>
 	       <ion-label stacked># Identificación</ion-label>
-	        <ion-input  [(ngModel)]="id" type="text"></ion-input>
+	        <ion-input  [(ngModel)]="id" type="number"></ion-input>
 	    </ion-item>
 
 	    <ion-item>
@@ -22,10 +22,10 @@
 
 	    <ion-item>
 	       <ion-label stacked>Telefono</ion-label>
-	        <ion-input  [(ngModel)]="tel" type="text"></ion-input>
+	        <ion-input  [(ngModel)]="telefono" type="tel"></ion-input>
 	    </ion-item>
 
     </ion-list>
 
-    	<button ion-button block color="secondary" (click)="confirmar">Confirmar</button>
+    	<button ion-button block color="secondary" (click)="confirmar()">Retirar</button>
 </ion-content>

@@ -7,6 +7,7 @@ import { RetirarService } from '../../providers/retirar-service/retirar-service'
 
 @Component({
   templateUrl: 'build/pages/confirmar-retiro/confirmar-retiro.html',
+  providers: [RetirarService],
 })
 
 export class ConfirmarRetiroPage {
@@ -28,26 +29,32 @@ private tags:any;
 private descripcion: string;
 private fecha: any;
 
-  constructor(private navCtrl: NavController,public navParams: NavParams,public retirarService: RetirarService) {
-  	this.codigoBusqueda=navParams.get('codigoBusqueda');
-  	     //    correoLugar: this.correoLugar,
-      //    nombrePunto: this.nombrePunto,
-      //    correoTrabajador: this.correoTrabajador
-            //    codigoBusqueda: this.codigoBusqueda,
+  constructor(private navCtrl: NavController, public navParams: NavParams, public retirarService: RetirarService) {
+  	
+    this.codigoBusqueda = this.navParams.get('codigoBusqueda');
+  	this.correoLugar = this.navParams.get('correoLugar');
+    this.nombrePunto = this.navParams.get('nombrePunto');
+    this.correoTrabajador = this.navParams.get('correoTrabajador');
   }
 
   confirmar(){
-  	let retiro={
-  		codigoBusqueda:this.codigoBusqueda,
-  		id: this.id,
-  		nombre: this.nombre,
-  		telefono: this.telefono,
-  		// nico esto si? nombrelugar: this.nombrelugar,
-  		correoLugar: this.correoLugar ,
-  		correoTrabajador: this.correoTrabajador 
-  	};
+  	if(this.id && this.telefono && this.nombre){
+      let retiro={
+    		numeroIdPersona: this.id,
+    		nombrePersona: this.nombre,
+    		celularPersona: this.telefono,
 
+        correoLugar: this.correoLugar ,
+        codigoBusqueda:this.codigoBusqueda,
+    		correoTrabajador: this.correoTrabajador 
+    	};
 
-  	//this.retirarService.createRetiro(retiro);
+      this.retirarService.createRetiro(retiro)
+        .then((res) => {
+          alert('acerca de del retiro' + res);
+          this.registro = res;
+        });
+    }
+  	
   }
 }

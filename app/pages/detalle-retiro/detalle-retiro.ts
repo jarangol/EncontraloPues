@@ -18,31 +18,45 @@ private registro: any;
 private correoTrabajador: any;
 
 //pertenecen a registro
-private tags:any;
+tags: any;
 private descripcion: string;
 private fecha: any;
 
-  constructor(private navCtrl: NavController,public navParams: NavParams) {
-      this.correoLugar = navParams.get('correoLugar');
-      this.nombrePunto = navParams.get('nombrePunto');
-      this.codigoBusqueda = navParams.get('codigoBusqueda');  
-      this.registro = navParams.get('registro');
-	    this.correoTrabajador = navParams.get('correoTrabajador');
+//para dividir la fecha en varios.
+private dia: any;
+private mes: any;
+private año: any;
 
-     if(this.registro){   
-    	this.tags = this.registro.tags; 
-    	this.descripcion = this.registro.descripcion;
-    	this.fecha = this.registro.fecha; 
-    }
+  constructor(private navCtrl: NavController,public navParams: NavParams) {
+      this.tags=[];
+      this.correoLugar = this.navParams.get('correoLugar');
+      this.nombrePunto = this.navParams.get('nombrePunto');
+      this.codigoBusqueda = this.navParams.get('codigoBusqueda');  
+      this.registro = this.navParams.get('registro');
+	    this.correoTrabajador = this.navParams.get('correoTrabajador');
+
+   
+//     if(this.registro){  
+         console.log(this.registro.objetosPerdidos.sinCodigoQR.tags);
+         console.log(typeof this.registro.objetosPerdidos.fechaRegistro);
+      	
+         this.tags = this.registro.objetosPerdidos.sinCodigoQR.tags; 
+    	   this.descripcion = this.registro.objetosPerdidos.sinCodigoQR.descripcionOculta;
+    	  
+         this.dia = this.registro.objetosPerdidos.fechaRegistro.dia; 
+         this.mes = this.registro.objetosPerdidos.fechaRegistro.mes; 
+         this.año = this.registro.objetosPerdidos.fechaRegistro.año; 
+        
+         this.fecha = this.dia + '/' + this.mes + '/' + this.año;
+  //  }
   }
 
   retirar(){
   	this.navCtrl.push(ConfirmarRetiroPage,{           
-      //    correoLugar: this.correoLugar,
-      //    nombrePunto: this.nombrePunto,
-      //    correoTrabajador: this.correoTrabajador
-            //    codigoBusqueda: this.codigoBusqueda,
-
+         correoLugar: this.correoLugar,
+         nombrePunto: this.nombrePunto,
+         correoTrabajador: this.correoTrabajador,
+         codigoBusqueda: this.codigoBusqueda,
   	});
   }
 }

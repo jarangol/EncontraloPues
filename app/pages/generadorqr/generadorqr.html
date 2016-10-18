@@ -8,6 +8,15 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding>	
+  <ion-item>
+      <ion-input [(ngModel)]="texto" type="text" placeholder="Introduzca el texto"></ion-input>
+  </ion-item>
+
+  <button ion-button block  color="secondary" (click)="generar()">
+    Buscar 
+  </button>
+
+ <img src="texto" width="300" height="150">
 
 </ion-content>

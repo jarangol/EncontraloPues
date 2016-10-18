@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController,Page, Platform, Alert, AlertController} from 'ionic-angular';
+import { NavController,Page, Platform, Alert, AlertController,NavParams} from 'ionic-angular';
 import {BarcodeScanner} from 'ionic-native';
 
 //page de detalle del retiro
@@ -20,6 +20,7 @@ private qrToggle: any; //variable de la interfaz
 private qrCode: string; //codigo escaneado
 
 private registro: any; //devuelve de la consulta por codigo de búsqueda
+private status: any; // status que devuelve la consulta por codigo.
 
 //necesarios para el insert de un retiro
 private correoLugar: string;
@@ -31,7 +32,6 @@ private data1: any;
 
   constructor(public platform: Platform, private navCtrl: NavController,public retirarService: RetirarService,public alertCtrl: AlertController) {
   	 this.correoLugar="Eafit@";
-
      this.nombrePunto="c";
      this.correoTrabajador="m";
      this.nombreLugar="d";
@@ -99,26 +99,34 @@ private data1: any;
   			correoLugar: this.correoLugar,
   			nombrePunto: this.nombrePunto
   		}
-	  	this.retirarService.consultarCodigo(consulta)
-	  	.then((data) => {
+  		
+  	
+		this.retirarService.consultarCodigo(consulta)
+		  .then((data) => {
       		this.registro = data;
-      		console.log("Resultado "+ this.registro);
-      		
-      		this.data1=JSON.parse(data);
-      		console.log("parseado "+ this.data1[0].nombre);
+      		console.log(data.status);
    		 });
 
-	  	this.navCtrl.push(DetalleRetiroPage,{ 	 	
-	  	 	// correoLugar: this.correoLugar,
-	  	 	// nombrePunto: this.nombrePunto,
-	  	 	// codigoBusqueda: this.codigoBusqueda,
-	  	 	// registro: this.registro,
-	  	 	// correoTrabajador: this.correoTrabajador
+		  	
+	  	if(this.registro.status == 400){
+	  		console.log("400");
+		    //alert(this.registro);	   	
+	   	}else{	
+	  		this.registro = this.registro.json();
+		  	
+		  	this.navCtrl.push(DetalleRetiroPage,{ 	 	
+		  	 	 correoLugar: this.correoLugar,
+		  	 	 nombrePunto: this.nombrePunto,
+		  	 	 codigoBusqueda: this.codigoBusqueda,
+		  	 	 registro: this.registro.lugar.puntosRecoleccion ,
+		  	 	 correoTrabajador: this.correoTrabajador
 
-	  	});
-	  	  	this.codigoBusqueda="";
-	  }
-
+		  	});
+		  	this.codigoBusqueda = "";
+		  	this.registro = null;
+		}
+	}	
   }
+
 
 }

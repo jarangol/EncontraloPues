@@ -371,6 +371,7 @@ app.post('/api/consultarObjetosPerdidosTrabajador',function(req,res){
     {$unwind : "$lugar.puntosRecoleccion.objetosPerdidos"},
     {$match : {"lugar.puntosRecoleccion.objetosPerdidos.codigoBusqueda" : req.body.codigoBusqueda}},
     {$project: {
+        'lugar.puntosRecoleccion.nombre':1,
         'lugar.puntosRecoleccion.objetosPerdidos.codigoBusqueda':1,
         'lugar.puntosRecoleccion.objetosPerdidos.codigoQR':1,
         'lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags':1,
@@ -381,17 +382,18 @@ app.post('/api/consultarObjetosPerdidosTrabajador',function(req,res){
       function(err,objetoPerdido){
 
         if(!objetoPerdido.length){
-          res.send(0,"Error : No se encontro un objeto");
+          res.status(404).send("Error : No se encontro un objeto");
         }else if(objetoPerdido[0].lugar.puntosRecoleccion.objetosPerdidos.codigoQR){
-          res.send(1,"Error : El objeto se registro escaneando su codigoQR");
-        }else if(objetoPerdido.nombre != req.body.nombrePunto){
-          res.send(2,"Error : El objeto se encuentra en el punto de Recoleccion: " + objetoPerdido[0].lugar.puntosRecoleccion.nombre
-                  + "\n Realice el retiro en ese punto de Recoleccion")
+          res.status(405).send("Error : El objeto se registro escaneando su codigoQR");
+        }else if(objetoPerdido[0].lugar.puntosRecoleccion.nombre != req.body.nombrePunto){
+          res.status(406).send("Error : El objeto se encuentra en el punto de Recoleccion: " + objetoPerdido[0].lugar.puntosRecoleccion.nombre
+                          + "\n Realice el retiro en ese punto de Recoleccion")
         }else{
           res.json(objetoPerdido[0]);
         }
       })
 });
+
 
 app.post('/api/consultarObjetosPerdidosLugar',function(req,res){
   consultaNombrePuntoRecoleccion = {};

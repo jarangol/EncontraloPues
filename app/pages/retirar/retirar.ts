@@ -55,7 +55,6 @@ private data1: any;
     if(this.qrToggle){
   	  this.platform.ready().then(() => {       
 		BarcodeScanner.scan().then((barcodeData) => {
-			alert("scan");
 			this.qrCode=barcodeData.text;
 		    
 		    let prompt = this.alertCtrl.create({
@@ -78,6 +77,21 @@ private data1: any;
 		          text: 'Confirmar',
 		          handler: data => {
 		            console.log('data:'+data);
+
+		            let retiro={
+				    	codigoQR: this.qrCode,
+				        correoLugar: this.correoLugar ,
+				        codigoRetiro: data,
+				        nombrePunto: this.nombrePunto,
+				    	correoTrabajador: this.correoTrabajador 
+			    	};
+
+		            this.retirarService.consultarCodigo(retiro)
+					  .then((data) => {
+			      		this.registro = data;
+			      		console.log(data.status);
+			   		 });
+
 		          }
 		        }
 		      ]

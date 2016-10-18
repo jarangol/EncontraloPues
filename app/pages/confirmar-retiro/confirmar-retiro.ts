@@ -51,7 +51,7 @@ private fecha: any;
 
       this.retirarService.createRetiro(retiro)
         .then((res) => {
-          alert('acerca de del retiro' + res);
+          alert(res);
           this.registro = res;
         });
 

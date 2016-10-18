@@ -67,7 +67,6 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     return new Promise(resolve => {
       this.http.post(this.serverURL + '/api/retirarObjetoPerdidoQR', body, {headers: headers})
         .subscribe(res => {
-           console.log("createRetiro():"+res.text());
            this.data=res.text();
            resolve(this.data);
        });

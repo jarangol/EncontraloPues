@@ -26,7 +26,7 @@ import { RetirarService} from './providers/retirar-service/retirar-service';
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = RetirarPage;
+  rootPage: any =HomePage;
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform) {
@@ -36,12 +36,9 @@ class MyApp {
     this.pages = [
       { title: 'Registrar', component: RegistrarPage},
       { title: 'Retirar', component: RetirarPage},
-      //{ title: 'Inicio', component: HomePage },
       { title: 'Generar', component: GeneradorqrPage} ,
       { title: 'Buscar', component: BuscarPage},
-      //{ title: 'Confirmar retiro', component:  ConfirmarRetiroPage},
-      //{ title: 'Consultar', component: ConsultarPage},
-      //{ title: 'Detalle Retiro', component: DetalleRetiroPage},
+      { title: 'Consultar', component: ConsultarPage},
       //{ title: 'Identificar', component: IdentificarPage},
       //{ title: 'Page2', component: Page2 },
      

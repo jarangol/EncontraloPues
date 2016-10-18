@@ -54,6 +54,10 @@ private fecha: any;
           alert('acerca de del retiro' + res);
           this.registro = res;
         });
+
+        this.telefono="";
+        this.id="";
+        this.nombre="";
     }
   	
   }

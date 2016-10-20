@@ -18,6 +18,9 @@ export class RetirarPage {
 
 private qrToggle: any; //variable de la interfaz 
 private qrCode: string; //codigo escaneado
+private tags: any;
+private añoRegistro: any;
+private mesRegistro: any;
 
 private registro: any; //devuelve de la consulta por codigo de búsqueda
 private status: any; // status que devuelve la consulta por codigo.
@@ -86,10 +89,11 @@ private data1: any;
 				    	correoTrabajador: this.correoTrabajador 
 			    	};
 
-		            this.retirarService.consultarCodigo(retiro)
+		            this.retirarService.createRetiroQR(retiro)
 					  .then((data) => {
 			      		this.registro = data;
-			      		console.log(data.status);
+			      		console.log(data);
+			      		alert(data);
 			   		 });
 
 		          }
@@ -142,5 +146,21 @@ private data1: any;
 	}	
   }
 
+    public addTag(tagNameInput: any): void {
+    if(tagNameInput.value) {
+      // Add the tag
+      this.tags.push(tagNameInput.value);
+      
+      // Reset the field
+      tagNameInput.value = '';
+    }
+  }
+  
+  public deleteTag(tagName: string) {
+    // Find the index of the tag
+    let index = this.tags.indexOf(tagName);  
+    // Delete the tag in that index
+    this.tags.splice(index, 1);
+  } 
 
 }

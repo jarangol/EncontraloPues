@@ -26,7 +26,8 @@ import { RetirarService} from './providers/retirar-service/retirar-service';
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any =HomePage;
+  rootPage: any = RetirarPage;
+  
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform) {
@@ -34,13 +35,13 @@ class MyApp {
     
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Registrar', component: RegistrarPage},
+       { title: 'Registrar', component: RegistrarPage},
       { title: 'Retirar', component: RetirarPage},
       { title: 'Generar', component: GeneradorqrPage} ,
       { title: 'Buscar', component: BuscarPage},
       { title: 'Consultar', component: ConsultarPage},
       //{ title: 'Identificar', component: IdentificarPage},
-      //{ title: 'Page2', component: Page2 },
+      { title: 'Page2', component: Page2 },
      
     ];
 

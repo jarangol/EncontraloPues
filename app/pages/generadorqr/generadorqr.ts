@@ -17,17 +17,15 @@ export class GeneradorqrPage {
 
 private texto: any;
 private data: any;
+private url: string;
 
 	constructor(private navCtrl: NavController, public qrService: GenerarQRService) {
-  
+		this.url = "https://afternoon-crag-97293.herokuapp.com/qr/";  
   	}	
 
   	generar(){
   		if(this.texto){
-	  		this.qrService.generar(this.texto)
-		  	.then((data) => {
-	      		this.data = data;
-	   		 });
+  			this.url = "https://afternoon-crag-97293.herokuapp.com/qr/"+this.texto;  
 		}
   	}
 

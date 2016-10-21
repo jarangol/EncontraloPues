@@ -4,6 +4,7 @@ import {BarcodeScanner} from 'ionic-native';
 
 //page de detalle del retiro
 import { DetalleRetiroPage} from '../../pages/detalle-retiro/detalle-retiro';
+import { ConsultarPage} from '../../pages/consultar/consultar';
 
 //proveedor del service
 import { RetirarService } from '../../providers/retirar-service/retirar-service';
@@ -21,8 +22,9 @@ private qrCode: string; //codigo escaneado
 private tags: any;
 private añoRegistro: any;
 private mesRegistro: any;
+private fecha: any;
 
-private registro: any; //devuelve de la consulta por codigo de búsqueda
+private registros: any; //devuelve de la consulta por codigo de búsqueda
 private status: any; // status que devuelve la consulta por codigo.
 
 //necesarios para el insert de un retiro
@@ -34,6 +36,8 @@ private correoTrabajador: string;
 private data1: any;
 
   constructor(public platform: Platform, private navCtrl: NavController,public retirarService: RetirarService,public alertCtrl: AlertController) {
+  	 this.tags = [];
+
   	 this.correoLugar="Eafit@";
      this.nombrePunto="c";
      this.correoTrabajador="m";
@@ -91,7 +95,7 @@ private data1: any;
 
 		            this.retirarService.createRetiroQR(retiro)
 					  .then((data) => {
-			      		this.registro = data;
+			      		this.registros = data;
 			      		console.log(data);
 			      		alert(data);
 			   		 });
@@ -111,56 +115,60 @@ private data1: any;
   }
 
   public buscar(){
-  	if(this.codigoBusqueda){
+
+  	if(true){
   		let consulta = {
   			codigoBusqueda: this.codigoBusqueda,
   			correoLugar: this.correoLugar,
-  			nombrePunto: this.nombrePunto
+  			nombrePunto: this.nombrePunto,
+  			añoRegistro: this.añoRegistro,
+     		mesRegistro: this.mesRegistro,
+	  		codigoObjeto: this.codigoBusqueda,
+	  		tags: this.tags
   		}
   		
   	
-		this.retirarService.consultarCodigo(consulta)
+		this.retirarService.consultar(consulta)
 		  .then((data) => {
-      		this.registro = data;
+      		this.registros = data;
       		console.log(data.status);
    		 });
 
 		  	
-	  	if(this.registro.status == 400){
+	  	if(this.registros.status == 400){
 	  		console.log("400");
 		    //alert(this.registro);	   	
 	   	}else{	
-	  		this.registro = this.registro.json();
+	  		this.registros = this.registros.json();
 		  	
-		  	this.navCtrl.push(DetalleRetiroPage,{ 	 	
+		  	this.navCtrl.push(ConsultarPage,{ 	 	
+		  	 	 
 		  	 	 correoLugar: this.correoLugar,
 		  	 	 nombrePunto: this.nombrePunto,
-		  	 	 codigoBusqueda: this.codigoBusqueda,
-		  	 	 registro: this.registro.lugar.puntosRecoleccion ,
+		  	 	 //codigoBusqueda: this.codigoBusqueda,
+		  	 	 registros: this.registros.lugar.puntosRecoleccion ,
 		  	 	 correoTrabajador: this.correoTrabajador
 
 		  	});
 		  	this.codigoBusqueda = "";
-		  	this.registro = null;
+		  	this.registros = null;
 		}
 	}	
   }
 
     public addTag(tagNameInput: any): void {
     if(tagNameInput.value) {
-      // Add the tag
       this.tags.push(tagNameInput.value);
       
-      // Reset the field
       tagNameInput.value = '';
     }
   }
   
   public deleteTag(tagName: string) {
-    // Find the index of the tag
     let index = this.tags.indexOf(tagName);  
-    // Delete the tag in that index
+
     this.tags.splice(index, 1);
   } 
+
 
 }

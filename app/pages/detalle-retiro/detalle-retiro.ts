@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams} from 'ionic-angular';
+import { NavController, NavParams,AlertController} from 'ionic-angular';
 
 //page to push
 import { ConfirmarRetiroPage } from '../confirmar-retiro/confirmar-retiro';
@@ -27,18 +27,16 @@ private dia: any;
 private mes: any;
 private año: any;
 
-  constructor(private navCtrl: NavController,public navParams: NavParams) {
+  constructor(private navCtrl: NavController,public navParams: NavParams, public alertCtrl: AlertController) {
       this.tags=[];
       this.correoLugar = this.navParams.get('correoLugar');
-      this.nombrePunto = this.navParams.get('nombrePunto');
-      this.codigoBusqueda = this.navParams.get('codigoBusqueda');  
+      this.nombrePunto = this.navParams.get('nombrePunto'); 
       this.registro = this.navParams.get('registro');
 	    this.correoTrabajador = this.navParams.get('correoTrabajador');
 
    
-//     if(this.registro){  
-         console.log(this.registro.objetosPerdidos.sinCodigoQR.tags);
-         console.log(typeof this.registro.objetosPerdidos.fechaRegistro);
+     if(this.registro){  
+
       	
          this.tags = this.registro.objetosPerdidos.sinCodigoQR.tags; 
     	   this.descripcion = this.registro.objetosPerdidos.sinCodigoQR.descripcionOculta;
@@ -48,15 +46,55 @@ private año: any;
          this.año = this.registro.objetosPerdidos.fechaRegistro.año; 
         
          this.fecha = this.dia + '/' + this.mes + '/' + this.año;
-  //  }
+    }
   }
 
+
+
+      showPrompt() {
+        let prompt = this.alertCtrl.create({
+          title: 'Retirar',
+          message: "Ingrese los datos de quien reclama.",
+          inputs: [
+            {
+              name: 'id',
+              placeholder: 'Identificación'
+            },
+             {
+              name: 'nombre',
+              placeholder: 'Nombre'
+            },
+            {
+              name: 'tel',
+              placeholder: 'Telefono'
+            },
+          ],
+          buttons: [
+            {
+              text: 'Cancel',
+              handler: data => {
+                console.log('Cancel clicked');
+              }
+            },
+            {
+              text: 'Retirar',
+              handler: data => {
+                console.log('Saved clicked');
+              }
+            }
+          ]
+        });
+        prompt.present();
+  }
+
+
   retirar(){
-  	this.navCtrl.push(ConfirmarRetiroPage,{           
-         correoLugar: this.correoLugar,
-         nombrePunto: this.nombrePunto,
-         correoTrabajador: this.correoTrabajador,
-         codigoBusqueda: this.codigoBusqueda,
-  	});
+    this.showPrompt();
+  	// this.navCtrl.push(ConfirmarRetiroPage,{           
+   //       correoLugar: this.correoLugar,
+   //       nombrePunto: this.nombrePunto,
+   //       correoTrabajador: this.correoTrabajador,
+   //       codigoBusqueda: this.codigoBusqueda,
+  	// });
   }
 }

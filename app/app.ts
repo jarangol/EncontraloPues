@@ -37,11 +37,11 @@ class MyApp {
     this.pages = [
        { title: 'Registrar', component: RegistrarPage},
       { title: 'Retirar', component: RetirarPage},
-      { title: 'Generar', component: GeneradorqrPage} ,
-      { title: 'Buscar', component: BuscarPage},
+      //{ title: 'Generar', component: GeneradorqrPage} ,
+     // { title: 'Buscar', component: BuscarPage},
       { title: 'Consultar', component: ConsultarPage},
-      //{ title: 'Identificar', component: IdentificarPage},
-      { title: 'Page2', component: Page2 },
+      { title: 'Detalle', component:  DetalleRetiroPage},
+     // { title: 'Page2', component: Page2 },
      
     ];
 

@@ -22,7 +22,7 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
   /**
   * Get para datos de prueba
   **/
-  public consultarCodigo(consulta) {
+  public consultar(consulta) {
     let body = JSON.stringify(consulta);
     let headers = new Headers();
     headers.append('Content-Type','application/json');

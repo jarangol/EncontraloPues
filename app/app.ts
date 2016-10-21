@@ -13,6 +13,8 @@ import { Page2 } from './pages/page2/page2';
 import { RegistrarPage} from './pages/registrar/registrar';
 import { RetirarPage} from './pages/retirar/retirar';
 import {  GeneradorqrPage } from './pages/generadorqr/generadorqr';
+import { Login } from './pages/login/login';
+
 
 //providers
 import { RegistroService} from './providers/registro-service/registro-service';
@@ -27,22 +29,22 @@ class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = RetirarPage;
-  
+
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform) {
     this.initializeApp();
-    
+
     // used for an example of ngFor and navigation
     this.pages = [
-       { title: 'Registrar', component: RegistrarPage},
+      { title: 'Registrar', component: RegistrarPage},
       { title: 'Retirar', component: RetirarPage},
       { title: 'Generar', component: GeneradorqrPage} ,
       { title: 'Buscar', component: BuscarPage},
       { title: 'Consultar', component: ConsultarPage},
-      //{ title: 'Identificar', component: IdentificarPage},
+      { title: 'Login', component: Login},
       { title: 'Page2', component: Page2 },
-     
+
     ];
 
   }
@@ -67,4 +69,3 @@ class MyApp {
 }
 
 ionicBootstrap(MyApp);
-

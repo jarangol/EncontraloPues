@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams,AlertController} from 'ionic-angular';
 
-//page to push
-import { ConfirmarRetiroPage } from '../confirmar-retiro/confirmar-retiro';
+//proveedor del service
+import { RetirarService } from '../../providers/retirar-service/retirar-service';
 
 
 @Component({
@@ -18,34 +18,29 @@ private registro: any;
 private correoTrabajador: any;
 
 //pertenecen a registro
-tags: any;
+private tags: any;
 private descripcion: string;
 private fecha: any;
 
 //para dividir la fecha en varios.
 private dia: any;
-private mes: any;
-private año: any;
+private añoMes: any; //año y mes concatenados AAAA-MM
 
-  constructor(private navCtrl: NavController,public navParams: NavParams, public alertCtrl: AlertController) {
+  constructor(private navCtrl: NavController,public navParams: NavParams, public alertCtrl: AlertController, public retirarService: RetirarService) {
       this.tags=[];
+      this.registro = this.navParams.get('registro');
       this.correoLugar = this.navParams.get('correoLugar');
       this.nombrePunto = this.navParams.get('nombrePunto'); 
-      this.registro = this.navParams.get('registro');
+      this.codigoBusqueda = this.navParams.get('codigoBusqueda');
 	    this.correoTrabajador = this.navParams.get('correoTrabajador');
 
    
      if(this.registro){  
-
-      	
-         this.tags = this.registro.objetosPerdidos.sinCodigoQR.tags; 
+         this.tags = this.registro.objetosPerdidos.sinCodigoQR.tags;
     	   this.descripcion = this.registro.objetosPerdidos.sinCodigoQR.descripcionOculta;
     	  
          this.dia = this.registro.objetosPerdidos.fechaRegistro.dia; 
-         this.mes = this.registro.objetosPerdidos.fechaRegistro.mes; 
-         this.año = this.registro.objetosPerdidos.fechaRegistro.año; 
-        
-         this.fecha = this.dia + '/' + this.mes + '/' + this.año;
+         this.fecha =this.añoMes + '-' + this.dia ;
     }
   }
 
@@ -58,15 +53,18 @@ private año: any;
           inputs: [
             {
               name: 'id',
-              placeholder: 'Identificación'
+              placeholder: 'Identificación',
+              type: 'text',
             },
              {
               name: 'nombre',
-              placeholder: 'Nombre'
+              placeholder: 'Nombre',
+              type: 'text'
             },
             {
               name: 'tel',
-              placeholder: 'Telefono'
+              placeholder: 'Telefono',
+              type: 'tel'
             },
           ],
           buttons: [
@@ -79,7 +77,27 @@ private año: any;
             {
               text: 'Retirar',
               handler: data => {
-                console.log('Saved clicked');
+                if(data.id && data.tel && data.nombre){
+                  console.log(data.id);
+                  console.log(data.nombre);
+                  console.log(data.tel);
+                  console.log(typeof data.id);
+                  let retiro={
+                    numeroIdPersona: data.id,
+                    nombrePersona: data.nombre,
+                    celularPersona: data.tel,
+
+                    correoLugar: this.correoLugar ,
+                    codigoBusqueda:this.codigoBusqueda,
+                    correoTrabajador: this.correoTrabajador 
+                  };
+
+                  this.retirarService.createRetiro(retiro)
+                    .then((res) => {
+                      alert(res);
+                      this.registro = res;
+                    });
+                }
               }
             }
           ]
@@ -90,11 +108,5 @@ private año: any;
 
   retirar(){
     this.showPrompt();
-  	// this.navCtrl.push(ConfirmarRetiroPage,{           
-   //       correoLugar: this.correoLugar,
-   //       nombrePunto: this.nombrePunto,
-   //       correoTrabajador: this.correoTrabajador,
-   //       codigoBusqueda: this.codigoBusqueda,
-  	// });
   }
 }

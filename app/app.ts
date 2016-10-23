@@ -3,8 +3,6 @@ import { ionicBootstrap, Platform, Nav} from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
 //paginas
-import { BuscarPage} from './pages/buscar/buscar';
-import { ConfirmarRetiroPage} from './pages/confirmar-retiro/confirmar-retiro';
 import { ConsultarPage} from './pages/consultar/consultar';
 import { DetalleRetiroPage} from './pages/detalle-retiro/detalle-retiro';
 import { HomePage } from './pages/home/home';
@@ -13,6 +11,7 @@ import { Page2 } from './pages/page2/page2';
 import { RegistrarPage} from './pages/registrar/registrar';
 import { RetirarPage} from './pages/retirar/retirar';
 import {  GeneradorqrPage } from './pages/generadorqr/generadorqr';
+import {  ReclamadosPage } from './pages/reclamados/reclamados';
 
 //providers
 import { RegistroService} from './providers/registro-service/registro-service';
@@ -37,11 +36,11 @@ class MyApp {
     this.pages = [
        { title: 'Registrar', component: RegistrarPage},
       { title: 'Retirar', component: RetirarPage},
+      { title: 'Detalle', component: DetalleRetiroPage} ,
       //{ title: 'Generar', component: GeneradorqrPage} ,
-     // { title: 'Buscar', component: BuscarPage},
       { title: 'Consultar', component: ConsultarPage},
-      { title: 'Detalle', component:  DetalleRetiroPage},
      // { title: 'Page2', component: Page2 },
+      { title: 'Reclamados', component: ReclamadosPage }
      
     ];
 

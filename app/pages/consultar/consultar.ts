@@ -33,10 +33,10 @@ export class ConsultarPage {
   private año: any;
  
     constructor(private navCtrl: NavController, public registroService: RegistroService, public navParams: NavParams){
-     this.loadRegistros();
+      this.loadRegistros();
       this.correoLugar = this.navParams.get('correoLugar');
       this.nombrePunto = this.navParams.get('nombrePunto');
-      //this.codigoBusqueda = this.navParams.get('codigoBusqueda');  
+      this.codigoBusqueda = this.navParams.get('codigoBusqueda');  
       this.registros = this.navParams.get('registros');
       this.correoTrabajador = this.navParams.get('correoTrabajador');
   }
@@ -50,12 +50,14 @@ export class ConsultarPage {
    }
 
     itemTapped(event, registro) {
-      alert("selecciono un registro");
+      alert("seleccionó un registro "+registro.nombre);
      this.navCtrl.push(DetalleRetiroPage, {
       registro: registro,
       correoLugar: this.correoLugar,
+      nombrePunto: this.nombrePunto, 
+      codigoBusqueda: this.codigoBusqueda,
       correoTrabajador: this.correoTrabajador,
-      nombrePunto: this.nombrePunto,       
+            
     });
   }
 

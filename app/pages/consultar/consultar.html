@@ -12,8 +12,11 @@
     <ion-list> 
      <button ion-item *ngFor="let registro of registros" (click)="itemTapped($event,registro)">
       {{registro.nombre}}
-      <div  item-right>
-         {{registro.nombre}}
+      <div  *ngIf="registro.nombre=='Nicolas Escobar'" item-right>
+         <font color="green">{{registro.nombre}}</font> 
+      </div>
+      <div  *ngIf="registro.nombre!='Nicolas Escobar'" item-right>
+         <font color="red">{{registro.nombre}}</font> 
       </div>
     </button>
     </ion-list>

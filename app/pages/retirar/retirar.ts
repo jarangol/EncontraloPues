@@ -115,58 +115,49 @@ private data1: any;
   }
 
   public buscar(){
-
-  	if(true){
+  	if(this.fecha){
   		let consulta = {
+  			fecha : this.fecha,
   			codigoBusqueda: this.codigoBusqueda,
+  			tags: this.tags,
   			correoLugar: this.correoLugar,
   			nombrePunto: this.nombrePunto,
-  			añoRegistro: this.añoRegistro,
-     		mesRegistro: this.mesRegistro,
 	  		codigoObjeto: this.codigoBusqueda,
-	  		tags: this.tags
+	  		
   		}
   		
   	
-		this.retirarService.consultar(consulta)
+		this.retirarService.consultarPerdidosTrabajador(consulta)
 		  .then((data) => {
       		this.registros = data;
       		console.log(data.status);
    		 });
 
-		  	
-	  	if(this.registros.status == 400){
-	  		console.log("400");
-		    //alert(this.registro);	   	
-	   	}else{	
-	  		this.registros = this.registros.json();
-		  	
-		  	this.navCtrl.push(ConsultarPage,{ 	 	
-		  	 	 
-		  	 	 correoLugar: this.correoLugar,
-		  	 	 nombrePunto: this.nombrePunto,
-		  	 	 //codigoBusqueda: this.codigoBusqueda,
-		  	 	 registros: this.registros.lugar.puntosRecoleccion ,
-		  	 	 correoTrabajador: this.correoTrabajador
+  		this.registros = this.registros;
+	  	
+	  	this.navCtrl.push(ConsultarPage,{ 	 	
+	  	 	 
+	  	 	 correoLugar: this.correoLugar,
+	  	 	 nombrePunto: this.nombrePunto,
+	  	 	 codigoBusqueda: this.codigoBusqueda,
+	  	 	 registros: this.registros.lugar.puntosRecoleccion ,
+	  	 	 correoTrabajador: this.correoTrabajador
 
-		  	});
-		  	this.codigoBusqueda = "";
-		  	this.registros = null;
-		}
+	  	});
+	  	this.codigoBusqueda = "";
+		this.registros=null;
 	}	
   }
 
     public addTag(tagNameInput: any): void {
     if(tagNameInput.value) {
       this.tags.push(tagNameInput.value);
-      
       tagNameInput.value = '';
     }
   }
   
   public deleteTag(tagName: string) {
     let index = this.tags.indexOf(tagName);  
-
     this.tags.splice(index, 1);
   } 
 

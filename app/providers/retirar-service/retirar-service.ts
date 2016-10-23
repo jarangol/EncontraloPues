@@ -22,7 +22,7 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
   /**
   * Get para datos de prueba
   **/
-  public consultar(consulta) {
+  public consultarPerdidosTrabajador(consulta) {
     let body = JSON.stringify(consulta);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
@@ -35,7 +35,7 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     
       this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajador',body, {headers: headers})
         .subscribe(res => {
-          this.data = res;
+          this.data = res.json();
           console.log(res);
           resolve(this.data);
       });

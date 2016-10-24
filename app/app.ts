@@ -14,15 +14,17 @@ import { RegistrarPage} from './pages/registrar/registrar';
 import { RetirarPage} from './pages/retirar/retirar';
 import {  GeneradorqrPage } from './pages/generadorqr/generadorqr';
 import { Login } from './pages/login/login';
+import { Objetos} from './pages/objetos/objetos'
 
 
 //providers
 import { RegistroService} from './providers/registro-service/registro-service';
 import { RetirarService} from './providers/retirar-service/retirar-service';
+import { LogInService } from './providers/logIn-service/logIn-service';
 
 @Component({
   templateUrl: 'build/app.html'
-  ,providers: [RegistroService, RetirarService]
+  ,providers: [RegistroService, RetirarService, LogInService]
 })
 
 class MyApp {
@@ -44,6 +46,7 @@ class MyApp {
       { title: 'Consultar', component: ConsultarPage},
       { title: 'Login', component: Login},
       { title: 'Page2', component: Page2 },
+      { title: 'Objetos', component: Objetos },
 
     ];
 

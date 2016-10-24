@@ -18,24 +18,24 @@ export class Login {
   private correo: any;
   private contrasenia: any;
 
-  validacion:any;
+  validacion: any; 
 
   constructor(public navCtrl: NavController, public loginService: LogInService) { }
 
   validar() {
-    alert("llame a validar");
+    // alert("llame a validar");
     if (this.correo && this.contrasenia) {
 
       let validacion = {
         correoElectronico: this.correo,
-        contrasenia: this.contrasenia  
+        contrasenia: this.contrasenia
       };
-      
+
       this.loginService.validarInfo(validacion).
-      then((res) => {
-        alert(res);
-        this.validacion = res;
-      });
+        then((res) => {
+          alert(res);
+          this.validacion = res;
+        });
 
       this.correo = "";
       this.contrasenia = "";

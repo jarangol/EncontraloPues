@@ -72,12 +72,17 @@ export class RegistrarPage {
         };
         this.registroService.createRegistro(registro)
         .then((res) => {
-          alert(res);
           this.registro = res;
+          console.log(this.registro.mensaje);
         });
 
-        this.tags = [];
-        this.descripcionOculta="";
+        if(this.registro.correcto){
+          alert(this.registro.mensaje);
+          this.tags = [];
+          this.descripcionOculta="";
+        }else{
+          alert(this.registro.mensaje)
+        }        
       }
     }
 

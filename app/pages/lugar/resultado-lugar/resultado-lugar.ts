@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
 import { NavController,Platform, Alert, Page, NavParams} from 'ionic-angular';
 
-//servicio para llamados http
-import { RegistroService} from '../../providers/registro-service/registro-service';
+
+//Servicio de llamados http 
+import { LugarService} from '../../../providers/lugar-service/lugar-service';
 
 // Pagina para navegar
-import { DetalleRetiroPage} from '../../pages/detalle-retiro/detalle-retiro';
+import { DetalleBusquedaPage} from '../detalle-busqueda/detalle-busqueda';
 
 @Component({ 
-   templateUrl: 'build/pages/consultar/consultar.html',
-   providers: [RegistroService]
+   templateUrl: 'build/pages/lugar/resultado-lugar/resultado-lugar.html',
+   providers: [LugarService]
 })
 
-export class ConsultarPage {
+export class ResultadoLugarPage {
   private registros: any;
   private selectedItem: any;
     //me los pasan como navParams desde la vista retirar
@@ -26,13 +27,7 @@ export class ConsultarPage {
   private descripcion: string;
   private fecha: any;
 
-  //para dividir la fecha en varios.
-  private dia: any;
-  private mes: any;
-  private año: any;
- 
-    constructor(private navCtrl: NavController, public registroService: RegistroService, public navParams: NavParams){
-      this.loadRegistros();
+    constructor(private navCtrl: NavController, public lugarService: LugarService, public navParams: NavParams){
       this.correoLugar = this.navParams.get('correoLugar');
       this.nombrePunto = this.navParams.get('nombrePunto');
       this.codigoBusqueda = this.navParams.get('codigoBusqueda');  
@@ -40,17 +35,10 @@ export class ConsultarPage {
       this.correoTrabajador = this.navParams.get('correoTrabajador');
   }
 
-	  
-   loadRegistros(){
-      this.registroService.load()
-      .then(data => {
-        this.registros = data;
-      });
-   }
 
     itemTapped(event, registro) {
-      alert("seleccionó un registro "+registro.nombre);
-     this.navCtrl.push(DetalleRetiroPage, {
+      alert("seleccionó un registro");
+     this.navCtrl.push(DetalleBusquedaPage, {
       registro: registro,
       correoLugar: this.correoLugar,
       nombrePunto: this.nombrePunto, 
@@ -62,4 +50,3 @@ export class ConsultarPage {
 
 
  }
-

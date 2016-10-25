@@ -9,7 +9,7 @@ import { RegistroService} from '../../../providers/registro-service/registro-ser
 import { DetalleRetiroPage} from '../detalle-retiro/detalle-retiro';
 
 @Component({ 
-   templateUrl: 'build/pages/consultar/consultar.html',
+   templateUrl: 'build/pages/trabajador/consultar/consultar.html',
    providers: [RegistroService]
 })
 

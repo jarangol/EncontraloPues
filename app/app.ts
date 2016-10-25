@@ -3,22 +3,26 @@ import { ionicBootstrap, Platform, Nav} from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
 //paginas
-import { ConsultarPage} from './pages/consultar/consultar';
-import { DetalleRetiroPage} from './pages/detalle-retiro/detalle-retiro';
-import { HomePage } from './pages/home/home';
-import { IdentificarPage } from './pages/identificar/identificar';
-import { Page2 } from './pages/page2/page2';
-import { RegistrarPage} from './pages/registrar/registrar';
-import { RetirarPage} from './pages/retirar/retirar';
-import {  GeneradorqrPage } from './pages/generadorqr/generadorqr';
-import {  ReclamadosPage } from './pages/reclamados/reclamados';
-<<<<<<< HEAD
-import { Login } from './pages/login/login';
-import { Objetos} from './pages/objetos/objetos'
-=======
-import {BuscarLugarPage} from './pages/lugar/buscar-lugar/buscar-lugar';
->>>>>>> Julian
 
+//trabajador
+import { ConsultarPage} from './pages/trabajador/consultar/consultar';
+import { DetalleRetiroPage} from './pages/trabajador/detalle-retiro/detalle-retiro';
+import { RegistrarPage} from './pages/trabajador/registrar/registrar';
+import { RetirarPage} from './pages/trabajador/retirar/retirar';
+import {  ReclamadosPage } from './pages/trabajador/reclamados/reclamados';
+
+//usuario
+import { IdentificarPage } from './pages/usuario/identificar/identificar';
+import {  GeneradorqrPage } from './pages/usuario/generadorqr/generadorqr';
+import { Objetos} from './pages/usuario/objetos/objetos'
+
+//lugar
+import {BuscarLugarPage} from './pages/lugar/buscar-lugar/buscar-lugar'
+
+//paginas generales
+import { Login } from './pages/login/login';
+import { HomePage } from './pages/home/home';
+import { Page2 } from './pages/page2/page2';
 
 //providers
 import { RegistroService} from './providers/registro-service/registro-service';
@@ -42,14 +46,9 @@ class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-<<<<<<< HEAD
-      { title: 'Registrar', component: RegistrarPage},
-      { title: 'Retirar', component: RetirarPage},
-=======
        { title: 'Registrar', component: RegistrarPage},
       { title: 'Buscar trabajador', component: RetirarPage},
         { title: 'Buscar Lugar', component: BuscarLugarPage},
->>>>>>> Julian
       { title: 'Detalle', component: DetalleRetiroPage} ,
       //{ title: 'Generar', component: GeneradorqrPage} ,
       { title: 'Consultar', component: ConsultarPage},

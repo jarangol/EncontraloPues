@@ -12,7 +12,7 @@ import { ConsultarPage} from '../consultar/consultar';
 import { RetirarService } from '../../../providers/retirar-service/retirar-service';
 
 @Component({
-  templateUrl: 'build/pages/retirar/retirar.html',
+  templateUrl: 'build/pages/trabajador/retirar/retirar.html',
   providers: [RetirarService],
 })
 

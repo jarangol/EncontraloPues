@@ -8,18 +8,19 @@
 // App Shared Sass variables belong in app.variables.scss.
 
 @import "../pages/home/home";
-@import "../pages/consultar/consultar";
-@import "../pages/registrar/registrar";
+@import "../pages/trabajador/consultar/consultar";
+@import "../pages/trabajador/registrar/registrar";
 @import "../pages/page2/page2";
 
 //lugar pages
 @import "../pages/lugar/buscar-lugar/buscar-lugar.scss";
 
+//trabajador
+@import "../pages/trabajador/retirar/retirar.scss";
+@import "../pages/trabajador/detalle-retiro/detalle-retiro.scss";
 
-@import "../pages/retirar/retirar.scss";
-@import "../pages/detalle-retiro/detalle-retiro.scss";
-@import "../pages/identificar/identificar.scss";
+@import "../pages/usuario/identificar/identificar.scss";
 //@import "../pages/confirmar-retiro/confirmar-retiro.scss";
-@import "../pages/reclamados/reclamados.scss";
-@import "../pages/generadorqr/generadorqr.scss";
-@import "../pages/listar-reclamados/listar-reclamados.scss";
+@import "../pages/trabajador/reclamados/reclamados.scss";
+@import "../pages/usuario/generadorqr/generadorqr.scss";
+//@import "../pages/listar-reclamados/listar-reclamados.scss";

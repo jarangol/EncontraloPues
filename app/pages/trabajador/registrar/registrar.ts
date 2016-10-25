@@ -7,7 +7,7 @@ import {BarcodeScanner} from 'ionic-native';
 import { RegistroService} from '../../../providers/registro-service/registro-service';
 
 @Component({
-  templateUrl: 'build/pages/registrar/registrar.html',
+  templateUrl: 'build/pages/trabajador/registrar/registrar.html',
   providers: [RegistroService]
 })
 

@@ -5,7 +5,7 @@ import { NavController } from 'ionic-angular';
 import { RetiradosService} from '../../../providers/retirados-service/retirados-service';
 
 @Component({
-  templateUrl: 'build/pages/reclamados/reclamados.html',
+  templateUrl: 'build/pages/trabajador/reclamados/reclamados.html',
     providers: [RetiradosService],
 })
 export class ReclamadosPage {

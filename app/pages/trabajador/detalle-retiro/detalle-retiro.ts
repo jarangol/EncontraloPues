@@ -6,7 +6,7 @@ import { RetirarService } from '../../../providers/retirar-service/retirar-servi
 
 
 @Component({
-  templateUrl: 'build/pages/detalle-retiro/detalle-retiro.html',
+  templateUrl: 'build/pages/trabajador/detalle-retiro/detalle-retiro.html',
 })
 export class DetalleRetiroPage {
 

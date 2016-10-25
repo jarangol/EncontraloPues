@@ -2,11 +2,11 @@ import { Component,  OnInit } from '@angular/core';
 import { NavController} from 'ionic-angular';
 
 //proveedor del service de qr
-import { GenerarQRService} from '../../providers/generarQR/generarQR';
+import { GenerarQRService} from '../../../providers/generarQR/generarQR';
 
 
 @Component({
-  templateUrl: 'build/pages/generadorqr/generadorqr.html',
+  templateUrl: 'build/pages/usuario/generadorqr/generadorqr.html',
   providers: [GenerarQRService],
 })
 

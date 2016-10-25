@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 //Service para los llamados http
-import { RetiradosService} from '../../providers/retirados-service/retirados-service';
+import { RetiradosService} from '../../../providers/retirados-service/retirados-service';
 
 @Component({
   templateUrl: 'build/pages/reclamados/reclamados.html',

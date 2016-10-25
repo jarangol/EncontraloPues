@@ -4,9 +4,9 @@ import { NavController,Platform, Alert, Page, NavParams} from 'ionic-angular';
 //service: 
 //import {Registros} from '../../providers/registros/registros';
 
-import { RegistroService} from '../../providers/registro-service/registro-service';
+import { RegistroService} from '../../../providers/registro-service/registro-service';
 
-import { DetalleRetiroPage} from '../../pages/detalle-retiro/detalle-retiro';
+import { DetalleRetiroPage} from '../detalle-retiro/detalle-retiro';
 
 @Component({ 
    templateUrl: 'build/pages/consultar/consultar.html',

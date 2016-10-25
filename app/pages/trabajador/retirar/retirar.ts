@@ -3,13 +3,13 @@ import { NavController,Page, Platform, Alert, AlertController,NavParams} from 'i
 import {BarcodeScanner} from 'ionic-native';
 
 //page de detalle del retiro
-import { DetalleRetiroPage} from '../../pages/detalle-retiro/detalle-retiro';
+import { DetalleRetiroPage} from '../detalle-retiro/detalle-retiro';
 
 //pagina para resultado de la busqueda
-import { ConsultarPage} from '../../pages/consultar/consultar';
+import { ConsultarPage} from '../consultar/consultar';
 
 //proveedor del service
-import { RetirarService } from '../../providers/retirar-service/retirar-service';
+import { RetirarService } from '../../../providers/retirar-service/retirar-service';
 
 @Component({
   templateUrl: 'build/pages/retirar/retirar.html',

@@ -4,10 +4,7 @@ import {Validators, FormBuilder } from '@angular/forms';
 import {BarcodeScanner} from 'ionic-native';
 
 //proveedor del service
-import { RegistroService} from '../../providers/registro-service/registro-service';
-
-//clase para registroQR
-import {RegistroQR} from '../../registroQR';
+import { RegistroService} from '../../../providers/registro-service/registro-service';
 
 @Component({
   templateUrl: 'build/pages/registrar/registrar.html',
@@ -19,8 +16,6 @@ export class RegistrarPage {
  qrToggle: any; //toggle tag
  codigoBusqueda: any; //retornado al hacer el registro
  registro: any;
-
- private registroQR: RegistroQR;
 
  codigoQR: string;
  correoLugar: string;

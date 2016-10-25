@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams,AlertController} from 'ionic-angular';
 
 //proveedor del service
-import { RetirarService } from '../../providers/retirar-service/retirar-service';
+import { RetirarService } from '../../../providers/retirar-service/retirar-service';
 
 
 @Component({

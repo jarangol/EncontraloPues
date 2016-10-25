@@ -11,13 +11,10 @@ import { Page2 } from './pages/page2/page2';
 import { RegistrarPage} from './pages/registrar/registrar';
 import { RetirarPage} from './pages/retirar/retirar';
 import {  GeneradorqrPage } from './pages/generadorqr/generadorqr';
-<<<<<<< HEAD
 import {  ReclamadosPage } from './pages/reclamados/reclamados';
-=======
 import { Login } from './pages/login/login';
 import { Objetos} from './pages/objetos/objetos'
 
->>>>>>> login
 
 //providers
 import { RegistroService} from './providers/registro-service/registro-service';
@@ -46,16 +43,11 @@ class MyApp {
       { title: 'Detalle', component: DetalleRetiroPage} ,
       //{ title: 'Generar', component: GeneradorqrPage} ,
       { title: 'Consultar', component: ConsultarPage},
-<<<<<<< HEAD
      // { title: 'Page2', component: Page2 },
-      { title: 'Reclamados', component: ReclamadosPage }
-     
-=======
+      { title: 'Reclamados', component: ReclamadosPage },
       { title: 'Login', component: Login},
       { title: 'Page2', component: Page2 },
       { title: 'Objetos', component: Objetos },
-
->>>>>>> login
     ];
 
   }

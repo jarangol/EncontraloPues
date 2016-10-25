@@ -10,14 +10,14 @@
 <ion-content padding>
   
   <ion-list no-lines>
+      <ion-item>
+            <ion-input [(ngModel)]="codigoBusqueda" type="search" placeholder="Código de Busqueda" clearInput></ion-input>
+      </ion-item>
+      
      <ion-item>
         <ion-label>Fecha de pérdida</ion-label>
         <ion-datetime  displayFormat="MMM/YYYY" pickerFormat="MMM-YYYY" [(ngModel)]="fecha" ></ion-datetime>
       </ion-item>
-
-        <ion-item>
-            <ion-input [(ngModel)]="codigoBusqueda" type="search" placeholder="Código de Busqueda" clearInput></ion-input>
-        </ion-item>
 
       
     <ion-label stacked>Tags</ion-label>

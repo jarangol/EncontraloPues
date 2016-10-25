@@ -26,16 +26,18 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     let body = JSON.stringify(consulta);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    
+
+   /*  
     if (this.data) {
       return Promise.resolve(this.data);
     }
+    */
     
     return new Promise(resolve => {
-    
       this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajador',body, {headers: headers})
         .subscribe(res => {
           this.data = res.json();
+          console.log("En el service: "+res.text());
           resolve(this.data);
       });
     });  

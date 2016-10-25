@@ -19,7 +19,7 @@ import { RetirarService } from '../../providers/retirar-service/retirar-service'
 
 export class RetirarPage {
 
-private qrToggle: any; //variable de la interfaz 
+private qrToggle: any; //variable de la interfaz para activarQR
 private qrCode: string; //codigo escaneado
 private tags: any;
 private añoRegistro: any;
@@ -27,7 +27,6 @@ private mesRegistro: any;
 private fecha: any;
 
 private registros: any; //devuelve de la consulta por codigo de búsqueda
-private status: any; // status que devuelve la consulta por codigo.
 
 //necesarios para el insert de un retiro
 private correoLugar: string;
@@ -35,7 +34,6 @@ private nombrePunto: string;
 private nombreLugar: string;
 private codigoBusqueda: any; //ingresado por el usuario
 private correoTrabajador: string; 
-private data1: any;
 
   constructor(public platform: Platform, private navCtrl: NavController,public retirarService: RetirarService,public alertCtrl: AlertController) {
   	 this.tags = [];
@@ -117,7 +115,8 @@ private data1: any;
   }
 
   public buscar(){
-  	if(this.fecha){
+  	alert(this.fecha);
+		if(this.fecha){
   		let consulta = {
   			añoMesRegistro : this.fecha,
   			codigoBusqueda: this.codigoBusqueda,
@@ -133,8 +132,10 @@ private data1: any;
 				.then((data) => {
 					this.registros = data;
 					console.log(this.registros);
+					alert(this.registros);
 				});
 
+				
 				
 				// this.navCtrl.push(ConsultarPage,{ 	 	
 					

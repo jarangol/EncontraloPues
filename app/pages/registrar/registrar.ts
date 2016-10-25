@@ -70,6 +70,7 @@ export class RegistrarPage {
           nombrePunto: this.nombrePunto,
           correoTrabajador: this.correoTrabajador
         };
+       
         this.registroService.createRegistro(registro)
         .then((res) => {
           this.registro = res;

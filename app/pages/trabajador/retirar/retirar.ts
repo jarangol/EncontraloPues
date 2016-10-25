@@ -22,9 +22,7 @@ export class RetirarPage {
 private qrToggle: any; //variable de la interfaz para activarQR
 private qrCode: string; //codigo escaneado
 private tags: any;
-private añoRegistro: any;
-private mesRegistro: any;
-private fecha: any;
+private fecha: any; //fecha del registro (YYYY-MM)
 
 private registros: any; //devuelve de la consulta por codigo de búsqueda
 
@@ -94,11 +92,11 @@ private correoTrabajador: string;
 			    		};
 
 		            this.retirarService.createRetiroQR(retiro)
-					  .then((data) => {
-			      		this.registros = data;
-			      		console.log(data);
-			      		alert(data);
-			   		 });
+								.then((data) => {
+										this.registros = data;
+										console.log(data);
+										alert(data);
+								});
 
 		          }
 		        }
@@ -115,7 +113,6 @@ private correoTrabajador: string;
   }
 
   public buscar(){
-  	alert(this.fecha);
 		if(this.fecha){
   		let consulta = {
   			añoMesRegistro : this.fecha,
@@ -123,31 +120,26 @@ private correoTrabajador: string;
   			tags: this.tags,
   			correoLugar: this.correoLugar,
   			nombrePunto: this.nombrePunto,
-	  		codigoObjeto: this.codigoBusqueda,
-	  		
   		}
   		
 			
 			this.retirarService.consultarPerdidosTrabajador(consulta)
 				.then((data) => {
 					this.registros = data;
-					console.log(this.registros);
-					alert(this.registros);
 				});
 
 				
 				
-				// this.navCtrl.push(ConsultarPage,{ 	 	
-					
-				// 	correoLugar: this.correoLugar,
-				// 	nombrePunto: this.nombrePunto,
-				// 	codigoBusqueda: this.codigoBusqueda,
-				// 	registros: this.registros.lugar.puntosRecoleccion ,
-				// 	correoTrabajador: this.correoTrabajador
+				this.navCtrl.push(ConsultarPage,{ 	 					
+				 	correoLugar: this.correoLugar,
+					nombrePunto: this.nombrePunto,
+					codigoBusqueda: this.codigoBusqueda,
+					registros: this.registros,
+					correoTrabajador: this.correoTrabajador
+				});
 
-				// });
 			this.codigoBusqueda = "";
-			this.registros=null;
+			this.registros=undefined;
 		}	
   }
 

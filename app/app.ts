@@ -49,14 +49,14 @@ class MyApp {
        { title: 'Registrar', component: RegistrarPage},
       { title: 'Buscar trabajador', component: RetirarPage},
         { title: 'Buscar Lugar', component: BuscarLugarPage},
-      { title: 'Detalle', component: DetalleRetiroPage} ,
+      //{ title: 'Detalle', component: DetalleRetiroPage} ,
       //{ title: 'Generar', component: GeneradorqrPage} ,
       { title: 'Consultar', component: ConsultarPage},
      // { title: 'Page2', component: Page2 },
       { title: 'Reclamados', component: ReclamadosPage },
-      { title: 'Login', component: Login},
-      { title: 'Page2', component: Page2 },
-      { title: 'Objetos', component: Objetos },
+     // { title: 'Login', component: Login},
+      //{ title: 'Page2', component: Page2 },
+      //{ title: 'Objetos', component: Objetos },
     ];
 
   }

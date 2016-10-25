@@ -35,13 +35,13 @@ private añoMes: any; //año y mes concatenados AAAA-MM
 	    this.correoTrabajador = this.navParams.get('correoTrabajador');
 
    
-     if(this.registro){  
-         this.tags = this.registro.objetosPerdidos.sinCodigoQR.tags;
-    	   this.descripcion = this.registro.objetosPerdidos.sinCodigoQR.descripcionOculta;
+    //  if(this.registro){  
+    //      this.tags = this.registro.objetosPerdidos.sinCodigoQR.tags;
+    // 	   this.descripcion = this.registro.objetosPerdidos.sinCodigoQR.descripcionOculta;
     	  
-         this.dia = this.registro.objetosPerdidos.fechaRegistro.dia; 
-         this.fecha =this.añoMes + '-' + this.dia ;
-    }
+    //      this.dia = this.registro.objetosPerdidos.fechaRegistro.dia; 
+    //      this.fecha =this.añoMes + '-' + this.dia ;
+    // }
   }
 
 

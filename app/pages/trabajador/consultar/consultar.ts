@@ -49,6 +49,7 @@ export class ConsultarPage {
       });
    }
 
+   //actual para pintar
     itemTapped(event, registro) {
       alert("seleccionó un registro "+registro.nombre);
      this.navCtrl.push(DetalleRetiroPage, {

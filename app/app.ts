@@ -11,37 +11,51 @@ import { Page2 } from './pages/page2/page2';
 import { RegistrarPage} from './pages/registrar/registrar';
 import { RetirarPage} from './pages/retirar/retirar';
 import {  GeneradorqrPage } from './pages/generadorqr/generadorqr';
+<<<<<<< HEAD
 import {  ReclamadosPage } from './pages/reclamados/reclamados';
+=======
+import { Login } from './pages/login/login';
+import { Objetos} from './pages/objetos/objetos'
+
+>>>>>>> login
 
 //providers
 import { RegistroService} from './providers/registro-service/registro-service';
 import { RetirarService} from './providers/retirar-service/retirar-service';
+import { LogInService } from './providers/logIn-service/logIn-service';
 
 @Component({
   templateUrl: 'build/app.html'
-  ,providers: [RegistroService, RetirarService]
+  ,providers: [RegistroService, RetirarService, LogInService]
 })
 
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = RetirarPage;
-  
+
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform) {
     this.initializeApp();
-    
+
     // used for an example of ngFor and navigation
     this.pages = [
-       { title: 'Registrar', component: RegistrarPage},
+      { title: 'Registrar', component: RegistrarPage},
       { title: 'Retirar', component: RetirarPage},
       { title: 'Detalle', component: DetalleRetiroPage} ,
       //{ title: 'Generar', component: GeneradorqrPage} ,
       { title: 'Consultar', component: ConsultarPage},
+<<<<<<< HEAD
      // { title: 'Page2', component: Page2 },
       { title: 'Reclamados', component: ReclamadosPage }
      
+=======
+      { title: 'Login', component: Login},
+      { title: 'Page2', component: Page2 },
+      { title: 'Objetos', component: Objetos },
+
+>>>>>>> login
     ];
 
   }
@@ -66,4 +80,3 @@ class MyApp {
 }
 
 ionicBootstrap(MyApp);
-

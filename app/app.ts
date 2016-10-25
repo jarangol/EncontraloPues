@@ -12,8 +12,12 @@ import { RegistrarPage} from './pages/registrar/registrar';
 import { RetirarPage} from './pages/retirar/retirar';
 import {  GeneradorqrPage } from './pages/generadorqr/generadorqr';
 import {  ReclamadosPage } from './pages/reclamados/reclamados';
+<<<<<<< HEAD
 import { Login } from './pages/login/login';
 import { Objetos} from './pages/objetos/objetos'
+=======
+import {BuscarLugarPage} from './pages/lugar/buscar-lugar/buscar-lugar';
+>>>>>>> Julian
 
 
 //providers
@@ -38,8 +42,14 @@ class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
+<<<<<<< HEAD
       { title: 'Registrar', component: RegistrarPage},
       { title: 'Retirar', component: RetirarPage},
+=======
+       { title: 'Registrar', component: RegistrarPage},
+      { title: 'Buscar trabajador', component: RetirarPage},
+        { title: 'Buscar Lugar', component: BuscarLugarPage},
+>>>>>>> Julian
       { title: 'Detalle', component: DetalleRetiroPage} ,
       //{ title: 'Generar', component: GeneradorqrPage} ,
       { title: 'Consultar', component: ConsultarPage},

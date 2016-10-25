@@ -52,7 +52,7 @@ export class RegistroService {
       this.http.post(this.serverURL + '/api/registrarObjetoPerdidoQR', body, {headers: headers})
         .subscribe(res => {
            console.log("createRegistroQR():"+res.text());
-           this.data=res.text();
+           this.data=res.json();
            resolve(this.data);
        });
      });
@@ -67,7 +67,7 @@ export class RegistroService {
     return new Promise(resolve => {
       this.http.post('https://afternoon-crag-97293.herokuapp.com/api/registrarObjetoPerdido', body, {headers: headers})
         .subscribe(res => {
-           this.data = res.text();
+           this.data = res.json();
            resolve(this.data);
         });
      

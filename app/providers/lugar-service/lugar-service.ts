@@ -2,14 +2,9 @@ import { Injectable } from '@angular/core';
 import { Http , Headers, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-/*
-  Generated class for the RetirarService provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
-export class RetirarService {
+export class LugarService {
 
 private data: any;
 private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
@@ -22,22 +17,21 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
   /**
   * Get para datos de prueba
   **/
-  public consultarPerdidosTrabajador(consulta) {
+  public consultarPerdidosLugar(consulta) {
     let body = JSON.stringify(consulta);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-
-   /*  
+    
     if (this.data) {
       return Promise.resolve(this.data);
     }
-    */
     
     return new Promise(resolve => {
-      this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajador',body, {headers: headers})
+    
+      this.http.post(this.serverURL + '/api/consultarObjetosPerdidosLugar',body, {headers: headers})
         .subscribe(res => {
           this.data = res.json();
-          console.log("En el service: "+res.text());
+          console.log(res);
           resolve(this.data);
       });
     });  

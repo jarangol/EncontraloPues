@@ -4,6 +4,8 @@ import {BarcodeScanner} from 'ionic-native';
 
 //page de detalle del retiro
 import { DetalleRetiroPage} from '../../pages/detalle-retiro/detalle-retiro';
+
+//pagina para resultado de la busqueda
 import { ConsultarPage} from '../../pages/consultar/consultar';
 
 //proveedor del service
@@ -17,7 +19,7 @@ import { RetirarService } from '../../providers/retirar-service/retirar-service'
 
 export class RetirarPage {
 
-private qrToggle: any; //variable de la interfaz 
+private qrToggle: any; //variable de la interfaz para activarQR
 private qrCode: string; //codigo escaneado
 private tags: any;
 private añoRegistro: any;
@@ -25,7 +27,6 @@ private mesRegistro: any;
 private fecha: any;
 
 private registros: any; //devuelve de la consulta por codigo de búsqueda
-private status: any; // status que devuelve la consulta por codigo.
 
 //necesarios para el insert de un retiro
 private correoLugar: string;
@@ -33,7 +34,6 @@ private nombrePunto: string;
 private nombreLugar: string;
 private codigoBusqueda: any; //ingresado por el usuario
 private correoTrabajador: string; 
-private data1: any;
 
   constructor(public platform: Platform, private navCtrl: NavController,public retirarService: RetirarService,public alertCtrl: AlertController) {
   	 this.tags = [];
@@ -86,12 +86,12 @@ private data1: any;
 		            console.log('data:'+data);
 
 		            let retiro={
-				    	codigoQR: this.qrCode,
-				        correoLugar: this.correoLugar ,
-				        codigoRetiro: data,
-				        nombrePunto: this.nombrePunto,
-				    	correoTrabajador: this.correoTrabajador 
-			    	};
+									codigoQR: this.qrCode,
+									correoLugar: this.correoLugar ,
+									codigoRetiro: data,
+									nombrePunto: this.nombrePunto,
+									correoTrabajador: this.correoTrabajador 
+			    		};
 
 		            this.retirarService.createRetiroQR(retiro)
 					  .then((data) => {
@@ -115,9 +115,10 @@ private data1: any;
   }
 
   public buscar(){
-  	if(this.fecha){
+  	alert(this.fecha);
+		if(this.fecha){
   		let consulta = {
-  			fecha : this.fecha,
+  			añoMesRegistro : this.fecha,
   			codigoBusqueda: this.codigoBusqueda,
   			tags: this.tags,
   			correoLugar: this.correoLugar,
@@ -126,27 +127,28 @@ private data1: any;
 	  		
   		}
   		
-  	
-		this.retirarService.consultarPerdidosTrabajador(consulta)
-		  .then((data) => {
-      		this.registros = data;
-      		console.log(data.status);
-   		 });
+			
+			this.retirarService.consultarPerdidosTrabajador(consulta)
+				.then((data) => {
+					this.registros = data;
+					console.log(this.registros);
+					alert(this.registros);
+				});
 
-  		this.registros = this.registros;
-	  	
-	  	this.navCtrl.push(ConsultarPage,{ 	 	
-	  	 	 
-	  	 	 correoLugar: this.correoLugar,
-	  	 	 nombrePunto: this.nombrePunto,
-	  	 	 codigoBusqueda: this.codigoBusqueda,
-	  	 	 registros: this.registros.lugar.puntosRecoleccion ,
-	  	 	 correoTrabajador: this.correoTrabajador
+				
+				
+				// this.navCtrl.push(ConsultarPage,{ 	 	
+					
+				// 	correoLugar: this.correoLugar,
+				// 	nombrePunto: this.nombrePunto,
+				// 	codigoBusqueda: this.codigoBusqueda,
+				// 	registros: this.registros.lugar.puntosRecoleccion ,
+				// 	correoTrabajador: this.correoTrabajador
 
-	  	});
-	  	this.codigoBusqueda = "";
-		this.registros=null;
-	}	
+				// });
+			this.codigoBusqueda = "";
+			this.registros=null;
+		}	
   }
 
     public addTag(tagNameInput: any): void {

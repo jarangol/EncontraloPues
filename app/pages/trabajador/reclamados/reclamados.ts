@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-
+//Service para los llamados http
 import { RetiradosService} from '../../providers/retirados-service/retirados-service';
 
 @Component({
@@ -9,7 +9,10 @@ import { RetiradosService} from '../../providers/retirados-service/retirados-ser
     providers: [RetiradosService],
 })
 export class ReclamadosPage {
-private objetos: any;
+  private objetos: any;
+
+  //campos para la consulta
+  private nombrePunto: any;
 
   constructor(private navCtrl: NavController, private retiradosService: RetiradosService) {
   	

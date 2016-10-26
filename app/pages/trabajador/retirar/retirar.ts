@@ -126,20 +126,21 @@ private correoTrabajador: string;
 			this.retirarService.consultarPerdidosTrabajador(consulta)
 				.then((data) => {
 					this.registros = data;
+					//console.log("En retirar "+this.registros);
+		
+					this.navCtrl.push(ConsultarPage,{ 	 					
+						correoLugar: this.correoLugar,
+						nombrePunto: this.nombrePunto,
+						codigoBusqueda: this.codigoBusqueda,
+						registros: this.registros, //.lugar.puntosRecoleccion,
+						correoTrabajador: this.correoTrabajador
+					});
+
 				});
 
 				
-				
-				this.navCtrl.push(ConsultarPage,{ 	 					
-				 	correoLugar: this.correoLugar,
-					nombrePunto: this.nombrePunto,
-					codigoBusqueda: this.codigoBusqueda,
-					registros: this.registros,
-					correoTrabajador: this.correoTrabajador
-				});
-
+	
 			this.codigoBusqueda = "";
-			this.registros=undefined;
 		}	
   }
 

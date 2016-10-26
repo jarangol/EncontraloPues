@@ -37,7 +37,7 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
       this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajador',body, {headers: headers})
         .subscribe(res => {
           this.data = res.json();
-          console.log("En el service: "+res.text());
+          //console.log("En el service: "+res.text());
           resolve(this.data);
       });
     });  

@@ -27,10 +27,8 @@
             <ion-input [(ngModel)]="codigoBusqueda" type="search" placeholder="Código de Busqueda" clearInput></ion-input>
         </ion-item>
 
-      
     <ion-label stacked>Tags</ion-label>
-       
-      
+        
       <ion-item>     
           <ion-input  #ntag type="text" placeholder="Escriba aquí la etiqueta"></ion-input>
           <button ion-button (click)="addTag(ntag)" ng-enter="addTag(ntag)"  item-right>

@@ -29,29 +29,21 @@ export class ConsultarPage {
 
   //para dividir la fecha en varios.
   private dia: any;
-  private mes: any;
-  private año: any;
+  private añoMes: any;
+  
  
     constructor(private navCtrl: NavController, public registroService: RegistroService, public navParams: NavParams){
-      this.loadRegistros();
       this.correoLugar = this.navParams.get('correoLugar');
       this.nombrePunto = this.navParams.get('nombrePunto');
       this.codigoBusqueda = this.navParams.get('codigoBusqueda');  
       this.registros = this.navParams.get('registros');
       this.correoTrabajador = this.navParams.get('correoTrabajador');
+      console.log("En consultar "+this.registros);
   }
 
-	  
-   loadRegistros(){
-      this.registroService.load()
-      .then(data => {
-        this.registros = data;
-      });
-   }
 
-   //actual para pintar
+   //para ir a ver el detalle
     itemTapped(event, registro) {
-      alert("seleccionó un registro "+registro.nombre);
      this.navCtrl.push(DetalleRetiroPage, {
       registro: registro,
       correoLugar: this.correoLugar,

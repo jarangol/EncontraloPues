@@ -31,7 +31,7 @@ export class RegistrarPage {
 
          //ejemplo de registro con QR
          this.correoLugar="Eafit@";
-         this.nombrePunto="c";
+         this.nombrePunto="b";
          this.correoTrabajador="m";
          this.codigoQR="57f4bc2305ce30bc346183b0";
 
@@ -67,8 +67,9 @@ export class RegistrarPage {
         };
         this.registroService.createRegistro(registro)
         .then((res) => {
-          alert(res);
           this.registro = res;
+          alert(this.registro.mensaje);
+          
         });
 
         this.tags = [];

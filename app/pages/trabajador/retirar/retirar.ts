@@ -24,7 +24,7 @@ private qrCode: string; //codigo escaneado
 private tags: any;
 private fecha: any; //fecha del registro (YYYY-MM)
 
-private registros: any; //devuelve de la consulta por codigo de búsqueda
+public registros: any; //devuelve de la consulta por codigo de búsqueda
 
 //necesarios para el insert de un retiro
 private correoLugar: string;
@@ -37,7 +37,7 @@ private correoTrabajador: string;
   	 this.tags = [];
 
   	 this.correoLugar="Eafit@";
-     this.nombrePunto="c";
+     this.nombrePunto="b";
      this.correoTrabajador="m";
      this.nombreLugar="d";
   }
@@ -121,28 +121,28 @@ private correoTrabajador: string;
   			correoLugar: this.correoLugar,
   			nombrePunto: this.nombrePunto,
   		}
-  		
-			
+  		 
+			let registros2: any;
+
 			this.retirarService.consultarPerdidosTrabajador(consulta)
-				.then((data) => {
-					this.registros = data;
-					//console.log("En retirar "+this.registros);
-		
-					this.navCtrl.push(ConsultarPage,{ 	 					
-						correoLugar: this.correoLugar,
-						nombrePunto: this.nombrePunto,
-						codigoBusqueda: this.codigoBusqueda,
-						registros: this.registros, //.lugar.puntosRecoleccion,
-						correoTrabajador: this.correoTrabajador
-					});
-
+			.then((data) => {
+      	console.log(data);
+      	this.navCtrl.push(ConsultarPage,{ 	 					
+					correoLugar: this.correoLugar,
+					nombrePunto: this.nombrePunto,
+					codigoBusqueda: this.codigoBusqueda,
+					registros: data, //.lugar.puntosRecoleccion,
+					correoTrabajador: this.correoTrabajador
 				});
+			});
+			console.log("En page: "+registros2);
 
-				
-	
+			
+
 			this.codigoBusqueda = "";
 		}	
-  }
+}
+	
 
     public addTag(tagNameInput: any): void {
     if(tagNameInput.value) {

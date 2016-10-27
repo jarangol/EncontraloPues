@@ -15,7 +15,7 @@ private data: any;
 private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
   
   constructor(private http: Http){
-    this.data = null;
+    //this.data = null;
   }
 
 
@@ -27,17 +27,20 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     let headers = new Headers();
     headers.append('Content-Type','application/json');
 
-   /*  
+   
     if (this.data) {
-      return Promise.resolve(this.data);
+      return this.data;
     }
-    */
+    
+    // this.data = this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajador',body, {headers: headers});
+    // return this.data;
     
     return new Promise(resolve => {
       this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajador',body, {headers: headers})
-        .subscribe(res => {
-          this.data = res.json();
-          //console.log("En el service: "+res.text());
+        .map(res => res.json())
+        .subscribe(data => {
+          this.data = data;
+          console.log("En el service: "+data);
           resolve(this.data);
       });
     });  

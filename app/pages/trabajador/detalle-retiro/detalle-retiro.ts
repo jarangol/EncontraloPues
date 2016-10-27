@@ -22,6 +22,7 @@ private tags: any;
 private descripcion: string;
 private fecha: any;
 
+
 //para dividir la fecha en varios.
 private dia: any;
 private añoMes: any; //año y mes concatenados AAAA-MM
@@ -31,16 +32,16 @@ private añoMes: any; //año y mes concatenados AAAA-MM
       this.registro = this.navParams.get('registro');
       this.correoLugar = this.navParams.get('correoLugar');
       this.nombrePunto = this.navParams.get('nombrePunto'); 
-      this.codigoBusqueda = this.navParams.get('codigoBusqueda');
 	    this.correoTrabajador = this.navParams.get('correoTrabajador');
    
      if(this.registro){  
          this.tags = this.registro.lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags;
     	   this.descripcion = this.registro.lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.descripcionOculta;
-    	  
+    	   this.codigoBusqueda = this.registro.lugar.puntosRecoleccion.objetosPerdidos.codigoBusqueda;
+
          this.dia = this.registro.lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.dia; 
          this.añoMes = this.registro.lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.añoMes; 
-         this.fecha =this.añoMes + '-' + this.dia ;
+         this.fecha =this.añoMes + '-' + this.dia ; //para concatenar la fecha que viene separada
     }
   }
 
@@ -94,8 +95,9 @@ private añoMes: any; //año y mes concatenados AAAA-MM
 
                   this.retirarService.createRetiro(retiro)
                     .then((res) => {
-                      alert(res);
+                  
                       this.registro = res;
+                      alert(this.registro.mensaje);
                     });
                 }
               }

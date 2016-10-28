@@ -18,6 +18,9 @@ import { RetirarService } from '../../../providers/retirar-service/retirar-servi
 
 
 export class RetirarPage {
+tab1Root = ConsultarPage;
+tab2Root = DetalleRetiroPage;
+
 
 private qrToggle: any; //variable de la interfaz para activarQR
 private qrCode: string; //codigo escaneado

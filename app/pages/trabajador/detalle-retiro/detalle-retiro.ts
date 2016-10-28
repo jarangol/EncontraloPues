@@ -21,7 +21,7 @@ private correoTrabajador: any;
 private tags: any;
 private descripcion: string;
 private fecha: any;
-
+private punto: any;
 
 //para dividir la fecha en varios.
 private dia: any;
@@ -35,13 +35,15 @@ private añoMes: any; //año y mes concatenados AAAA-MM
 	    this.correoTrabajador = this.navParams.get('correoTrabajador');
    
      if(this.registro){  
-         this.tags = this.registro.lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags;
-    	   this.descripcion = this.registro.lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.descripcionOculta;
-    	   this.codigoBusqueda = this.registro.lugar.puntosRecoleccion.objetosPerdidos.codigoBusqueda;
-
          this.dia = this.registro.lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.dia; 
          this.añoMes = this.registro.lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.añoMes; 
          this.fecha =this.añoMes + '-' + this.dia ; //para concatenar la fecha que viene separada
+   	     
+         this.codigoBusqueda = this.registro.lugar.puntosRecoleccion.objetosPerdidos.codigoBusqueda;
+         this.tags = this.registro.lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags;
+    	   this.descripcion = this.registro.lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.descripcionOculta;
+         this.punto =  this.registro.lugar.puntosRecoleccion.nombre;
+       
     }
   }
 

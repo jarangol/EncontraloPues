@@ -3,21 +3,33 @@
   	 <button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-     	<ion-title>Buscar Objetos</ion-title>
+    <ion-title>Buscar objetos</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding="true">
+
+<ion-content>
   
-  <ion-list no-lines>
+  <div padding>
+        <ion-segment [(ngModel)]="tipoBusqueda">
+          <ion-segment-button value="fecha">
+            Fecha
+          </ion-segment-button>
+          <ion-segment-button value="codigo">
+            Codigo
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+
+<div *ngSwitch="tipoBusqueda">
+  <form *ngSwitchWhen="'fecha'">
       <ion-item>
         <ion-label>Leer QR</ion-label>
         <ion-toggle [(ngModel)]="qrToggle" value="foo" checked="false"    
         (ionChange)="activarQR()"></ion-toggle>
       </ion-item>
       <br>
-
-
+  
        <ion-item>
         <ion-label>Fecha de pérdida</ion-label>
         <ion-datetime  displayFormat="MMM/YYYY" pickerFormat="MMM-YYYY" [(ngModel)]="fecha" ></ion-datetime>
@@ -45,12 +57,26 @@
           </span>
           </div>
       </ion-item>    
-  </ion-list> 
+  </form> 
 
-    <button ion-button block  color="secondary" (click)="buscar()">
-    <ion-icon ios="ios-search" md="md-search"></ion-icon> 
-    Buscar 
-     </button>
+
+  <form *ngSwitchWhen="'codigo'">
+      <ion-item>
+        <ion-label>Leer QR</ion-label>
+        <ion-toggle [(ngModel)]="qrToggle" value="foo" checked="false"    
+        (ionChange)="activarQR()"></ion-toggle>
+      </ion-item>
+      <br>
+      <ion-item>
+          <ion-input [(ngModel)]="codigoBusqueda" type="search" placeholder="Código de Busqueda" clearInput></ion-input>
+      </ion-item>
+  </form> 
+</div>
+
+  <button ion-button block  color="secondary" (click)="buscar()">
+      <ion-icon ios="ios-search" md="md-search"></ion-icon> 
+       Buscar 
+  </button>
 
 
 </ion-content>

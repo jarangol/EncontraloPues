@@ -46,11 +46,11 @@
 	
 		<ion-item>
 				<ion-label>Punto de recolección</ion-label>
-				<ion-input [(ngModel)]="nombrePunto" disabled></ion-input>
+				<ion-input [(ngModel)]="punto" disabled></ion-input>
 		</ion-item>
 	</ion-list>
 
-		<button (click)="retirar()" secondary block>Retirar</button>
+		<button *ngIf="punto == nombrePunto" (click)="retirar()" secondary block>Retirar</button>
 
 
 </ion-content>

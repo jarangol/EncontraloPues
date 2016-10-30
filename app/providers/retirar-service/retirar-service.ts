@@ -20,9 +20,9 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
 
 
   /**
-  * Get para datos de prueba
+  * 
   **/
-  public consultarPerdidosTrabajador(consulta) {
+  public consultarPerdidosFecha(consulta) {
     let body = JSON.stringify(consulta);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
@@ -37,6 +37,30 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     
     return new Promise(resolve => {
       this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajador',body, {headers: headers})
+        .map(res => res.json())
+        .subscribe(data => {
+          this.data = data;
+          console.log("En el service: "+data);
+          resolve(this.data);
+      });
+    });  
+  }
+
+  public consultarPerdidosCodigo(consulta) {
+    let body = JSON.stringify(consulta);
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+
+   
+    if (this.data) {
+      return this.data;
+    }
+    
+    // this.data = this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajador',body, {headers: headers});
+    // return this.data;
+    
+    return new Promise(resolve => {
+      this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajadorCodigo',body, {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;

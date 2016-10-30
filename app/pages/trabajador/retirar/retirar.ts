@@ -18,16 +18,14 @@ import { RetirarService } from '../../../providers/retirar-service/retirar-servi
 
 
 export class RetirarPage {
-tab1Root = ConsultarPage;
-tab2Root = DetalleRetiroPage;
-
-
-private qrToggle: any; //variable de la interfaz para activarQR
+//Variables de la interfaz
 private qrCode: string; //codigo escaneado
-private tags: any;
+private tags: any; //arreglo de tags ingresados
 private fecha: any; //fecha del registro (YYYY-MM)
+private tipoBusqueda: any; //para guarda la seleccion hecha en el segment
 
-public registros: any; //devuelve de la consulta por codigo de búsqueda
+
+public registros: any; //para guardar lo que devuelve  la consulta 
 
 //necesarios para el insert de un retiro
 private correoLugar: string;
@@ -37,8 +35,15 @@ private codigoBusqueda: any; //ingresado por el usuario
 private correoTrabajador: string; 
 
   constructor(public platform: Platform, private navCtrl: NavController,public retirarService: RetirarService,public alertCtrl: AlertController) {
-  	 this.tags = [];
+  	 this.tipoBusqueda = 'fecha';
 
+		 this.tags = [];
+		 var hoy = new Date();
+		 var mm = hoy.getMonth()+1; //hoy es 0!
+		 var yyyy = hoy.getFullYear();
+		 this.fecha = yyyy+'-'+mm;
+
+		 //temporal y desaparece con el login
   	 this.correoLugar="Eafit@";
      this.nombrePunto="b";
      this.correoTrabajador="m";
@@ -58,12 +63,10 @@ private correoTrabajador: string;
         return "";
     }
 
-  public activarQR():void{    
-    
-    if(this.qrToggle){
+  public activarQR(){    
   	  this.platform.ready().then(() => {       
-		BarcodeScanner.scan().then((barcodeData) => {
-			this.qrCode=barcodeData.text;
+				BarcodeScanner.scan().then((barcodeData) => {
+				this.qrCode=barcodeData.text;
 		    
 		    let prompt = this.alertCtrl.create({
 		      title: 'Retirar',
@@ -111,39 +114,54 @@ private correoTrabajador: string;
 			alert("Ha ocurrido un error: "+err);
 		}); 
       });
-    }
-
   }
 
   public buscar(){
-		if(this.fecha){
-  		let consulta = {
+		if(this.tipoBusqueda=='fecha' && this.fecha ){
+  		var consulta = {
   			añoMesRegistro : this.fecha,
-  			codigoBusqueda: this.codigoBusqueda,
   			tags: this.tags,
   			correoLugar: this.correoLugar,
   			nombrePunto: this.nombrePunto,
   		}
-  		 
-			let registros2: any;
 
-			this.retirarService.consultarPerdidosTrabajador(consulta)
+			this.retirarService.consultarPerdidosFecha(consulta)
 			.then((data) => {
       	console.log(data);
-      	this.navCtrl.push(ConsultarPage,{ 	 					
+			 this.registros=data;
+			
+				this.navCtrl.push(ConsultarPage,{ 	 					
 					correoLugar: this.correoLugar,
 					nombrePunto: this.nombrePunto,
-					codigoBusqueda: this.codigoBusqueda,
-					registros: data, //.lugar.puntosRecoleccion,
+					registros: data.mensaje, //pasarle especificamente el atributo sin el mensaje
 					correoTrabajador: this.correoTrabajador
 				});
+		
 			});
-			console.log("En page: "+registros2);
+		}else if(this.tipoBusqueda=='codigo' && this.codigoBusqueda){
+				let consulta = {
+					codigoBusqueda: this.codigoBusqueda,
+					correoLugar: this.correoLugar,
+					nombrePunto: this.nombrePunto,
+  			}
+				this.retirarService.consultarPerdidosCodigo(consulta)
+				.then((data) => {
 
-			
-
+      		console.log(data);
+					this.registros=data;
+					
+					if(this.registros.correcto){
+							this.navCtrl.push(ConsultarPage,{ 	 					
+								correoLugar: this.correoLugar,
+								nombrePunto: this.nombrePunto,
+								registros: data.mensaje, //pasarle especificamente el atributo sin el mensaje
+								correoTrabajador: this.correoTrabajador
+							});
+					}
+				});
+		}
 			this.codigoBusqueda = "";
-		}	
+		
 }
 	
 

@@ -35,7 +35,7 @@ export class ConsultarPage {
     constructor(private navCtrl: NavController, public registroService: RegistroService, public navParams: NavParams, public retirarService: RetirarService){
       this.correoLugar = this.navParams.get('correoLugar');
       this.nombrePunto = this.navParams.get('nombrePunto');
-      this.codigoBusqueda = this.navParams.get('codigoBusqueda');  
+      //this.codigoBusqueda = this.navParams.get('codigoBusqueda');  
       this.registros = this.navParams.get('registros');
       this.correoTrabajador = this.navParams.get('correoTrabajador');
       console.log("En consultar "+this.registros);

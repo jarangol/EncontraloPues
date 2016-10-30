@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams,AlertController} from 'ionic-angular';
+import { NavController, NavParams,AlertController, Nav} from 'ionic-angular';
 
 //proveedor del service
 import { RetirarService } from '../../../providers/retirar-service/retirar-service';
 
+//Pagina inicial de retirar
+import { RetirarPage} from '../../../pages/trabajador/retirar/retirar';
 
 @Component({
   templateUrl: 'build/pages/trabajador/detalle-retiro/detalle-retiro.html',
@@ -27,7 +29,9 @@ private punto: any;
 private dia: any;
 private añoMes: any; //año y mes concatenados AAAA-MM
 
-  constructor(private navCtrl: NavController,public navParams: NavParams, public alertCtrl: AlertController, public retirarService: RetirarService) {
+//private nav: Nav;
+
+  constructor(private navCtrl: NavController,public navParams: NavParams, public alertCtrl: AlertController, public retirarService: RetirarService, public nav:Nav) {
       this.tags=[];
       this.registro = this.navParams.get('registro');
       this.correoLugar = this.navParams.get('correoLugar');
@@ -81,10 +85,6 @@ private añoMes: any; //año y mes concatenados AAAA-MM
               text: 'Retirar',
               handler: data => {
                 if(data.id && data.tel && data.nombre){
-                  console.log(data.id);
-                  console.log(data.nombre);
-                  console.log(data.tel);
-                  console.log(typeof data.id);
                   let retiro={
                     numeroIdPersona: data.id,
                     nombrePersona: data.nombre,
@@ -97,9 +97,11 @@ private añoMes: any; //año y mes concatenados AAAA-MM
 
                   this.retirarService.createRetiro(retiro)
                     .then((res) => {
-                  
                       this.registro = res;
                       alert(this.registro.mensaje);
+                      if(this.registro.correcto){
+                        this.nav.setRoot(RetirarPage);
+                      }
                     });
                 }
               }

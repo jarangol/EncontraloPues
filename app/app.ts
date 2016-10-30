@@ -55,7 +55,7 @@ class MyApp {
      // { title: 'Page2', component: Page2 },
       { title: 'Reclamados', component: ReclamadosPage },
       { title: 'Login', component: Login},
-      { title: 'Page2', component: Page2 },
+      //{ title: 'Page2', component: Page2 },
       { title: 'Objetos', component: Objetos },
     ];
 

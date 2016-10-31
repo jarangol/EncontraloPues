@@ -27,7 +27,7 @@ private punto: any;
 
 //para dividir la fecha en varios.
 private dia: any;
-private añoMes: any; //año y mes concatenados AAAA-MM
+private anoMes: any; //año y mes concatenados AAAA-MM
 
 //private nav: Nav;
 
@@ -40,8 +40,8 @@ private añoMes: any; //año y mes concatenados AAAA-MM
    
      if(this.registro){  
          this.dia = this.registro.lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.dia; 
-         this.añoMes = this.registro.lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.añoMes; 
-         this.fecha =this.añoMes + '-' + this.dia ; //para concatenar la fecha que viene separada
+         this.anoMes = this.registro.lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.anoMes; 
+         this.fecha =this.anoMes + '-' + this.dia ; //para concatenar la fecha que viene separada
    	     
          this.codigoBusqueda = this.registro.lugar.puntosRecoleccion.objetosPerdidos.codigoBusqueda;
          this.tags = this.registro.lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags;
@@ -99,7 +99,7 @@ private añoMes: any; //año y mes concatenados AAAA-MM
                     .then((res) => {
                       this.registro = res;
                       alert(this.registro.mensaje);
-                      if(this.registro.correcto){
+                      if(this.registro.correcto == true){
                         this.nav.setRoot(RetirarPage);
                       }
                     });

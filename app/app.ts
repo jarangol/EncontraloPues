@@ -9,7 +9,7 @@ import { ConsultarPage} from './pages/trabajador/consultar/consultar';
 import { DetalleRetiroPage} from './pages/trabajador/detalle-retiro/detalle-retiro';
 import { RegistrarPage} from './pages/trabajador/registrar/registrar';
 import { RetirarPage} from './pages/trabajador/retirar/retirar';
-import {  ReclamadosPage } from './pages/trabajador/reclamados/reclamados';
+import { RetiradosPage } from './pages/trabajador/retirados/retirados';
 
 //usuario
 import { IdentificarPage } from './pages/usuario/identificar/identificar';
@@ -37,7 +37,7 @@ import { LogInService } from './providers/logIn-service/logIn-service';
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = RetirarPage;
+  rootPage: any = RegistrarPage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -47,15 +47,14 @@ class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
        { title: 'Registrar', component: RegistrarPage},
-      { title: 'Buscar trabajador', component: RetirarPage},
-        { title: 'Buscar Lugar', component: BuscarLugarPage},
+       { title: 'Retirar (trabajador)', component: RetirarPage},
+       { title: 'Retirar (lugar)', component: BuscarLugarPage},
       //{ title: 'Detalle', component: DetalleRetiroPage} ,
       //{ title: 'Generar', component: GeneradorqrPage} ,
-      { title: 'Consultar', component: ConsultarPage},
+      //{ title: 'Consultar', component: ConsultarPage},
      // { title: 'Page2', component: Page2 },
-      { title: 'Reclamados', component: ReclamadosPage },
+      { title: 'Retirados', component: RetiradosPage },
      // { title: 'Login', component: Login},
-      //{ title: 'Page2', component: Page2 },
       //{ title: 'Objetos', component: Objetos },
     ];
 

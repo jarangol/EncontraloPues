@@ -12,30 +12,29 @@ import { RegistroService} from '../../../providers/registro-service/registro-ser
 })
 
 export class RegistrarPage { 
- tag: any;//tag para agregar
- qrToggle: any; //toggle tag
- codigoBusqueda: any; //retornado al hacer el registro
- registro: any;
+ //atributos específicos de la vista
+ private tag: any;//tag para agregar
+ private codigoQR: string; //string scaneada desde el codigo qr
+ private tags: Array<String>; //guarda el conjunto de tags
+ private descripcionOculta: string;
+ private tipoRegistro: any; //Indica si el registro es manual o por qr.
 
- codigoQR: string;
- correoLugar: string;
- nombrePunto: string;
- correoTrabajador: string;
-
- private tags: Array<String>;
- descripcionOculta: string;
- codigo: any;
+ private registro: any; //aloja el resultado del llamado al servidor
+ 
+ //datos proporcionados en la autenticación 
+ private correoLugar: string;
+ private nombrePunto: string;
+ private  correoTrabajador: string;
 
  	constructor(public platform: Platform, private navCtrl: NavController,public registroService: RegistroService){   
-         this.tags = [];
+         this.tipoRegistro = 'manual'; //hace el tab de manual por defecto
+         this.tags = []; //para inicializar el arreglo de tags
 
          //ejemplo de registro con QR
          this.correoLugar="Eafit@";
          this.nombrePunto="b";
          this.correoTrabajador="m";
          this.codigoQR="57f4bc2305ce30bc346183b0";
-
-         //this.registroQR= new RegistroQR(this.codigoQR,this.correoLugar,this.nombrePunto,this.correoTrabajador);
     }
 
 
@@ -57,7 +56,8 @@ export class RegistrarPage {
     * Es llamado para confirmar registro manual.
     **/
     public confirmar(){
-      if(this.descripcionOculta && this.tags.length > 0){ 
+      
+      if(this.descripcionOculta && this.tags.length > 0){   
         let registro = {
           tags: this.tags,
           descripcionOculta: this.descripcionOculta,
@@ -65,11 +65,11 @@ export class RegistrarPage {
           nombrePunto: this.nombrePunto,
           correoTrabajador: this.correoTrabajador
         };
+
         this.registroService.createRegistro(registro)
         .then((res) => {
           this.registro = res;
           alert(this.registro.mensaje);
-          
         });
 
         this.tags = [];
@@ -78,45 +78,45 @@ export class RegistrarPage {
     }
 
     /**
-    * Método llamado al modificar el toggle de la parte principal.
+    * Método llamado para hacer un registro escaneando el codigo QR
     **/
-    public activarQR(): void{   
-      
-      if(this.qrToggle){
-        this.platform.ready().then(() => {       
-           BarcodeScanner.scan().then((barcodeData) => {
-             
-              let registroQR = {
-                codigoQR: barcodeData.text,
-                correoLugar: this.correoLugar,
-                nombrePunto: this.nombrePunto,
-                correoTrabajador: this.correoTrabajador
-              };
+    public activarQR(){   
 
-              this.registroService.createRegistroQR(registroQR)
-               .then((res) => {
-                alert(res);
-                this.registro = res;
-              });
+      this.platform.ready().then(() => {       
+          BarcodeScanner.scan().then((barcodeData) => {
+            
+            let registroQR = {
+              codigoQR: barcodeData.text,
+              correoLugar: this.correoLugar,
+              nombrePunto: this.nombrePunto,
+              correoTrabajador: this.correoTrabajador
+            };
 
-          }, (err) => {
-              alert("Ha ocurrido un error: "+err);
-          }); 
-        });        
-      }   
+            this.registroService.createRegistroQR(registroQR)
+              .then((res) => {
+              alert(res);
+              this.registro = res;
+            });
+
+        }, (err) => {
+            alert("Ha ocurrido un error: "+err);
+        }); 
+      });         
     }
 
-
+/**
+ * Para agregar un nuevo tag al arreglo
+ */
   public addTag(tagNameInput: any): void {
     if(tagNameInput.value) {
-      // Add the tag
       this.tags.push(tagNameInput.value);
-      
-      // Reset the field
       tagNameInput.value = '';
     }
   }
   
+  /**
+   * Para eliminar un tag del arreglo
+   */
   public deleteTag(tagName: string) {
     // Find the index of the tag
     let index = this.tags.indexOf(tagName);  

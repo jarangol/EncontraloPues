@@ -15,12 +15,13 @@ private data: any;
 private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
   
   constructor(private http: Http){
-    //this.data = null;
+    this.data = null;
   }
 
 
   /**
-  * 
+   *  Permite hacer una consulta de los objetos perdidos pasandole la fecha
+   *  y opcionalmente los tags
   **/
   public consultarPerdidosFecha(consulta) {
     let body = JSON.stringify(consulta);
@@ -45,7 +46,13 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
       });
     });  
   }
-
+ 
+ 
+ /**
+   *  Permite hacer una consulta de los objetos perdidos,
+   *  pasandole el codigo de registro
+   * El usuario debe ser un trabajador
+  **/
   public consultarPerdidosCodigo(consulta) {
     let body = JSON.stringify(consulta);
     let headers = new Headers();

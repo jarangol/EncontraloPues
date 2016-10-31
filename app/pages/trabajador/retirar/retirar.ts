@@ -20,18 +20,17 @@ import { RetirarService } from '../../../providers/retirar-service/retirar-servi
 export class RetirarPage {
 //Variables de la interfaz
 private qrCode: string; //codigo escaneado
-private tags: any; //arreglo de tags ingresados
+private tags: Array<String>; //arreglo de tags ingresados
 private fecha: any; //fecha del registro (YYYY-MM)
 private tipoBusqueda: any; //para guarda la seleccion hecha en el segment
-
+private codigoBusqueda: any; //ingresado por el usuario
 
 public registros: any; //para guardar lo que devuelve  la consulta 
 
-//necesarios para el insert de un retiro
+//necesarios para crear de un retiro
 private correoLugar: string;
 private nombrePunto: string;
 private nombreLugar: string;
-private codigoBusqueda: any; //ingresado por el usuario
 private correoTrabajador: string; 
 
   constructor(public platform: Platform, private navCtrl: NavController,public retirarService: RetirarService,public alertCtrl: AlertController) {
@@ -118,8 +117,8 @@ private correoTrabajador: string;
 
   public buscar(){
 		if(this.tipoBusqueda=='fecha' && this.fecha ){
-  		var consulta = {
-  			añoMesRegistro : this.fecha,
+  		let consulta = {
+  			anoMesRegistro : this.fecha,
   			tags: this.tags,
   			correoLugar: this.correoLugar,
   			nombrePunto: this.nombrePunto,
@@ -128,7 +127,7 @@ private correoTrabajador: string;
 			this.retirarService.consultarPerdidosFecha(consulta)
 			.then((data) => {
       	console.log(data);
-			 this.registros=data;
+			  this.registros=data;
 			
 				this.navCtrl.push(ConsultarPage,{ 	 					
 					correoLugar: this.correoLugar,
@@ -151,10 +150,10 @@ private correoTrabajador: string;
 					this.registros=data;
 					
 					if(this.registros.correcto){
-							this.navCtrl.push(ConsultarPage,{ 	 					
+							this.navCtrl.push(DetalleRetiroPage,{ 	 					
 								correoLugar: this.correoLugar,
 								nombrePunto: this.nombrePunto,
-								registros: data.mensaje, //pasarle especificamente el atributo sin el mensaje
+								registro: data.mensaje, //pasarle especificamente el atributo sin el mensaje
 								correoTrabajador: this.correoTrabajador
 							});
 					}

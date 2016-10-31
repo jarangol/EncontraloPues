@@ -10,25 +10,34 @@
 
 <ion-content class="consultar">
     <ion-list> 
-     <!--<ion-list-header> En este punto </ion-list-header>-->
       <ion-list-header>
         <ion-row>
-            <ion-col>Fecha </ion-col>
+            <ion-col>Fecha Registro</ion-col>
+            <ion-col>Fecha Retiro</ion-col>
             <ion-col>Tags </ion-col>
-            <ion-col>Ubicación</ion-col>
         </ion-row>
       </ion-list-header>
-     <button ion-item *ngFor="let registro of registros"  (click)="itemTapped($event,registro)">
+     <button ion-item *ngFor="let registro of registros"  (click)="itemTapped($event,registro)"
+     >
+     <ion-row>
+      {{registro.lugar.puntosRecoleccion.objetosRetirados.fechaRegistro.anoMes}}
+     </ion-row>
         <ion-row>
             <ion-col>
-                {{registro.lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.dia}}
+                {{registro.lugar.puntosRecoleccion.objetosRetirados.fechaRegistro.dia}}
+            </ion-col>
+            
+            <ion-col>
+              {{registro.lugar.puntosRecoleccion.objetosRetirados.retirado.fechaRetiro.dia}}
             </ion-col>
 
             <ion-col>
-              {{registro.lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags}}
+              {{registro.lugar.puntosRecoleccion.objetosRetirados.sinCodigoQR.tags}}
             </ion-col>
           
-            <ion-col>
+            
+
+            <!--<ion-col>
               <div  *ngIf="registro.lugar.puntosRecoleccion.actual" item-right>
                 <font color="green">En este punto</font> 
               </div>
@@ -36,7 +45,7 @@
               <div  *ngIf="!registro.lugar.puntosRecoleccion.actual" item-right>
                 <font color="red">En otro punto</font> 
               </div>
-            </ion-col>
+            </ion-col>-->
       </ion-row>
      </button>
 

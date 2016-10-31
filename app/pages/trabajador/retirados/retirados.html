@@ -3,7 +3,7 @@
   	 <button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Retirar objetos</ion-title>
+    <ion-title>Buscar Retirados</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -18,9 +18,9 @@
           <ion-segment-button value="codigo">
             Codigo
           </ion-segment-button>
-          <ion-segment-button value="qr" (ionSelect)="activarQR()">
+          <!--<ion-segment-button value="qr" (ionSelect)="activarQR()">
             QR
-          </ion-segment-button>
+          </ion-segment-button>-->
         </ion-segment>
       </div>
 
@@ -63,7 +63,7 @@
 
 </div>
 
-  <button ion-button block  color="secondary" (click)="buscar()" *ngIf="tipoBusqueda != 'qr'">
+  <button ion-button block  color="secondary" (click)="buscar()">
       <ion-icon ios="ios-search" md="md-search"></ion-icon> 
        Buscar 
   </button>

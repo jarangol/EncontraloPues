@@ -37,7 +37,7 @@ import { LogInService } from './providers/logIn-service/logIn-service';
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = RegistrarPage;
+  rootPage: any = RetiradosPage;
 
   pages: Array<{title: string, component: any}>;
 

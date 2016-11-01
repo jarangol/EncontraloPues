@@ -4,8 +4,8 @@ import { NavController, NavParams } from 'ionic-angular';
 //Service para los llamados http
 import { RetiradosService} from '../../../providers/retirados-service/retirados-service';
 
-//page de detalle del retiro
-import { DetalleRetiroPage} from '../detalle-retiro/detalle-retiro';
+//Pagina para mostrar en detalle cada item
+import { DetalleRetiradoPage} from '../detalle-retirado/detalle-retirado';
 
 //pagina para resultado de la busqueda
 import { ListarRetiradosPage} from '../listar-retirados/listar-retirados';
@@ -51,7 +51,6 @@ export class RetiradosPage {
   }
 
   public buscar(){
-      console.log("antes");
       if(this.tipoBusqueda=='fecha' && this.fecha ){
         let consulta = {
           anoMesRegistro : this.fecha,
@@ -65,20 +64,18 @@ export class RetiradosPage {
         .then((data) => {
           console.log("resultado: "+data);
           this.objetos = data;
-        
-          this.navCtrl.push(ListarRetiradosPage,{ 	 					
-            correoLugar: this.correoLugar,
-            nombrePunto: this.nombrePunto,
-            registros: data.mensaje, //pasarle especificamente el atributo sin el mensaje
-            correoTrabajador: this.correoTrabajador
-          });
-      
+
+            this.navCtrl.push(ListarRetiradosPage,{ 	 					
+              registros: data.mensaje, //pasarle especificamente el atributo sin el mensaje
+              fecha: this.fecha
+            });
+  
         });
+
       }else if(this.tipoBusqueda=='codigo' && this.codigoBusqueda){
           let consulta = {
             codigoBusqueda: this.codigoBusqueda,
             correoLugar: this.correoLugar,
-            nombrePunto: this.nombrePunto,
           }
           this.retiradosService.consultarRetiradosCodigo(consulta)
           .then((data) => {
@@ -87,16 +84,14 @@ export class RetiradosPage {
             this.objetos=data;
             
             if(this.objetos.correcto){
-                this.navCtrl.push(DetalleRetiroPage,{ 	 					
-                  correoLugar: this.correoLugar,
-                  nombrePunto: this.nombrePunto,
+                this.navCtrl.push(DetalleRetiradoPage,{ 	 					
                   registro: data.mensaje, //pasarle especificamente el atributo sin el mensaje
-                  correoTrabajador: this.correoTrabajador
                 });
             }
           });
+           this.codigoBusqueda = "";
       }
-        this.codigoBusqueda = "";
+       
       
   }
 

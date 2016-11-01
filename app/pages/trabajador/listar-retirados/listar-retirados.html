@@ -8,34 +8,34 @@
 </ion-header>
 
 
-<ion-content class="consultar">
+<ion-content>
     <ion-list> 
+    <ion-item>
+        <ion-label>Retirados de</ion-label>
+        <ion-datetime  displayFormat="MMM/YYYY" pickerFormat="MMM-YYYY" [(ngModel)]="fecha" disabled></ion-datetime>
+      </ion-item>
       <ion-list-header>
         <ion-row>
-            <ion-col>Fecha Registro</ion-col>
+            <ion-col>Dia de Registro</ion-col>
             <ion-col>Fecha Retiro</ion-col>
             <ion-col>Tags </ion-col>
         </ion-row>
       </ion-list-header>
+      
      <button ion-item *ngFor="let registro of registros"  (click)="itemTapped($event,registro)"
      >
-     <ion-row>
-      {{registro.lugar.puntosRecoleccion.objetosRetirados.fechaRegistro.anoMes}}
-     </ion-row>
         <ion-row>
             <ion-col>
                 {{registro.lugar.puntosRecoleccion.objetosRetirados.fechaRegistro.dia}}
             </ion-col>
             
             <ion-col>
-              {{registro.lugar.puntosRecoleccion.objetosRetirados.retirado.fechaRetiro.dia}}
+              {{registro.lugar.puntosRecoleccion.objetosRetirados.retirado.fechaRetiro.anoMes + '-' + registro.lugar.puntosRecoleccion.objetosRetirados.retirado.fechaRetiro.dia}}
             </ion-col>
 
             <ion-col>
               {{registro.lugar.puntosRecoleccion.objetosRetirados.sinCodigoQR.tags}}
             </ion-col>
-          
-            
 
             <!--<ion-col>
               <div  *ngIf="registro.lugar.puntosRecoleccion.actual" item-right>

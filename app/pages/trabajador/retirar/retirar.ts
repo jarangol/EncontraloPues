@@ -97,11 +97,7 @@ private correoTrabajador: string;
 			    		};
 
 		            this.retirarService.createRetiroQR(retiro)
-								.then((data) => {
-										this.registros = data;
-										console.log(data);
-										alert(data);
-								});
+								.subscribe(data => this.registros = data);
 
 		          }
 		        }
@@ -125,18 +121,18 @@ private correoTrabajador: string;
   		}
 
 			this.retirarService.consultarPerdidosFecha(consulta)
-			.then((data) => {
-      	console.log(data);
-			  this.registros=data;
-			
-				this.navCtrl.push(ConsultarPage,{ 	 					
-					correoLugar: this.correoLugar,
-					nombrePunto: this.nombrePunto,
-					registros: data.mensaje, //pasarle especificamente el atributo sin el mensaje
-					correoTrabajador: this.correoTrabajador
-				});
+			.subscribe(data => this.registros = data);
+				if(this.registros.correcto){
+					this.navCtrl.push(ConsultarPage,{ 	 					
+						correoLugar: this.correoLugar,
+						nombrePunto: this.nombrePunto,
+						registros: this.registros.mensaje, //pasarle especificamente el atributo sin el mensaje
+						correoTrabajador: this.correoTrabajador
+					});
+				}else{
+					alert(this.registros.mensaje);
+				}
 		
-			});
 		}else if(this.tipoBusqueda=='codigo' && this.codigoBusqueda){
 				let consulta = {
 					codigoBusqueda: this.codigoBusqueda,
@@ -144,23 +140,21 @@ private correoTrabajador: string;
 					nombrePunto: this.nombrePunto,
   			}
 				this.retirarService.consultarPerdidosCodigo(consulta)
-				.then((data) => {
-
-      		console.log(data);
-					this.registros=data;
+				.subscribe(data => this.registros = data);
 					
 					if(this.registros.correcto){
 							this.navCtrl.push(DetalleRetiroPage,{ 	 					
 								correoLugar: this.correoLugar,
 								nombrePunto: this.nombrePunto,
-								registro: data.mensaje, //pasarle especificamente el atributo sin el mensaje
+								registro: this.registros.mensaje, //pasarle especificamente el atributo sin el mensaje
 								correoTrabajador: this.correoTrabajador
 							});
+						this.codigoBusqueda = "";
+					}else{
+						alert(this.registros.mensaje);
 					}
-				});
 		}
-			this.codigoBusqueda = "";
-		
+			
 }
 	
 

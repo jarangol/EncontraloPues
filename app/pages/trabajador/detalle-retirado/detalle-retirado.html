@@ -12,20 +12,19 @@
 	<ion-list no-lines>
                
 		<ion-item>
-            <ion-label>Código de búsqueda</ion-label>
-            <ion-input [(ngModel)]="codigoBusqueda" type="text" disabled></ion-input>
+            <ion-label>Consecutivo</ion-label>
+			<ion-label>{{codigoBusqueda}}</ion-label>
 		</ion-item>
     
     	<ion-item>
-            <ion-label>Punto de recolección</ion-label>
-            <ion-input [(ngModel)]="puntoRecoleccion" disabled></ion-input>
+            <ion-label>Punto de recolección:</ion-label>
+			<ion-label>{{puntoRecoleccion}}</ion-label>
         </ion-item>
 
 		<ion-item>
 			<ion-label>Fecha de pérdida</ion-label>
-			<ion-datetime  displayFormat="D/MMM/YYYY" pickerFormat="MMM-YYYY" [(ngModel)]="fechaRegistro" disabled></ion-datetime>
+			<ion-datetime  displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="fechaRegistro" disabled></ion-datetime>
 		</ion-item>
-
 	
 		<ion-item>
 		  <ion-label>Tags:</ion-label>
@@ -49,22 +48,23 @@
     
         <ion-item>
 			<ion-label>Fecha de retiro</ion-label>
-			<ion-datetime  displayFormat="D/MMM/YYYY" pickerFormat="MMM-YYYY" [(ngModel)]="fechaRetiro" disabled></ion-datetime>
+			<ion-datetime  displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="fechaRetiro"></ion-datetime>
 		</ion-item>
        
         <ion-item>
-            <ion-label>Nombre</ion-label>
-            <ion-input [(ngModel)]="nombrePersona" disabled></ion-input>
+            <ion-label>Nombre:</ion-label>
+			<ion-label>{{nombrePersona}}</ion-label>
+           
         </ion-item>
 
         <ion-item>
-            <ion-label>Identificacion</ion-label>
-            <ion-input [(ngModel)]="numeroIdPersona" disabled></ion-input>
+            <ion-label>Identificacion:</ion-label>
+			<ion-label>{{numeroIdPersona}}</ion-label>
         </ion-item>
         
         <ion-item>
-            <ion-label>Telefono</ion-label>
-            <ion-input [(ngModel)]="telefonoPersona" disabled></ion-input>
+            <ion-label>Telefono:</ion-label>
+			 <ion-label>{{telefonoPersona}}</ion-label>
         </ion-item>
 
 	</ion-list>

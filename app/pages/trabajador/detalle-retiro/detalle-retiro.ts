@@ -22,8 +22,9 @@ private correoTrabajador: any;
 //pertenecen a registro
 private tags: any;
 private descripcion: string;
-private fecha: any;
-private punto: any;
+private fechaRegistro: any;
+private actual: any; //me dice si esta en el punto actual para poder retirarlo
+private punto: any; //Donde fue registrado
 
 //para dividir la fecha en varios.
 private dia: any;
@@ -41,11 +42,12 @@ private anoMes: any; //año y mes concatenados AAAA-MM
      if(this.registro){  
          this.dia = this.registro.lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.dia; 
          this.anoMes = this.registro.lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.anoMes; 
-         this.fecha =this.anoMes + '-' + this.dia ; //para concatenar la fecha que viene separada
+         this.fechaRegistro = this.anoMes + '-' + this.dia ; //para concatenar la fecha que viene separada
    	     
          this.codigoBusqueda = this.registro.lugar.puntosRecoleccion.objetosPerdidos.codigoBusqueda;
          this.tags = this.registro.lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags;
     	   this.descripcion = this.registro.lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.descripcionOculta;
+         this.actual =  this.registro.lugar.puntosRecoleccion.actual;
          this.punto =  this.registro.lugar.puntosRecoleccion.nombre;
        
     }
@@ -96,13 +98,11 @@ private anoMes: any; //año y mes concatenados AAAA-MM
                   };
 
                   this.retirarService.createRetiro(retiro)
-                    .then((res) => {
-                      this.registro = res;
-                      alert(this.registro.mensaje);
-                      if(this.registro.correcto == true){
-                        this.nav.setRoot(RetirarPage);
-                      }
-                    });
+                  .subscribe(data => this.registro = data);
+                  alert(this.registro.mensaje);
+                  if(this.registro.correcto == true){
+                    this.nav.setRoot(RetirarPage);
+                  }
                 }
               }
             }

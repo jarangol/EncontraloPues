@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Alert } from 'ionic-angular';
 
 //Service para los llamados http
 import { RetiradosService} from '../../../providers/retirados-service/retirados-service';
@@ -32,10 +32,10 @@ export class RetiradosPage {
   private correoLugar: string;
   private nombreLugar: string;
   private correoTrabajador: string; 
-
+ // private retiradosService: RetiradosService;
 
   constructor(private navCtrl: NavController, private retiradosService: RetiradosService) {
-  	this.tipoBusqueda = 'fecha';
+    this.tipoBusqueda = 'fecha';
 
 		 this.tags = [];
 		 var hoy = new Date();
@@ -61,16 +61,21 @@ export class RetiradosPage {
 
    
         this.retiradosService.consultarRetiradosFecha(consulta)
-        .then((data) => {
-          console.log("resultado: "+data);
-          this.objetos = data;
+        .subscribe(data => this.objetos = data);
+        
 
-            this.navCtrl.push(ListarRetiradosPage,{ 	 					
-              registros: data.mensaje, //pasarle especificamente el atributo sin el mensaje
-              fecha: this.fecha
-            });
-  
-        });
+        console.log(this.objetos);
+        
+        if(this.objetos.correcto){  
+          this.navCtrl.push(ListarRetiradosPage,{ 	 					
+            registros: this.objetos.mensaje, //pasarle especificamente el atributo sin el mensaje
+            fecha: this.fecha
+          });
+        }else{
+          alert(this.objetos.mensaje);
+        }
+    
+
 
       }else if(this.tipoBusqueda=='codigo' && this.codigoBusqueda){
           let consulta = {
@@ -78,18 +83,17 @@ export class RetiradosPage {
             correoLugar: this.correoLugar,
           }
           this.retiradosService.consultarRetiradosCodigo(consulta)
-          .then((data) => {
-
-            console.log(data);
-            this.objetos=data;
-            
+          .subscribe(data => this.objetos = data);
+        
             if(this.objetos.correcto){
                 this.navCtrl.push(DetalleRetiradoPage,{ 	 					
-                  registro: data.mensaje, //pasarle especificamente el atributo sin el mensaje
+                  registro: this.objetos.mensaje, //pasarle especificamente el atributo sin el mensaje
                 });
+              this.codigoBusqueda = "";
+            }else{
+              alert(this.objetos.mensaje);
             }
-          });
-           this.codigoBusqueda = "";
+          
       }
        
       

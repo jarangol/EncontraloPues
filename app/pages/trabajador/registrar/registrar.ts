@@ -67,13 +67,15 @@ export class RegistrarPage {
         };
 
         this.registroService.createRegistro(registro)
-        .then((res) => {
-          this.registro = res;
-          alert(this.registro.mensaje);
-        });
+        .subscribe(data => this.registro = data);
 
-        this.tags = [];
-        this.descripcionOculta="";
+        if(this.registro.correcto){
+          alert(this.registro.mensaje);
+          this.tags = [];
+          this.descripcionOculta="";
+        }else{
+          alert(this.registro.mensaje);
+        }
       }
     }
 
@@ -93,10 +95,9 @@ export class RegistrarPage {
             };
 
             this.registroService.createRegistroQR(registroQR)
-              .then((res) => {
-              alert(res);
-              this.registro = res;
-            });
+            .subscribe(data => this.registro = data);
+
+            alert(this.registro.mensaje);
 
         }, (err) => {
             alert("Ha ocurrido un error: "+err);

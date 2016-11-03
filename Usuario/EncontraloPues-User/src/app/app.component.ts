@@ -4,9 +4,11 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { TabsPage } from '../pages/tabs/tabs';
 import { AuthService } from '../services/auth/auth.service';
 
+//pages
 import { PingPage } from '../pages/ping/ping';
-import {ProfilePage } from '../pages/profile/profile'
-
+import {ProfilePage } from '../pages/profile/profile';
+import { Escaneoqr } from '../pages/escaneoqr/escaneoqr';
+//
 
 @Component({
   templateUrl: 'app.html'
@@ -31,7 +33,8 @@ export class AuthApp {
 
     this.pages = [
       {title: 'Ping', component: PingPage},
-      {title: 'Profile',component: ProfilePage}
+      {title: 'Profile',component: ProfilePage},
+      {title: 'Escanea el QR', component: Escaneoqr}
     ];
   
   }

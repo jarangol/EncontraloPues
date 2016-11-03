@@ -8,6 +8,7 @@ import { AuthConfig, AuthHttp } from 'angular2-jwt';
 import { AuthService } from '../services/auth/auth.service';
 import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
+import { Escaneoqr } from '../pages/escaneoqr/escaneoqr';
 
 let storage: Storage = new Storage();
 
@@ -23,6 +24,7 @@ export function getAuthHttp(http) {
     AuthApp,
     ProfilePage,
     PingPage,
+    Escaneoqr,
     TabsPage
   ],
   imports: [
@@ -33,6 +35,7 @@ export function getAuthHttp(http) {
     AuthApp,
     ProfilePage,
     PingPage,
+    Escaneoqr,
     TabsPage
   ],
   providers: [

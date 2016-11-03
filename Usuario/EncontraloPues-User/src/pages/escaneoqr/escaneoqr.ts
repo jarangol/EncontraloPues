@@ -16,6 +16,7 @@ import {BarcodeScanner} from 'ionic-native';
 export class Escaneoqr {
 
   codigoQR: string;
+   qrToggle: any;
 
   constructor(public platform: Platform,public navCtrl: NavController) {}
 

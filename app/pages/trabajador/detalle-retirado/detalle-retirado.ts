@@ -37,23 +37,24 @@ private telefonoPersona: any;
      
      if(this.registro){  
          //sacamos la fecha de registro
-         this.dia = this.registro.lugar.puntosRecoleccion.objetosRetirados.fechaRegistro.dia; 
-         this.anoMes = this.registro.lugar.puntosRecoleccion.objetosRetirados.fechaRegistro.anoMes; 
+         this.registro = this.registro.puntosRecoleccion;
+         this.dia = this.registro.objetosRetirados.fechaRegistro.dia; 
+         this.anoMes = this.registro.objetosRetirados.fechaRegistro.anoMes; 
          this.fechaRegistro = this.anoMes + '-' + this.dia ; //para concatenar la fecha que viene separada
-          console.log(this.registro.lugar.puntosRecoleccion.objetosRetirados.fechaRegistro.dia);
-         this.codigoBusqueda = this.registro.lugar.puntosRecoleccion.objetosRetirados.codigoBusqueda;
-         this.tags = this.registro.lugar.puntosRecoleccion.objetosRetirados.sinCodigoQR.tags;
-    	   this.descripcion = this.registro.lugar.puntosRecoleccion.objetosRetirados.sinCodigoQR.descripcionOculta;
-         this.puntoRecoleccion =  this.registro.lugar.puntosRecoleccion.nombre;
+       
+         this.codigoBusqueda = this.registro.objetosRetirados.codigoBusqueda;
+         this.tags = this.registro.objetosRetirados.sinCodigoQR.tags;
+    	   this.descripcion = this.registro.objetosRetirados.sinCodigoQR.descripcionOculta;
+         this.puntoRecoleccion =  this.registro.nombre;
 
          //sacamos la fecha de retiro.
-         this.dia = this.registro.lugar.puntosRecoleccion.objetosRetirados.retirado.fechaRetiro.dia; 
-         this.anoMes = this.registro.lugar.puntosRecoleccion.objetosRetirados.retirado.fechaRetiro.anoMes; 
+         this.dia = this.registro.objetosRetirados.retirado.fechaRetiro.dia; 
+         this.anoMes = this.registro.objetosRetirados.retirado.fechaRetiro.anoMes; 
          this.fechaRetiro = this.anoMes + '-' + this.dia ; //para concatenar la fecha que viene separada
 
-   	     this.nombrePersona = this.registro.lugar.puntosRecoleccion.objetosRetirados.retirado.personaReclamo.nombre;
-         this.numeroIdPersona =  this.registro.lugar.puntosRecoleccion.objetosRetirados.retirado.personaReclamo.numeroId;
-         this.telefonoPersona =  this.registro.lugar.puntosRecoleccion.objetosRetirados.retirado.personaReclamo.celular;   
+   	     this.nombrePersona = this.registro.objetosRetirados.retirado.personaReclamo.nombre;
+         this.numeroIdPersona =  this.registro.objetosRetirados.retirado.personaReclamo.numeroId;
+         this.telefonoPersona =  this.registro.objetosRetirados.retirado.personaReclamo.celular;   
     }
 
   }

@@ -12,14 +12,14 @@
   
   <div padding>
         <ion-segment [(ngModel)]="tipoBusqueda">
-          <ion-segment-button value="fecha">
+          <ion-segment-button value='fecha'>
             Fecha
           </ion-segment-button>
-          <ion-segment-button value="codigo">
-            Codigo
+          <ion-segment-button value='consecutivo'>
+            Consecutivo
           </ion-segment-button>
           <ion-segment-button value="qr" (ionSelect)="activarQR()">
-            QR
+            Leer QR
           </ion-segment-button>
         </ion-segment>
       </div>
@@ -54,10 +54,10 @@
   </ion-list> 
 
 
-  <ion-list *ngSwitchCase="'codigo'" no-lines>
-     <br><br>
+  <ion-list *ngSwitchCase="'consecutivo'" no-lines>
       <ion-item>
-          <ion-input [(ngModel)]="codigoBusqueda" type="search" placeholder="Código de Busqueda" clearInput></ion-input>
+           <ion-label floating>Ingrese el consecutivo:</ion-label>
+          <ion-input [(ngModel)]="codigoBusqueda" type="search" clearInput></ion-input>
       </ion-item>
   </ion-list> 
 

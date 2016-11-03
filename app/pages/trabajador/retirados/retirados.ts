@@ -56,35 +56,41 @@ export class RetiradosPage {
           anoMesRegistro : this.fecha,
           tags: this.tags,
           correoLugar: this.correoLugar,
-          nombrePunto: this.nombrePunto,
+          nombrePunto: this.nombrePunto
         }
 
    
         this.retiradosService.consultarRetiradosFecha(consulta)
         .subscribe(data => this.objetos = data);
         
-
-        console.log(this.objetos);
+        if(this.objetos){
+          console.log(this.objetos);
+          if(this.objetos.correcto){  
+            this.navCtrl.push(ListarRetiradosPage,{ 	 					
+              registros: this.objetos.mensaje, //pasarle especificamente el atributo sin el mensaje
+              fecha: this.fecha
+            });
+          }else{
+            alert(this.objetos.mensaje);
+          }
         
-        if(this.objetos.correcto){  
-          this.navCtrl.push(ListarRetiradosPage,{ 	 					
-            registros: this.objetos.mensaje, //pasarle especificamente el atributo sin el mensaje
-            fecha: this.fecha
-          });
+      
         }else{
-          alert(this.objetos.mensaje);
-        }
-    
+					alert("Ha ocurrido un error, vuelve a intentarlo");
+				}
 
 
-      }else if(this.tipoBusqueda=='codigo' && this.codigoBusqueda){
+      }else if(this.tipoBusqueda=='consecutivo' && this.codigoBusqueda){
           let consulta = {
             codigoBusqueda: this.codigoBusqueda,
             correoLugar: this.correoLugar,
           }
+
           this.retiradosService.consultarRetiradosCodigo(consulta)
           .subscribe(data => this.objetos = data);
-        
+          
+          if(this.objetos){
+          
             if(this.objetos.correcto){
                 this.navCtrl.push(DetalleRetiradoPage,{ 	 					
                   registro: this.objetos.mensaje, //pasarle especificamente el atributo sin el mensaje
@@ -93,6 +99,10 @@ export class RetiradosPage {
             }else{
               alert(this.objetos.mensaje);
             }
+          
+        }else{
+					alert("Ha ocurrido un error, vuelve a intentarlo");
+				}
           
       }
        

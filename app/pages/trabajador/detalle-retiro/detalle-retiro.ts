@@ -14,7 +14,7 @@ export class DetalleRetiroPage {
 
 //me los pasan como navParams desde la vista retirar
 private correoLugar: any;
-private nombrePunto: any;
+private nombrePunto: any; //punto actual
 private codigoBusqueda: any;
 private registro: any;
 private correoTrabajador: any;
@@ -92,7 +92,7 @@ private anoMes: any; //año y mes concatenados AAAA-MM
                     numeroIdPersona: data.id,
                     nombrePersona: data.nombre,
                     celularPersona: data.tel,
-
+                    nombrePunto: this.nombrePunto,
                     correoLugar: this.correoLugar ,
                     codigoBusqueda:this.codigoBusqueda,
                     correoTrabajador: this.correoTrabajador 

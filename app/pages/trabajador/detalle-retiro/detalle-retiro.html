@@ -15,34 +15,34 @@
 			<ion-datetime  displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="fechaRegistro" disabled></ion-datetime>
 		</ion-item>
 
+	
+		<ion-item>
+				<ion-label stacked>Punto de recolección:</ion-label>
+				<ion-label>{{puntoRecoleccion}}</ion-label>
+		</ion-item>
+		
+		<ion-item>
+				<ion-label stacked>Consecutivo:</ion-label>
+				<ion-label>{{codigoBusqueda}}</ion-label>
+		</ion-item>
+
+
 		<ion-item>
 		  <ion-label stacked>Tags:</ion-label>
 		</ion-item>
 
 	  <ion-item>
-		<div class="tag-container">
-			<span class="tag" *ngFor="let tag of tags">
-		  	{{ tag }}
-			 </span>
-		</div>
+			<div class="tag-container">
+				<span class="tag" *ngFor="let tag of tags">
+					{{ tag }}
+				</span>
+			</div>
 	  </ion-item>
 
 		 <ion-item>
-	        <ion-label stacked>Descripción oculta:</ion-label>
+	        <ion-label stacked>Descripción privada:</ion-label>
 	    	  <ion-textarea  [(ngModel)]="descripcion" rows="5" disabled></ion-textarea>
 		</ion-item>
-
-	
-		<ion-item>
-				<ion-label>Punto de recolección:</ion-label>
-				<ion-label>{{puntoRecoleccion}}</ion-label>
-		</ion-item>
-		
-		<ion-item>
-				<ion-label>Código de búsqueda</ion-label>
-				<ion-input [(ngModel)]="codigoBusqueda" type="search" disabled></ion-input>
-		</ion-item>
-
 
 
 	</ion-list>

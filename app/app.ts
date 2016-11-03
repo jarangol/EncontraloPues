@@ -47,8 +47,8 @@ class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
        { title: 'Registrar', component: RegistrarPage},
-       { title: 'Retirar (trabajador)', component: RetirarPage},
-      // { title: 'Retirar (lugar)', component: BuscarLugarPage},
+       { title: 'Retirar', component: RetirarPage},
+      // { title: 'Buscar (lugar)', component: BuscarLugarPage},
       //{ title: 'Detalle', component: DetalleRetiroPage} ,
       //{ title: 'Generar', component: GeneradorqrPage} ,
       //{ title: 'Consultar', component: ConsultarPage},

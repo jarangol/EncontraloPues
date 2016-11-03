@@ -136,7 +136,7 @@ private correoTrabajador: string;
 				}
 			}
 		
-		}else if(this.tipoBusqueda=='codigo' && this.codigoBusqueda){
+		}else if(this.tipoBusqueda=='consecutivo' && this.codigoBusqueda){
 				let consulta = {
 					codigoBusqueda: this.codigoBusqueda,
 					correoLugar: this.correoLugar,
@@ -145,17 +145,21 @@ private correoTrabajador: string;
 				this.retirarService.consultarPerdidosCodigo(consulta)
 				.subscribe(data => this.registros = data);
 					
-					if(this.registros.correcto){
+					if(this.registros){
+						if(this.registros.correcto){
 							this.navCtrl.push(DetalleRetiroPage,{ 	 					
 								correoLugar: this.correoLugar,
 								nombrePunto: this.nombrePunto,
 								registro: this.registros.mensaje, //pasarle especificamente el atributo sin el mensaje
 								correoTrabajador: this.correoTrabajador
 							});
-						this.codigoBusqueda = "";
-					}else{
-						alert(this.registros.mensaje);
-					}
+							this.codigoBusqueda = "";
+						}else{
+							alert(this.registros.mensaje);
+						}
+				}else{
+					alert("Ha ocurrido un error, vuelve a intentarlo");
+				}
 		}
 			
 }

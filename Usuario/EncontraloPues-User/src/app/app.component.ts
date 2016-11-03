@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth/auth.service';
 import { PingPage } from '../pages/ping/ping';
 import {ProfilePage } from '../pages/profile/profile';
 import { Escaneoqr } from '../pages/escaneoqr/escaneoqr';
+import { Agregarobjts } from '../pages/agregarobjts/agregarobjts';
 //
 
 @Component({
@@ -34,7 +35,8 @@ export class AuthApp {
     this.pages = [
       {title: 'Ping', component: PingPage},
       {title: 'Profile',component: ProfilePage},
-      {title: 'Escanea el QR', component: Escaneoqr}
+      {title: 'Escanea el QR', component: Escaneoqr},
+      {title: 'Agrega tu objeto', component: Agregarobjts}      
     ];
   
   }

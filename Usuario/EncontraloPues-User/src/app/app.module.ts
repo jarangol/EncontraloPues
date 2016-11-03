@@ -9,6 +9,7 @@ import { AuthService } from '../services/auth/auth.service';
 import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { Escaneoqr } from '../pages/escaneoqr/escaneoqr';
+import { Agregarobjts } from '../pages/agregarobjts/agregarobjts';
 
 let storage: Storage = new Storage();
 
@@ -25,6 +26,7 @@ export function getAuthHttp(http) {
     ProfilePage,
     PingPage,
     Escaneoqr,
+    Agregarobjts,
     TabsPage
   ],
   imports: [
@@ -36,6 +38,7 @@ export function getAuthHttp(http) {
     ProfilePage,
     PingPage,
     Escaneoqr,
+    Agregarobjts,
     TabsPage
   ],
   providers: [

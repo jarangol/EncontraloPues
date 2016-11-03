@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Generar</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>	
+  <ion-item>
+      <ion-input [(ngModel)]="texto" type="text" placeholder="Introduzca el texto"></ion-input>
+  </ion-item>
+
+  <button ion-button block  color="secondary" (click)="generar()">
+    Generar
+  </button>
+
+ <img src={{url}} width="300" height="150">
+
+</ion-content>

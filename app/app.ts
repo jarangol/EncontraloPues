@@ -48,13 +48,13 @@ class MyApp {
     this.pages = [
        { title: 'Registrar', component: RegistrarPage},
        { title: 'Retirar (trabajador)', component: RetirarPage},
-       { title: 'Retirar (lugar)', component: BuscarLugarPage},
+      // { title: 'Retirar (lugar)', component: BuscarLugarPage},
       //{ title: 'Detalle', component: DetalleRetiroPage} ,
       //{ title: 'Generar', component: GeneradorqrPage} ,
       //{ title: 'Consultar', component: ConsultarPage},
      // { title: 'Page2', component: Page2 },
       { title: 'Retirados', component: RetiradosPage },
-     // { title: 'Login', component: Login},
+      { title: 'Login', component: Login},
       //{ title: 'Objetos', component: Objetos },
     ];
 

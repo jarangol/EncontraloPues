@@ -21,19 +21,19 @@
      <button ion-item *ngFor="let registro of registros"  (click)="itemTapped($event,registro)">
         <ion-row>
             <ion-col>
-                {{registro.lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.dia}}
+                {{registro.puntosRecoleccion.objetosPerdidos.fechaRegistro.dia}}
             </ion-col>
 
             <ion-col>
-              {{registro.lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags}}
+              {{registro.puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags}}
             </ion-col>
           
             <ion-col>
-              <div  *ngIf="registro.lugar.puntosRecoleccion.actual" item-right>
+              <div  *ngIf="registro.puntosRecoleccion.actual" item-right>
                 <font color="green">En este punto</font> 
               </div>
 
-              <div  *ngIf="!registro.lugar.puntosRecoleccion.actual" item-right>
+              <div  *ngIf="!registro.puntosRecoleccion.actual" item-right>
                 <font color="red">En otro punto</font> 
               </div>
             </ion-col>

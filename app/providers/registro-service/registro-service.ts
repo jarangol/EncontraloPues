@@ -38,8 +38,9 @@ export class RegistroService {
     headers.append('Content-Type','application/json');
     
 
-    this.data=this.http.post(this.serverURL + '/api/registrarObjetoPerdido',body, {headers: headers})
+    this.http.post(this.serverURL + '/api/registrarObjetoPerdido',body, {headers: headers})
     .map(res => res.json());
+    //.subscribe(data => this.data = data);
 
     return this.data; 
   }  

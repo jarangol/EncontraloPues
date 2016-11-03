@@ -122,6 +122,8 @@ private correoTrabajador: string;
 
 			this.retirarService.consultarPerdidosFecha(consulta)
 			.subscribe(data => this.registros = data);
+			
+			if(this.registros){
 				if(this.registros.correcto){
 					this.navCtrl.push(ConsultarPage,{ 	 					
 						correoLugar: this.correoLugar,
@@ -132,6 +134,7 @@ private correoTrabajador: string;
 				}else{
 					alert(this.registros.mensaje);
 				}
+			}
 		
 		}else if(this.tipoBusqueda=='codigo' && this.codigoBusqueda){
 				let consulta = {

@@ -24,7 +24,7 @@ private tags: any;
 private descripcion: string;
 private fechaRegistro: any;
 private actual: any; //me dice si esta en el punto actual para poder retirarlo
-private punto: any; //Donde fue registrado
+private puntoRecoleccion: any; //Lugar  registrado
 
 //para dividir la fecha en varios.
 private dia: any;
@@ -40,15 +40,16 @@ private anoMes: any; //año y mes concatenados AAAA-MM
 	    this.correoTrabajador = this.navParams.get('correoTrabajador');
    
      if(this.registro){  
-         this.dia = this.registro.lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.dia; 
-         this.anoMes = this.registro.lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.anoMes; 
+         this.registro = this.registro.puntosRecoleccion;
+         this.dia = this.registro.objetosPerdidos.fechaRegistro.dia; 
+         this.anoMes = this.registro.objetosPerdidos.fechaRegistro.anoMes; 
          this.fechaRegistro = this.anoMes + '-' + this.dia ; //para concatenar la fecha que viene separada
    	     
-         this.codigoBusqueda = this.registro.lugar.puntosRecoleccion.objetosPerdidos.codigoBusqueda;
-         this.tags = this.registro.lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags;
-    	   this.descripcion = this.registro.lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.descripcionOculta;
-         this.actual =  this.registro.lugar.puntosRecoleccion.actual;
-         this.punto =  this.registro.lugar.puntosRecoleccion.nombre;
+         this.codigoBusqueda = this.registro.objetosPerdidos.codigoBusqueda;
+         this.tags = this.registro.objetosPerdidos.sinCodigoQR.tags;
+    	   this.descripcion = this.registro.objetosPerdidos.sinCodigoQR.descripcionOculta;
+         this.actual =  this.registro.actual;
+         this.puntoRecoleccion =  this.registro.nombre;
        
     }
   }

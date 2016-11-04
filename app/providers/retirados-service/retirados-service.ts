@@ -25,10 +25,14 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     let headers = new Headers();
     headers.append('Content-Type','application/json');
 
-    this.data=this.http.post(this.serverURL + '/api/consultarObjetosRetiradosTrabajador',body, {headers: headers})
-    .map(res => res.json());
-
-    return this.data; 
+      return new Promise(resolve => {
+        this.data=this.http.post(this.serverURL + '/api/consultarObjetosRetiradosTrabajador',body, {headers: headers})
+        .map(res => res.json())
+        .subscribe(data => {
+          this.data = data;
+          resolve(this.data);
+       });
+     });
   }
 
   /**
@@ -41,10 +45,14 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     let headers = new Headers();
     headers.append('Content-Type','application/json');
 
-    this.data=this.http.post(this.serverURL + '/api/consultarObjetosRetiradosTrabajadorCodigo',body, {headers: headers})
-    .map(res => res.json());
-
-    return this.data; 
+    return new Promise(resolve => {
+        this.data=this.http.post(this.serverURL + '/api/consultarObjetosRetiradosTrabajadorCodigo',body, {headers: headers})
+        .map(res => res.json())
+        .subscribe(data => {
+          this.data = data;
+          resolve(this.data);
+       });
+     });
   }
 
 

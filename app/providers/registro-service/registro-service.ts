@@ -25,24 +25,32 @@ export class RegistroService {
     let headers = new Headers();
     headers.append('Content-Type','application/json');
 
-    this.data=this.http.post(this.serverURL + '/api/registrarObjetoPerdidoQR',body, {headers: headers})
-    .map(res => res.json());
-
-    return this.data; 
-      
+      return new Promise(resolve => {
+        this.data=this.http.post(this.serverURL + '/api/registrarObjetoPerdidoQR',body, {headers: headers})
+        .map(res => res.json())
+        .subscribe(data => {
+          this.data = data;
+          resolve(this.data);
+       });
+     });      
   }
 
   public createRegistro(registro){
     let body = JSON.stringify(registro);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
+    console.log("lo llama");
     
+    return new Promise(resolve => {
+        this.http.post(this.serverURL + '/api/registrarObjetoPerdido',body, {headers: headers})
+        .map(res => res.json())
+        .subscribe(data => {
+          this.data = data;
+          console.log(this.data);
+          resolve(this.data);
+       });
+     });
 
-    this.http.post(this.serverURL + '/api/registrarObjetoPerdido',body, {headers: headers})
-    .map(res => res.json());
-    //.subscribe(data => this.data = data);
-
-    return this.data; 
   }  
 
 

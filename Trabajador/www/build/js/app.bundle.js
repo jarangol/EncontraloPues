@@ -12,11 +12,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var ionic_angular_1 = require('ionic-angular');
 var ionic_native_1 = require('ionic-native');
+//paginas
+//trabajador
+var consultar_1 = require('./pages/trabajador/consultar/consultar');
+var detalle_retiro_1 = require('./pages/trabajador/detalle-retiro/detalle-retiro');
 var registrar_1 = require('./pages/trabajador/registrar/registrar');
 var retirar_1 = require('./pages/trabajador/retirar/retirar');
-var retirados_1 = require('./pages/trabajador/retirados/retirados');
+var reclamados_1 = require('./pages/trabajador/reclamados/reclamados');
+var objetos_1 = require('./pages/usuario/objetos/objetos');
 //lugar
 var buscar_lugar_1 = require('./pages/lugar/buscar-lugar/buscar-lugar');
+//paginas generales
+var login_1 = require('./pages/login/login');
 //providers
 var registro_service_1 = require('./providers/registro-service/registro-service');
 var retirar_service_1 = require('./providers/retirar-service/retirar-service');
@@ -24,18 +31,21 @@ var logIn_service_1 = require('./providers/logIn-service/logIn-service');
 var MyApp = (function () {
     function MyApp(platform) {
         this.platform = platform;
-        this.rootPage = retirados_1.RetiradosPage;
+        this.rootPage = retirar_1.RetirarPage;
         this.initializeApp();
         // used for an example of ngFor and navigation
         this.pages = [
             { title: 'Registrar', component: registrar_1.RegistrarPage },
-            { title: 'Retirar (trabajador)', component: retirar_1.RetirarPage },
-            { title: 'Retirar (lugar)', component: buscar_lugar_1.BuscarLugarPage },
-            //{ title: 'Detalle', component: DetalleRetiroPage} ,
+            { title: 'Buscar trabajador', component: retirar_1.RetirarPage },
+            { title: 'Buscar Lugar', component: buscar_lugar_1.BuscarLugarPage },
+            { title: 'Detalle', component: detalle_retiro_1.DetalleRetiroPage },
             //{ title: 'Generar', component: GeneradorqrPage} ,
-            //{ title: 'Consultar', component: ConsultarPage},
+            { title: 'Consultar', component: consultar_1.ConsultarPage },
             // { title: 'Page2', component: Page2 },
-            { title: 'Retirados', component: retirados_1.RetiradosPage },
+            { title: 'Reclamados', component: reclamados_1.ReclamadosPage },
+            { title: 'Login', component: login_1.Login },
+            //{ title: 'Page2', component: Page2 },
+            { title: 'Objetos', component: objetos_1.Objetos },
         ];
     }
     MyApp.prototype.initializeApp = function () {
@@ -67,7 +77,63 @@ var MyApp = (function () {
 }());
 ionic_angular_1.ionicBootstrap(MyApp);
 
-},{"./pages/lugar/buscar-lugar/buscar-lugar":2,"./pages/trabajador/registrar/registrar":9,"./pages/trabajador/retirados/retirados":10,"./pages/trabajador/retirar/retirar":11,"./providers/logIn-service/logIn-service":12,"./providers/registro-service/registro-service":14,"./providers/retirar-service/retirar-service":16,"@angular/core":164,"ionic-angular":478,"ionic-native":505}],2:[function(require,module,exports){
+},{"./pages/login/login":2,"./pages/lugar/buscar-lugar/buscar-lugar":3,"./pages/trabajador/consultar/consultar":6,"./pages/trabajador/detalle-retiro/detalle-retiro":7,"./pages/trabajador/reclamados/reclamados":8,"./pages/trabajador/registrar/registrar":9,"./pages/trabajador/retirar/retirar":10,"./pages/usuario/objetos/objetos":11,"./providers/logIn-service/logIn-service":12,"./providers/registro-service/registro-service":14,"./providers/retirar-service/retirar-service":16,"@angular/core":164,"ionic-angular":478,"ionic-native":505}],2:[function(require,module,exports){
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var ionic_angular_1 = require('ionic-angular');
+var logIn_service_1 = require('../../providers/logIn-service/logIn-service');
+/*
+  Generated class for the Login page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+*/
+var Login = (function () {
+    function Login(navCtrl, loginService) {
+        this.navCtrl = navCtrl;
+        this.loginService = loginService;
+    }
+    Login.prototype.validar = function () {
+        var _this = this;
+        // alert("llame a validar");
+        if (this.correo && this.contrasenia) {
+            var validacion = {
+                correoElectronico: this.correo,
+                contrasenia: this.contrasenia
+            };
+            this.loginService.validarInfo(validacion).
+                then(function (res) {
+                alert(res);
+                _this.validacion = res;
+            });
+            this.correo = "";
+            this.contrasenia = "";
+        }
+    };
+    Login.prototype.ionViewDidLoad = function () {
+        console.log('Hello Login Page');
+    };
+    Login = __decorate([
+        core_1.Component({
+            templateUrl: 'build/pages/login/login.html',
+            providers: [logIn_service_1.LogInService]
+        }), 
+        __metadata('design:paramtypes', [ionic_angular_1.NavController, logIn_service_1.LogInService])
+    ], Login);
+    return Login;
+}());
+exports.Login = Login;
+
+},{"../../providers/logIn-service/logIn-service":12,"@angular/core":164,"ionic-angular":478}],3:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -138,7 +204,7 @@ var BuscarLugarPage = (function () {
 }());
 exports.BuscarLugarPage = BuscarLugarPage;
 
-},{"../../../providers/lugar-service/lugar-service":13,"../resultado-lugar/resultado-lugar":4,"@angular/core":164,"ionic-angular":478}],3:[function(require,module,exports){
+},{"../../../providers/lugar-service/lugar-service":13,"../resultado-lugar/resultado-lugar":5,"@angular/core":164,"ionic-angular":478}],4:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -184,7 +250,7 @@ var DetalleBusquedaPage = (function () {
 }());
 exports.DetalleBusquedaPage = DetalleBusquedaPage;
 
-},{"../../../providers/retirar-service/retirar-service":16,"@angular/core":164,"ionic-angular":478}],4:[function(require,module,exports){
+},{"../../../providers/retirar-service/retirar-service":16,"@angular/core":164,"ionic-angular":478}],5:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -233,7 +299,7 @@ var ResultadoLugarPage = (function () {
 }());
 exports.ResultadoLugarPage = ResultadoLugarPage;
 
-},{"../../../providers/lugar-service/lugar-service":13,"../detalle-busqueda/detalle-busqueda":3,"@angular/core":164,"ionic-angular":478}],5:[function(require,module,exports){
+},{"../../../providers/lugar-service/lugar-service":13,"../detalle-busqueda/detalle-busqueda":4,"@angular/core":164,"ionic-angular":478}],6:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -246,38 +312,51 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var ionic_angular_1 = require('ionic-angular');
-//Pagina para mostrar en detalle cada item
+//service: 
+//import {Registros} from '../../providers/registros/registros';
+var registro_service_1 = require('../../../providers/registro-service/registro-service');
 var detalle_retiro_1 = require('../detalle-retiro/detalle-retiro');
 var ConsultarPage = (function () {
-    function ConsultarPage(navCtrl, navParams) {
+    function ConsultarPage(navCtrl, registroService, navParams) {
         this.navCtrl = navCtrl;
+        this.registroService = registroService;
         this.navParams = navParams;
+        this.loadRegistros();
         this.correoLugar = this.navParams.get('correoLugar');
         this.nombrePunto = this.navParams.get('nombrePunto');
+        this.codigoBusqueda = this.navParams.get('codigoBusqueda');
         this.registros = this.navParams.get('registros');
         this.correoTrabajador = this.navParams.get('correoTrabajador');
-        console.log("Listar perdidos: " + this.registros);
     }
-    //para ir a ver el detalle
+    ConsultarPage.prototype.loadRegistros = function () {
+        var _this = this;
+        this.registroService.load()
+            .then(function (data) {
+            _this.registros = data;
+        });
+    };
     ConsultarPage.prototype.itemTapped = function (event, registro) {
+        alert("seleccionó un registro " + registro.nombre);
         this.navCtrl.push(detalle_retiro_1.DetalleRetiroPage, {
             registro: registro,
             correoLugar: this.correoLugar,
             nombrePunto: this.nombrePunto,
+            codigoBusqueda: this.codigoBusqueda,
             correoTrabajador: this.correoTrabajador,
         });
     };
     ConsultarPage = __decorate([
         core_1.Component({
             templateUrl: 'build/pages/trabajador/consultar/consultar.html',
+            providers: [registro_service_1.RegistroService]
         }), 
-        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_1.NavParams])
+        __metadata('design:paramtypes', [ionic_angular_1.NavController, registro_service_1.RegistroService, ionic_angular_1.NavParams])
     ], ConsultarPage);
     return ConsultarPage;
 }());
 exports.ConsultarPage = ConsultarPage;
 
-},{"../detalle-retiro/detalle-retiro":7,"@angular/core":164,"ionic-angular":478}],6:[function(require,module,exports){
+},{"../../../providers/registro-service/registro-service":14,"../detalle-retiro/detalle-retiro":7,"@angular/core":164,"ionic-angular":478}],7:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -292,81 +371,23 @@ var core_1 = require('@angular/core');
 var ionic_angular_1 = require('ionic-angular');
 //proveedor del service
 var retirar_service_1 = require('../../../providers/retirar-service/retirar-service');
-var DetalleRetiradoPage = (function () {
-    function DetalleRetiradoPage(navCtrl, navParams, alertCtrl, retirarService, nav) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.alertCtrl = alertCtrl;
-        this.retirarService = retirarService;
-        this.nav = nav;
-        this.tags = [];
-        this.registro = this.navParams.get('registro');
-        if (this.registro) {
-            //sacamos la fecha de registro
-            this.dia = this.registro.lugar.puntosRecoleccion.objetosRetirados.fechaRegistro.dia;
-            this.anoMes = this.registro.lugar.puntosRecoleccion.objetosRetirados.fechaRegistro.anoMes;
-            this.fechaRegistro = this.anoMes + '-' + this.dia; //para concatenar la fecha que viene separada
-            this.codigoBusqueda = this.registro.lugar.puntosRecoleccion.objetosRetirados.codigoBusqueda;
-            this.tags = this.registro.lugar.puntosRecoleccion.objetosRetirados.sinCodigoQR.tags;
-            this.descripcion = this.registro.lugar.puntosRecoleccion.objetosRetirados.sinCodigoQR.descripcionOculta;
-            this.puntoRecoleccion = this.registro.lugar.puntosRecoleccion.nombre;
-            //sacamos la fecha de retiro.
-            this.dia = this.registro.lugar.puntosRecoleccion.objetosRetirados.retirado.fechaRetiro.dia;
-            this.anoMes = this.registro.lugar.puntosRecoleccion.objetosRetirados.retirado.fechaRetiro.anoMes;
-            this.fechaRetiro = this.anoMes + '-' + this.dia; //para concatenar la fecha que viene separada
-            this.nombrePersona = this.registro.lugar.puntosRecoleccion.objetosRetirados.retirado.personaReclamo.nombre;
-            this.numeroIdPersona = this.registro.lugar.puntosRecoleccion.objetosRetirados.retirado.personaReclamo.numeroId;
-            this.telefonoPersona = this.registro.lugar.puntosRecoleccion.objetosRetirados.retirado.personaReclamo.celular;
-        }
-    }
-    DetalleRetiradoPage = __decorate([
-        core_1.Component({
-            templateUrl: 'build/pages/trabajador/detalle-retirado/detalle-retirado.html',
-        }), 
-        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_1.NavParams, ionic_angular_1.AlertController, retirar_service_1.RetirarService, ionic_angular_1.Nav])
-    ], DetalleRetiradoPage);
-    return DetalleRetiradoPage;
-}());
-exports.DetalleRetiradoPage = DetalleRetiradoPage;
-
-},{"../../../providers/retirar-service/retirar-service":16,"@angular/core":164,"ionic-angular":478}],7:[function(require,module,exports){
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var core_1 = require('@angular/core');
-var ionic_angular_1 = require('ionic-angular');
-//proveedor del service
-var retirar_service_1 = require('../../../providers/retirar-service/retirar-service');
-//Pagina inicial de retirar
-var retirar_1 = require('../../../pages/trabajador/retirar/retirar');
 var DetalleRetiroPage = (function () {
-    //private nav: Nav;
-    function DetalleRetiroPage(navCtrl, navParams, alertCtrl, retirarService, nav) {
+    function DetalleRetiroPage(navCtrl, navParams, alertCtrl, retirarService) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.alertCtrl = alertCtrl;
         this.retirarService = retirarService;
-        this.nav = nav;
         this.tags = [];
         this.registro = this.navParams.get('registro');
         this.correoLugar = this.navParams.get('correoLugar');
         this.nombrePunto = this.navParams.get('nombrePunto');
+        this.codigoBusqueda = this.navParams.get('codigoBusqueda');
         this.correoTrabajador = this.navParams.get('correoTrabajador');
         if (this.registro) {
-            this.dia = this.registro.lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.dia;
-            this.anoMes = this.registro.lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.anoMes;
-            this.fecha = this.anoMes + '-' + this.dia; //para concatenar la fecha que viene separada
-            this.codigoBusqueda = this.registro.lugar.puntosRecoleccion.objetosPerdidos.codigoBusqueda;
-            this.tags = this.registro.lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags;
-            this.descripcion = this.registro.lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.descripcionOculta;
-            this.punto = this.registro.lugar.puntosRecoleccion.nombre;
+            this.tags = this.registro.objetosPerdidos.sinCodigoQR.tags;
+            this.descripcion = this.registro.objetosPerdidos.sinCodigoQR.descripcionOculta;
+            this.dia = this.registro.objetosPerdidos.fechaRegistro.dia;
+            this.fecha = this.añoMes + '-' + this.dia;
         }
     }
     DetalleRetiroPage.prototype.showPrompt = function () {
@@ -402,6 +423,10 @@ var DetalleRetiroPage = (function () {
                     text: 'Retirar',
                     handler: function (data) {
                         if (data.id && data.tel && data.nombre) {
+                            console.log(data.id);
+                            console.log(data.nombre);
+                            console.log(data.tel);
+                            console.log(typeof data.id);
                             var retiro = {
                                 numeroIdPersona: data.id,
                                 nombrePersona: data.nombre,
@@ -412,11 +437,8 @@ var DetalleRetiroPage = (function () {
                             };
                             _this.retirarService.createRetiro(retiro)
                                 .then(function (res) {
+                                alert(res);
                                 _this.registro = res;
-                                alert(_this.registro.mensaje);
-                                if (_this.registro.correcto == true) {
-                                    _this.nav.setRoot(retirar_1.RetirarPage);
-                                }
                             });
                         }
                     }
@@ -432,13 +454,13 @@ var DetalleRetiroPage = (function () {
         core_1.Component({
             templateUrl: 'build/pages/trabajador/detalle-retiro/detalle-retiro.html',
         }), 
-        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_1.NavParams, ionic_angular_1.AlertController, retirar_service_1.RetirarService, ionic_angular_1.Nav])
+        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_1.NavParams, ionic_angular_1.AlertController, retirar_service_1.RetirarService])
     ], DetalleRetiroPage);
     return DetalleRetiroPage;
 }());
 exports.DetalleRetiroPage = DetalleRetiroPage;
 
-},{"../../../pages/trabajador/retirar/retirar":11,"../../../providers/retirar-service/retirar-service":16,"@angular/core":164,"ionic-angular":478}],8:[function(require,module,exports){
+},{"../../../providers/retirar-service/retirar-service":16,"@angular/core":164,"ionic-angular":478}],8:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -451,35 +473,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var ionic_angular_1 = require('ionic-angular');
-//Pagina para mostrar en detalle cada item
-var detalle_retirado_1 = require('../detalle-retirado/detalle-retirado');
-var ListarRetiradosPage = (function () {
-    function ListarRetiradosPage(navCtrl, navParams) {
+//Service para los llamados http
+var retirados_service_1 = require('../../../providers/retirados-service/retirados-service');
+var ReclamadosPage = (function () {
+    function ReclamadosPage(navCtrl, retiradosService) {
         this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.registros = this.navParams.get('registros');
-        this.fecha = this.navParams.get('fecha');
-        console.log("listar retirados: " + this.registros);
+        this.retiradosService = retiradosService;
     }
-    //para ir a ver el detalle
-    ListarRetiradosPage.prototype.itemTapped = function (event, registro) {
-        this.navCtrl.push(detalle_retirado_1.DetalleRetiradoPage, {
-            registro: registro,
-            correoLugar: this.correoLugar,
-            nombrePunto: this.nombrePunto,
+    ReclamadosPage.prototype.getObjetos = function () {
+        var _this = this;
+        this.retiradosService.consultarRetiradosTrabajador()
+            .then(function (data) {
+            _this.objetos = data;
         });
     };
-    ListarRetiradosPage = __decorate([
+    ReclamadosPage.prototype.ionViewLoaded = function () {
+        // this.getObjetos();
+    };
+    ReclamadosPage = __decorate([
         core_1.Component({
-            templateUrl: 'build/pages/trabajador/listar-retirados/listar-retirados.html',
+            templateUrl: 'build/pages/trabajador/reclamados/reclamados.html',
+            providers: [retirados_service_1.RetiradosService],
         }), 
-        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_1.NavParams])
-    ], ListarRetiradosPage);
-    return ListarRetiradosPage;
+        __metadata('design:paramtypes', [ionic_angular_1.NavController, retirados_service_1.RetiradosService])
+    ], ReclamadosPage);
+    return ReclamadosPage;
 }());
-exports.ListarRetiradosPage = ListarRetiradosPage;
+exports.ReclamadosPage = ReclamadosPage;
 
-},{"../detalle-retirado/detalle-retirado":6,"@angular/core":164,"ionic-angular":478}],9:[function(require,module,exports){
+},{"../../../providers/retirados-service/retirados-service":15,"@angular/core":164,"ionic-angular":478}],9:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -500,13 +522,13 @@ var RegistrarPage = (function () {
         this.platform = platform;
         this.navCtrl = navCtrl;
         this.registroService = registroService;
-        this.tipoRegistro = 'manual'; //hace el tab de manual por defecto
-        this.tags = []; //para inicializar el arreglo de tags
+        this.tags = [];
         //ejemplo de registro con QR
         this.correoLugar = "Eafit@";
-        this.nombrePunto = "b";
+        this.nombrePunto = "c";
         this.correoTrabajador = "m";
         this.codigoQR = "57f4bc2305ce30bc346183b0";
+        //this.registroQR= new RegistroQR(this.codigoQR,this.correoLugar,this.nombrePunto,this.correoTrabajador);
     }
     RegistrarPage.prototype.scan = function () {
         var _this = this;
@@ -537,48 +559,46 @@ var RegistrarPage = (function () {
             };
             this.registroService.createRegistro(registro)
                 .then(function (res) {
+                alert(res);
                 _this.registro = res;
-                alert(_this.registro.mensaje);
             });
             this.tags = [];
             this.descripcionOculta = "";
         }
     };
     /**
-    * Método llamado para hacer un registro escaneando el codigo QR
+    * Método llamado al modificar el toggle de la parte principal.
     **/
     RegistrarPage.prototype.activarQR = function () {
         var _this = this;
-        this.platform.ready().then(function () {
-            ionic_native_1.BarcodeScanner.scan().then(function (barcodeData) {
-                var registroQR = {
-                    codigoQR: barcodeData.text,
-                    correoLugar: _this.correoLugar,
-                    nombrePunto: _this.nombrePunto,
-                    correoTrabajador: _this.correoTrabajador
-                };
-                _this.registroService.createRegistroQR(registroQR)
-                    .then(function (res) {
-                    alert(res);
-                    _this.registro = res;
+        if (this.qrToggle) {
+            this.platform.ready().then(function () {
+                ionic_native_1.BarcodeScanner.scan().then(function (barcodeData) {
+                    var registroQR = {
+                        codigoQR: barcodeData.text,
+                        correoLugar: _this.correoLugar,
+                        nombrePunto: _this.nombrePunto,
+                        correoTrabajador: _this.correoTrabajador
+                    };
+                    _this.registroService.createRegistroQR(registroQR)
+                        .then(function (res) {
+                        alert(res);
+                        _this.registro = res;
+                    });
+                }, function (err) {
+                    alert("Ha ocurrido un error: " + err);
                 });
-            }, function (err) {
-                alert("Ha ocurrido un error: " + err);
             });
-        });
+        }
     };
-    /**
-     * Para agregar un nuevo tag al arreglo
-     */
     RegistrarPage.prototype.addTag = function (tagNameInput) {
         if (tagNameInput.value) {
+            // Add the tag
             this.tags.push(tagNameInput.value);
+            // Reset the field
             tagNameInput.value = '';
         }
     };
-    /**
-     * Para eliminar un tag del arreglo
-     */
     RegistrarPage.prototype.deleteTag = function (tagName) {
         // Find the index of the tag
         var index = this.tags.indexOf(tagName);
@@ -609,110 +629,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var ionic_angular_1 = require('ionic-angular');
-//Service para los llamados http
-var retirados_service_1 = require('../../../providers/retirados-service/retirados-service');
-//Pagina para mostrar en detalle cada item
-var detalle_retirado_1 = require('../detalle-retirado/detalle-retirado');
-//pagina para resultado de la busqueda
-var listar_retirados_1 = require('../listar-retirados/listar-retirados');
-var RetiradosPage = (function () {
-    function RetiradosPage(navCtrl, retiradosService) {
-        this.navCtrl = navCtrl;
-        this.retiradosService = retiradosService;
-        this.tipoBusqueda = 'fecha';
-        this.tags = [];
-        var hoy = new Date();
-        var mm = hoy.getMonth() + 1; //hoy es 0!
-        var yyyy = hoy.getFullYear();
-        this.fecha = yyyy + '-' + mm;
-        //temporal y desaparece con el login
-        this.correoLugar = "Eafit@";
-        this.nombrePunto = "b";
-        this.correoTrabajador = "m";
-        this.nombreLugar = "d";
-    }
-    RetiradosPage.prototype.buscar = function () {
-        var _this = this;
-        if (this.tipoBusqueda == 'fecha' && this.fecha) {
-            var consulta = {
-                anoMesRegistro: this.fecha,
-                tags: this.tags,
-                correoLugar: this.correoLugar,
-                nombrePunto: this.nombrePunto,
-            };
-            this.retiradosService.consultarRetiradosFecha(consulta)
-                .then(function (data) {
-                console.log("resultado: " + data);
-                _this.objetos = data;
-                _this.navCtrl.push(listar_retirados_1.ListarRetiradosPage, {
-                    registros: data.mensaje,
-                    fecha: _this.fecha
-                });
-            });
-        }
-        else if (this.tipoBusqueda == 'codigo' && this.codigoBusqueda) {
-            var consulta = {
-                codigoBusqueda: this.codigoBusqueda,
-                correoLugar: this.correoLugar,
-            };
-            this.retiradosService.consultarRetiradosCodigo(consulta)
-                .then(function (data) {
-                console.log(data);
-                _this.objetos = data;
-                if (_this.objetos.correcto) {
-                    _this.navCtrl.push(detalle_retirado_1.DetalleRetiradoPage, {
-                        registro: data.mensaje,
-                    });
-                }
-            });
-            this.codigoBusqueda = "";
-        }
-    };
-    /**
-     * Para agregar un nuevo tag al arreglo
-     */
-    RetiradosPage.prototype.addTag = function (tagNameInput) {
-        if (tagNameInput.value) {
-            this.tags.push(tagNameInput.value);
-            tagNameInput.value = '';
-        }
-    };
-    /**
-     * Para eliminar un tag del arreglo
-     */
-    RetiradosPage.prototype.deleteTag = function (tagName) {
-        var index = this.tags.indexOf(tagName);
-        this.tags.splice(index, 1);
-    };
-    RetiradosPage = __decorate([
-        core_1.Component({
-            templateUrl: 'build/pages/trabajador/retirados/retirados.html',
-            providers: [retirados_service_1.RetiradosService],
-        }), 
-        __metadata('design:paramtypes', [ionic_angular_1.NavController, retirados_service_1.RetiradosService])
-    ], RetiradosPage);
-    return RetiradosPage;
-}());
-exports.RetiradosPage = RetiradosPage;
-
-},{"../../../providers/retirados-service/retirados-service":15,"../detalle-retirado/detalle-retirado":6,"../listar-retirados/listar-retirados":8,"@angular/core":164,"ionic-angular":478}],11:[function(require,module,exports){
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var core_1 = require('@angular/core');
-var ionic_angular_1 = require('ionic-angular');
 var ionic_native_1 = require('ionic-native');
-//page de detalle del retiro
-var detalle_retiro_1 = require('../detalle-retiro/detalle-retiro');
-//pagina para resultado de la busqueda
-var consultar_1 = require('../consultar/consultar');
 //proveedor del service
 var retirar_service_1 = require('../../../providers/retirar-service/retirar-service');
 var RetirarPage = (function () {
@@ -721,15 +638,9 @@ var RetirarPage = (function () {
         this.navCtrl = navCtrl;
         this.retirarService = retirarService;
         this.alertCtrl = alertCtrl;
-        this.tipoBusqueda = 'fecha';
         this.tags = [];
-        var hoy = new Date();
-        var mm = hoy.getMonth() + 1; //hoy es 0!
-        var yyyy = hoy.getFullYear();
-        this.fecha = yyyy + '-' + mm;
-        //temporal y desaparece con el login
         this.correoLugar = "Eafit@";
-        this.nombrePunto = "b";
+        this.nombrePunto = "c";
         this.correoTrabajador = "m";
         this.nombreLugar = "d";
     }
@@ -747,94 +658,82 @@ var RetirarPage = (function () {
     };
     RetirarPage.prototype.activarQR = function () {
         var _this = this;
-        this.platform.ready().then(function () {
-            ionic_native_1.BarcodeScanner.scan().then(function (barcodeData) {
-                _this.qrCode = barcodeData.text;
-                var prompt = _this.alertCtrl.create({
-                    title: 'Retirar',
-                    message: "Ingrese el código de retiro de este objeto",
-                    inputs: [
-                        {
-                            name: 'codigo',
-                            placeholder: 'Código'
-                        },
-                    ],
-                    buttons: [
-                        {
-                            text: 'Cancel',
-                            handler: function (data) {
-                                console.log('Cancel clicked');
+        if (this.qrToggle) {
+            this.platform.ready().then(function () {
+                ionic_native_1.BarcodeScanner.scan().then(function (barcodeData) {
+                    _this.qrCode = barcodeData.text;
+                    var prompt = _this.alertCtrl.create({
+                        title: 'Retirar',
+                        message: "Ingrese el código de retiro de este objeto",
+                        inputs: [
+                            {
+                                name: 'codigo',
+                                placeholder: 'Código'
+                            },
+                        ],
+                        buttons: [
+                            {
+                                text: 'Cancel',
+                                handler: function (data) {
+                                    console.log('Cancel clicked');
+                                }
+                            },
+                            {
+                                text: 'Confirmar',
+                                handler: function (data) {
+                                    console.log('data:' + data);
+                                    var retiro = {
+                                        codigoQR: _this.qrCode,
+                                        correoLugar: _this.correoLugar,
+                                        codigoRetiro: data,
+                                        nombrePunto: _this.nombrePunto,
+                                        correoTrabajador: _this.correoTrabajador
+                                    };
+                                    _this.retirarService.createRetiroQR(retiro)
+                                        .then(function (data) {
+                                        _this.registros = data;
+                                        console.log(data);
+                                        alert(data);
+                                    });
+                                }
                             }
-                        },
-                        {
-                            text: 'Confirmar',
-                            handler: function (data) {
-                                console.log('data:' + data);
-                                var retiro = {
-                                    codigoQR: _this.qrCode,
-                                    correoLugar: _this.correoLugar,
-                                    codigoRetiro: data,
-                                    nombrePunto: _this.nombrePunto,
-                                    correoTrabajador: _this.correoTrabajador
-                                };
-                                _this.retirarService.createRetiroQR(retiro)
-                                    .then(function (data) {
-                                    _this.registros = data;
-                                    console.log(data);
-                                    alert(data);
-                                });
-                            }
-                        }
-                    ]
+                        ]
+                    });
+                    prompt.present();
+                }, function (err) {
+                    alert("Ha ocurrido un error: " + err);
                 });
-                prompt.present();
-            }, function (err) {
-                alert("Ha ocurrido un error: " + err);
             });
-        });
+        }
     };
     RetirarPage.prototype.buscar = function () {
         var _this = this;
-        if (this.tipoBusqueda == 'fecha' && this.fecha) {
+        alert(this.fecha);
+        if (this.fecha) {
             var consulta = {
-                anoMesRegistro: this.fecha,
+                añoMesRegistro: this.fecha,
+                codigoBusqueda: this.codigoBusqueda,
                 tags: this.tags,
                 correoLugar: this.correoLugar,
                 nombrePunto: this.nombrePunto,
+                codigoObjeto: this.codigoBusqueda,
             };
-            this.retirarService.consultarPerdidosFecha(consulta)
+            this.retirarService.consultarPerdidosTrabajador(consulta)
                 .then(function (data) {
-                console.log(data);
                 _this.registros = data;
-                _this.navCtrl.push(consultar_1.ConsultarPage, {
-                    correoLugar: _this.correoLugar,
-                    nombrePunto: _this.nombrePunto,
-                    registros: data.mensaje,
-                    correoTrabajador: _this.correoTrabajador
-                });
+                console.log(_this.registros);
+                alert(_this.registros);
             });
+            // this.navCtrl.push(ConsultarPage,{ 	 	
+            // 	correoLugar: this.correoLugar,
+            // 	nombrePunto: this.nombrePunto,
+            // 	codigoBusqueda: this.codigoBusqueda,
+            // 	registros: this.registros.lugar.puntosRecoleccion ,
+            // 	correoTrabajador: this.correoTrabajador
+            // });
+            this.codigoBusqueda = "";
+            this.registros = null;
         }
-        else if (this.tipoBusqueda == 'codigo' && this.codigoBusqueda) {
-            var consulta = {
-                codigoBusqueda: this.codigoBusqueda,
-                correoLugar: this.correoLugar,
-                nombrePunto: this.nombrePunto,
-            };
-            this.retirarService.consultarPerdidosCodigo(consulta)
-                .then(function (data) {
-                console.log(data);
-                _this.registros = data;
-                if (_this.registros.correcto) {
-                    _this.navCtrl.push(detalle_retiro_1.DetalleRetiroPage, {
-                        correoLugar: _this.correoLugar,
-                        nombrePunto: _this.nombrePunto,
-                        registro: data.mensaje,
-                        correoTrabajador: _this.correoTrabajador
-                    });
-                }
-            });
-        }
-        this.codigoBusqueda = "";
     };
     RetirarPage.prototype.addTag = function (tagNameInput) {
         if (tagNameInput.value) {
@@ -857,7 +756,34 @@ var RetirarPage = (function () {
 }());
 exports.RetirarPage = RetirarPage;
 
-},{"../../../providers/retirar-service/retirar-service":16,"../consultar/consultar":5,"../detalle-retiro/detalle-retiro":7,"@angular/core":164,"ionic-angular":478,"ionic-native":505}],12:[function(require,module,exports){
+},{"../../../providers/retirar-service/retirar-service":16,"@angular/core":164,"ionic-angular":478,"ionic-native":505}],11:[function(require,module,exports){
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var ionic_angular_1 = require('ionic-angular');
+var Objetos = (function () {
+    function Objetos(navCtrl) {
+        this.navCtrl = navCtrl;
+    }
+    Objetos = __decorate([
+        core_1.Component({
+            templateUrl: 'build/pages/usuario/objetos/objetos.html'
+        }), 
+        __metadata('design:paramtypes', [ionic_angular_1.NavController])
+    ], Objetos);
+    return Objetos;
+}());
+exports.Objetos = Objetos;
+
+},{"@angular/core":164,"ionic-angular":478}],12:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1084,47 +1010,18 @@ var RetiradosService = (function () {
         this.data = null;
     }
     /**
-       *  Permite hacer una consulta de los objetos perdidos,
-       *  pasandole la fecha y opcionalmente los tags
-       * El usuario debe ser un trabajador
-      **/
-    RetiradosService.prototype.consultarRetiradosFecha = function (consulta) {
-        var _this = this;
-        var body = JSON.stringify(consulta);
-        var headers = new http_1.Headers();
-        headers.append('Content-Type', 'application/json');
-        if (this.data) {
-            return this.data;
-        }
-        return new Promise(function (resolve) {
-            _this.http.post(_this.serverURL + '/api/consultarObjetosRetiradosTrabajador', body, { headers: headers })
-                .map(function (res) { return res.json(); })
-                .subscribe(function (data) {
-                _this.data = data;
-                console.log("En el service retirados: " + data);
-                resolve(_this.data);
-            });
-        });
-    };
-    /**
-     *  Permite hacer una consulta de los objetos perdidos,
-     *  pasandole el codigo de registro
-     * El usuario debe ser un trabajador
+    * Get para obtener todos los elementos retirados de un lugar
     **/
-    RetiradosService.prototype.consultarRetiradosCodigo = function (consulta) {
+    RetiradosService.prototype.consultarRetiradosTrabajador = function () {
         var _this = this;
-        var body = JSON.stringify(consulta);
-        var headers = new http_1.Headers();
-        headers.append('Content-Type', 'application/json');
         if (this.data) {
-            return this.data;
+            return Promise.resolve(this.data);
         }
         return new Promise(function (resolve) {
-            _this.http.post(_this.serverURL + '/api/consultarObjetosRetiradosTrabajadorCodigo', body, { headers: headers })
+            _this.http.get(_this.serverURL + '/api/prueba')
                 .map(function (res) { return res.json(); })
                 .subscribe(function (data) {
                 _this.data = data;
-                console.log("En el service retirados: " + data);
                 resolve(_this.data);
             });
         });
@@ -1164,50 +1061,23 @@ var RetirarService = (function () {
         this.data = null;
     }
     /**
-     *  Permite hacer una consulta de los objetos perdidos pasandole la fecha
-     *  y opcionalmente los tags
+    * Get para datos de prueba
     **/
-    RetirarService.prototype.consultarPerdidosFecha = function (consulta) {
+    RetirarService.prototype.consultarPerdidosTrabajador = function (consulta) {
         var _this = this;
         var body = JSON.stringify(consulta);
         var headers = new http_1.Headers();
         headers.append('Content-Type', 'application/json');
-        if (this.data) {
-            return this.data;
-        }
-        // this.data = this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajador',body, {headers: headers});
-        // return this.data;
+        /*
+         if (this.data) {
+           return Promise.resolve(this.data);
+         }
+         */
         return new Promise(function (resolve) {
             _this.http.post(_this.serverURL + '/api/consultarObjetosPerdidosTrabajador', body, { headers: headers })
-                .map(function (res) { return res.json(); })
-                .subscribe(function (data) {
-                _this.data = data;
-                console.log("En el service: " + data);
-                resolve(_this.data);
-            });
-        });
-    };
-    /**
-      *  Permite hacer una consulta de los objetos perdidos,
-      *  pasandole el codigo de registro
-      * El usuario debe ser un trabajador
-     **/
-    RetirarService.prototype.consultarPerdidosCodigo = function (consulta) {
-        var _this = this;
-        var body = JSON.stringify(consulta);
-        var headers = new http_1.Headers();
-        headers.append('Content-Type', 'application/json');
-        if (this.data) {
-            return this.data;
-        }
-        // this.data = this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajador',body, {headers: headers});
-        // return this.data;
-        return new Promise(function (resolve) {
-            _this.http.post(_this.serverURL + '/api/consultarObjetosPerdidosTrabajadorCodigo', body, { headers: headers })
-                .map(function (res) { return res.json(); })
-                .subscribe(function (data) {
-                _this.data = data;
-                console.log("En el service: " + data);
+                .subscribe(function (res) {
+                _this.data = res.json();
+                console.log("En el service: " + res.text());
                 resolve(_this.data);
             });
         });

@@ -10,36 +10,15 @@
 
 <ion-content class="consultar">
     <ion-list> 
-     <!--<ion-list-header> En este punto </ion-list-header>-->
-      <ion-list-header>
-        <ion-row>
-            <ion-col>Fecha </ion-col>
-            <ion-col>Tags </ion-col>
-            <ion-col>Ubicación</ion-col>
-        </ion-row>
-      </ion-list-header>
-     <button ion-item *ngFor="let registro of registros"  (click)="itemTapped($event,registro)">
-        <ion-row>
-            <ion-col>
-                {{registro.lugar.puntosRecoleccion.objetosPerdidos.fechaRegistro.dia}}
-            </ion-col>
-
-            <ion-col>
-              {{registro.lugar.puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags}}
-            </ion-col>
-          
-            <ion-col>
-              <div  *ngIf="registro.lugar.puntosRecoleccion.actual" item-right>
-                <font color="green">En este punto</font> 
-              </div>
-
-              <div  *ngIf="!registro.lugar.puntosRecoleccion.actual" item-right>
-                <font color="red">En otro punto</font> 
-              </div>
-            </ion-col>
-      </ion-row>
-     </button>
-
-   </ion-list>
+     <button ion-item *ngFor="let registro of registros" (click)="itemTapped($event,registro)">
+      {{registro.nombre}}
+      <div  *ngIf="registro.nombre=='Nicolas Escobar'" item-right>
+         <font color="green">{{registro.nombre}}</font> 
+      </div>
+      <div  *ngIf="registro.nombre!='Nicolas Escobar'" item-right>
+         <font color="red">{{registro.nombre}}</font> 
+      </div>
+    </button>
+    </ion-list>
 
 </ion-content>

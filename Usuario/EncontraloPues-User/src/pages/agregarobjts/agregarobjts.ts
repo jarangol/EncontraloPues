@@ -14,7 +14,8 @@ import { NavController, Platform, Alert } from 'ionic-angular';
 export class Agregarobjts {
 
    tag: any;
-   private tags: Array<String>;
+   public tags: Array<String>;
+   descripcionOculta: string;
 
   constructor(public navCtrl: NavController,public platform: Platform) {
      this.tags = [];

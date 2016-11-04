@@ -10,16 +10,10 @@
 
 <ion-content padding>
 	<ion-list no-lines>
-		<ion-item>
-			<ion-label>Fecha de pérdida</ion-label>
-			<ion-datetime  displayFormat="D/MMM/YYYY" pickerFormat="MMM-YYYY" [(ngModel)]="fecha" disabled></ion-datetime>
-		</ion-item>
-
-		<ion-item>
-				<ion-label>Código de búsqueda</ion-label>
-				<ion-input [(ngModel)]="codigoBusqueda" type="search" disabled></ion-input>
-		</ion-item>
-
+	  <ion-item>
+	    <ion-label>Fecha:</ion-label>
+	    <ion-input [(ngModel)]="fecha" type="text" disabled></ion-input>
+	  </ion-item>
 
 		<ion-item>
 		  <ion-label>Tags:</ion-label>
@@ -38,14 +32,8 @@
 	    	  <ion-textarea id="descripcion" [(ngModel)]="descripcion" rows="5" disabled></ion-textarea>
 		</ion-item>
 
-	
-		<ion-item>
-				<ion-label>Punto de recolección</ion-label>
-				<ion-input [(ngModel)]="punto" disabled></ion-input>
-		</ion-item>
 	</ion-list>
-
-		<button *ngIf="punto == nombrePunto" (click)="retirar()" secondary block>Retirar</button>
-
+	
+	<button (click)="retirar()" secondary block>Retirar</button>
 
 </ion-content>

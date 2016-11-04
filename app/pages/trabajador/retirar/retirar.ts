@@ -97,7 +97,10 @@ private correoTrabajador: string;
 			    		};
 
 		            this.retirarService.createRetiroQR(retiro)
-								.subscribe(data => this.registros = data);
+								.then(data => {
+            				this.registros = data;
+            				console.log(this.registros);
+       					 });
 
 		          }
 		        }
@@ -121,8 +124,11 @@ private correoTrabajador: string;
   		}
 
 			this.retirarService.consultarPerdidosFecha(consulta)
-			.subscribe(data => this.registros = data);
-			
+		  .then(data => {
+            this.registros = data;
+            console.log(this.registros);
+        });
+
 			if(this.registros){
 				if(this.registros.correcto){
 					this.navCtrl.push(ConsultarPage,{ 	 					
@@ -143,7 +149,10 @@ private correoTrabajador: string;
 					nombrePunto: this.nombrePunto,
   			}
 				this.retirarService.consultarPerdidosCodigo(consulta)
-				.subscribe(data => this.registros = data);
+				.then(data => {
+            this.registros = data;
+            console.log(this.registros);
+        });
 					
 					if(this.registros){
 						if(this.registros.correcto){

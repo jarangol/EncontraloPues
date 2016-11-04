@@ -32,12 +32,9 @@
         <ion-datetime  displayFormat="MMM/YYYY" pickerFormat="MMM-YYYY" [(ngModel)]="fecha" ></ion-datetime>
       </ion-item>
 
-    <ion-item>
-      <ion-label stacked>Etiquetas del objeto</ion-label>
-    </ion-item>
-   
-      <ion-item>     
-          <ion-input  #ntag type="text" placeholder="Escriba aquí la etiqueta"></ion-input>
+      <ion-item>    
+          <ion-label stacked>Palabras clave del objeto</ion-label> 
+          <ion-input  #ntag type="text" placeholder="Agregue aqui una nueva palabra"></ion-input>
           <button ion-button (click)="addTag(ntag)" ng-enter="addTag(ntag)"  item-right>
           <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>
         </button>

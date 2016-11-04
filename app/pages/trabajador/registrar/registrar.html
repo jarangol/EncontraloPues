@@ -25,10 +25,11 @@
 
 
   <div [ngSwitch]="tipoRegistro">
+    
     <ion-list no-lines *ngSwitchCase="'manual'">
       <ion-item>
-          <ion-label stacked>1.Tags</ion-label>     
-          <ion-input  #ntag [(ngModel)]="tag" type="text" placeholder="Añadir etiqueta"></ion-input>
+          <ion-label stacked>1.Palabras clave del objeto</ion-label>     
+          <ion-input  #ntag [(ngModel)]="tag" type="text" placeholder="Agregue aqui una nueva palabra"></ion-input>
           <button ion-button (click)="addTag(ntag)" item-right>
           <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>
         </button>

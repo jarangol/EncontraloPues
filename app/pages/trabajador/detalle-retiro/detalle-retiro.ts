@@ -99,7 +99,11 @@ private anoMes: any; //año y mes concatenados AAAA-MM
                   };
 
                   this.retirarService.createRetiro(retiro)
-                  .subscribe(data => this.registro = data);
+                  .then(data => {
+                      this.registro = data;
+                      console.log(this.registro);
+                  });
+
                   alert(this.registro.mensaje);
                   if(this.registro.correcto == true){
                     this.nav.setRoot(RetirarPage);

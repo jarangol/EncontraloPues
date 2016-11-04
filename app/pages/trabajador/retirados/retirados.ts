@@ -61,7 +61,10 @@ export class RetiradosPage {
 
    
         this.retiradosService.consultarRetiradosFecha(consulta)
-        .subscribe(data => this.objetos = data);
+          .then(data => {
+            this.objetos = data;
+            console.log(this.objetos);
+        });
         
         if(this.objetos){
           console.log(this.objetos);
@@ -87,7 +90,10 @@ export class RetiradosPage {
           }
 
           this.retiradosService.consultarRetiradosCodigo(consulta)
-          .subscribe(data => this.objetos = data);
+          .then(data => {
+            this.objetos = data;
+            console.log(this.objetos);
+         });
           
           if(this.objetos){
           

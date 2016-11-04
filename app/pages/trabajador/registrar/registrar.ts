@@ -8,7 +8,7 @@ import { RegistroService} from '../../../providers/registro-service/registro-ser
 
 @Component({
   templateUrl: 'build/pages/trabajador/registrar/registrar.html',
-  providers: [RegistroService]
+  //providers: [RegistroService]
 })
 
 export class RegistrarPage { 
@@ -30,11 +30,10 @@ export class RegistrarPage {
          this.tipoRegistro = 'manual'; //hace el tab de manual por defecto
          this.tags = []; //para inicializar el arreglo de tags
 
-         //ejemplo de registro con QR
+         //datos necesarios
          this.correoLugar="Eafit@";
          this.nombrePunto="b";
          this.correoTrabajador="m";
-         this.codigoQR="57f4bc2305ce30bc346183b0";
     }
 
 
@@ -67,10 +66,14 @@ export class RegistrarPage {
         };
 
         this.registroService.createRegistro(registro)
-        .subscribe(data => this.registro = data);
+        .then(data => {
+            this.registro = data;
+            console.log(this.registro);
+        });
 
-        if(this.registro.correcto){
+        if(this.registro){
           alert(this.registro.mensaje);
+          console.log(this.registro.mensaje);
           this.tags = [];
           this.descripcionOculta="";
         }else{
@@ -95,8 +98,10 @@ export class RegistrarPage {
             };
 
             this.registroService.createRegistroQR(registroQR)
-            .subscribe(data => this.registro = data);
-
+            .then(data => {
+              this.registro = data;
+            });
+          
             alert(this.registro.mensaje);
 
         }, (err) => {

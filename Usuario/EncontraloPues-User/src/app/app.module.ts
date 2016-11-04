@@ -10,6 +10,9 @@ import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { Escaneoqr } from '../pages/escaneoqr/escaneoqr';
 import { Agregarobjts } from '../pages/agregarobjts/agregarobjts';
+import { Generarqr } from '../providers/generarqr/generarqr';
+import { Generadorqr } from '../pages/generadorqr/generadorqr';
+
 
 let storage: Storage = new Storage();
 
@@ -27,6 +30,7 @@ export function getAuthHttp(http) {
     PingPage,
     Escaneoqr,
     Agregarobjts,
+    Generadorqr,
     TabsPage
   ],
   imports: [
@@ -39,6 +43,7 @@ export function getAuthHttp(http) {
     PingPage,
     Escaneoqr,
     Agregarobjts,
+    Generadorqr,
     TabsPage
   ],
   providers: [
@@ -47,7 +52,8 @@ export function getAuthHttp(http) {
       provide: AuthHttp,
       useFactory: getAuthHttp,
       deps: [Http]
-    }
+    },
+    Generarqr
   ]
 })
 export class AppModule {}

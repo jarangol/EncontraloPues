@@ -127,8 +127,18 @@ private correoTrabajador: string;
 		  .then(data => {
             this.registros = data;
             console.log(this.registros);
-        });
-
+						// if(this.registros.correcto){
+						// 	this.navCtrl.push(ConsultarPage,{ 	 					
+						// 	correoLugar: this.correoLugar,
+						// 	nombrePunto: this.nombrePunto,
+						// 	registros: this.registros.mensaje, //pasarle especificamente el atributo sin el mensaje
+						// 	correoTrabajador: this.correoTrabajador
+			// 		});
+			// }else{
+			// 			alert(this.registros.mensaje);
+			// 		}
+      });
+      console.log("2"+this.registros);
 			if(this.registros){
 				if(this.registros.correcto){
 					this.navCtrl.push(ConsultarPage,{ 	 					

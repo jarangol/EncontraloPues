@@ -5,39 +5,32 @@ import { StatusBar } from 'ionic-native';
 //paginas
 
 //trabajador
-import { ConsultarPage} from './pages/trabajador/consultar/consultar';
-import { DetalleRetiroPage} from './pages/trabajador/detalle-retiro/detalle-retiro';
 import { RegistrarPage} from './pages/trabajador/registrar/registrar';
 import { RetirarPage} from './pages/trabajador/retirar/retirar';
 import { RetiradosPage } from './pages/trabajador/retirados/retirados';
-
-//usuario
-import { IdentificarPage } from './pages/usuario/identificar/identificar';
-import {  GeneradorqrPage } from './pages/usuario/generadorqr/generadorqr';
-import { Objetos} from './pages/usuario/objetos/objetos'
 
 //lugar
 import {BuscarLugarPage} from './pages/lugar/buscar-lugar/buscar-lugar'
 
 //paginas generales
 import { Login } from './pages/login/login';
-import { HomePage } from './pages/home/home';
-import { Page2 } from './pages/page2/page2';
 
 //providers
 import { RegistroService} from './providers/registro-service/registro-service';
+import { RetiradosService} from './providers/retirados-service/retirados-service';
 import { RetirarService} from './providers/retirar-service/retirar-service';
 import { LogInService } from './providers/logIn-service/logIn-service';
 
+
 @Component({
   templateUrl: 'build/app.html'
-  ,providers: [RegistroService, RetirarService, LogInService]
+  ,providers: [RegistroService, RetirarService, LogInService, RetiradosService]
 })
 
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = RetiradosPage;
+  rootPage: any = BuscarLugarPage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -48,14 +41,9 @@ class MyApp {
     this.pages = [
        { title: 'Registrar', component: RegistrarPage},
        { title: 'Retirar', component: RetirarPage},
-      // { title: 'Buscar (lugar)', component: BuscarLugarPage},
-      //{ title: 'Detalle', component: DetalleRetiroPage} ,
-      //{ title: 'Generar', component: GeneradorqrPage} ,
-      //{ title: 'Consultar', component: ConsultarPage},
-     // { title: 'Page2', component: Page2 },
+       { title: 'Buscar (lugar)', component: BuscarLugarPage},
       { title: 'Retirados', component: RetiradosPage },
       { title: 'Login', component: Login},
-      //{ title: 'Objetos', component: Objetos },
     ];
 
   }

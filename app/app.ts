@@ -11,6 +11,8 @@ import { RetiradosPage } from './pages/trabajador/retirados/retirados';
 
 //lugar
 import {BuscarLugarPage} from './pages/lugar/buscar-lugar/buscar-lugar'
+import {TrabajadoresPage} from './pages/lugar/trabajadores/trabajadores'
+import {TrabajadorPage} from './pages/lugar/trabajador/trabajador'
 
 //paginas generales
 import { Login } from './pages/login/login';
@@ -44,6 +46,8 @@ class MyApp {
        { title: 'Buscar (lugar)', component: BuscarLugarPage},
       { title: 'Retirados', component: RetiradosPage },
       { title: 'Login', component: Login},
+      { title: 'trabajadores', component: TrabajadoresPage},
+       { title: 'trabajador', component: TrabajadorPage},
     ];
 
   }

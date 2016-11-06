@@ -15,16 +15,16 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
 
 
   /**
-   *  Permite hacer una consulta de los objetos perdidos pasandole la fecha
+   *  Permite hacer una consulta de los trabajadores 
    *  y opcionalmente los tags
   **/
-  public consultarPerdidosFecha(consulta) {
-    let body = JSON.stringify(consulta);
+  public consultarTrabajadores(correoLugar) {
+    let body = JSON.stringify(correoLugar);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
 
       return new Promise(resolve => {
-       this.data = this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajador', body, {headers: headers})
+       this.data = this.http.post(this.serverURL + '/api/consultarTrabajadoresDisponibles', body, {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;
@@ -34,58 +34,6 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
   }
  
  
- /**
-   *  Permite hacer una consulta de los objetos perdidos,
-   *  pasandole el codigo de registro
-   * El usuario debe ser un trabajador
-  **/
-  public consultarPerdidosCodigo(consulta) {
-    let body = JSON.stringify(consulta);
-    let headers = new Headers();
-    headers.append('Content-Type','application/json'); 
-      return new Promise(resolve => {
-         this.data = this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajadorCodigo', body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-       });
-     });
-  }
-
-   
-  public createRetiro(retiro){
-    let body = JSON.stringify(retiro);
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
-       
-      
-      return new Promise(resolve => {
-        this.http.post(this.serverURL + '/api/retirarObjetoPerdido', body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-       });
-     });
-  } 
-
-
-  public createRetiroQR(retiroQR){
-    
-    let body = JSON.stringify(retiroQR);
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
-
-      return new Promise(resolve => {
-        this.http.post(this.serverURL + '/api/retirarObjetoPerdidoQR', body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-       });
-     });
-  } 
 
 }
 

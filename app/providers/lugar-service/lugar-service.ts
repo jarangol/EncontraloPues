@@ -15,14 +15,15 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
 
 
   /**
-  * Get para datos de prueba
+   *  Consulta objetos perdidos 
+   * en un mes y año especifico
+   * 
   **/
-  public consultarPerdidosLugar(consulta) {
+  public consultarPerdidosFecha(consulta) {
     let body = JSON.stringify(consulta);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    
-   
+     
    return new Promise(resolve => {
        this.data=this.http.post(this.serverURL + '/api/consultarObjetosPerdidosLugar',body, {headers: headers})
         .map(res => res.json())
@@ -33,32 +34,41 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
      }); 
   }
 
-   
-  public createRetiro(retiro){
-    let body = JSON.stringify(retiro);
+
+
+  /**
+   * 
+   * consulta un objeto perdido en especifico
+  **/
+  public consultarPerdidosCodigo(consulta) {
+    let body = JSON.stringify(consulta);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-       
-     return new Promise(resolve => {
-        this.data = this.http.post(this.serverURL + '/api/retirarObjetoPerdido', body, {headers: headers})
+     
+   return new Promise(resolve => {
+       this.data=this.http.post(this.serverURL + '/api/consultarObjetosPerdidosLugarCodigo',body, {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;
           resolve(this.data);
        });
-     });
-  } 
+     }); 
+  }
 
+ 
 
-  public createRetiroQR(retiroQR){
-    
-    let body = JSON.stringify(retiroQR);
+  /**
+   *  Permite hacer una consulta de los objetos perdidos,
+   *  pasandole la fecha y opcionalmente los tags
+   * El usuario debe ser un trabajador
+  **/
+  public consultarRetiradosFecha(consulta) {
+    let body = JSON.stringify(consulta);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    
 
-    return new Promise(resolve => {
-      this.data = this.http.post(this.serverURL + '/api/retirarObjetoPerdidoQR', body, {headers: headers})
+      return new Promise(resolve => {
+        this.data=this.http.post(this.serverURL + '/api/consultarObjetosRetiradosLugar',body, {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;
@@ -66,7 +76,29 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
        });
      });
   }
+  
+  /**
+   *  Permite hacer una consulta de los objetos perdidos,
+   *  pasandole el codigo de registro
+  **/
+  public consultarRetiradosCodigo(consulta) {
+    let body = JSON.stringify(consulta);
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
 
+    return new Promise(resolve => {
+        this.data=this.http.post(this.serverURL + '/api/consultarObjetosRetiradosLugarCodigo',body, {headers: headers})
+        .map(res => res.json())
+        .subscribe(data => {
+          this.data = data;
+          resolve(this.data);
+       });
+     });
+  }  
+
+  /**
+   * La diferencia es que aca  pueden 
+   */
     public consultarPuntosPerdidos(correoLugar){
     
       let body = JSON.stringify(correoLugar);
@@ -74,23 +106,6 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
       headers.append('Content-Type','application/json');
     
      return new Promise(resolve => {
-      this.data = this.http.post(this.serverURL + '/api/consultarNombrePuntosRecoleccion', body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-       });
-     });
-        
-  }  
-
-      public consultarPuntosRetirados(correoLugar){
-    
-      let body = JSON.stringify(correoLugar);
-      let headers = new Headers();
-      headers.append('Content-Type','application/json');
-      
-      return new Promise(resolve => {
       this.data = this.http.post(this.serverURL + '/api/consultarNombrePuntosRecoleccionDisponibles', body, {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
@@ -100,6 +115,24 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
      });
         
   }  
+
+    public consultarPuntosRetirados(correoLugar){
+    
+      let body = JSON.stringify(correoLugar);
+      let headers = new Headers();
+      headers.append('Content-Type','application/json');
+      
+      return new Promise(resolve => {
+        this.data = this.http.post(this.serverURL + '/api/consultarNombrePuntosRecoleccion', body, {headers: headers})
+          .map(res => res.json())
+          .subscribe(data => {
+            this.data = data;
+            resolve(this.data);
+        });
+      });
+        
+    }
+
 
 }
 

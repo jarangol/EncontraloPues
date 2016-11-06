@@ -150,6 +150,18 @@ function incrementarValor(sequenceName, callback) {
   );
 }
 
+function insertarObjetoPerdido(correoLugar, nombrePunto, objetoPerdido, callback) {
+  lugar.findOneAndUpdate({
+    _id: correoLugar,
+    "puntosRecoleccion.nombre": nombrePunto
+  },
+    {
+      $push: { "puntosRecoleccion.$.objetosPerdidos": objetoPerdido }
+    },
+    callback
+  )
+}
+
 function fechaActual() {
   date = new Date();
   month = '' + (date.getMonth() + 1);
@@ -158,7 +170,6 @@ function fechaActual() {
   if (day.length < 2) day = '0' + day;
   return { anoMes: [date.getFullYear(), month].join('-'), dia: day }
 }
-
 
 app.post('/api/iniciarSesionUsuario', function (req, res) {
   usuario.findOne({
@@ -323,6 +334,20 @@ app.post('/api/registrarLugar', function (req, res) {
       }
     })
 
+});
+
+app.post('/api/consultarLugares', function (req, res) {
+
+  lugar.aggregate(
+    { $project: { nombre: 1 } },
+    { $sort: { nombre: 1 } },
+    function (err, lugares) {
+      if (!err) {
+        res.json(lugares)
+      } else {
+        res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
+      }
+    })
 });
 
 app.post('/api/modificarContraseñaLugar', function (req, res) {
@@ -551,14 +576,23 @@ app.post('/api/modificarDatosObjetoPersonal', function (req, res) {
     })
 });
 
-
-
-
-
+app.post('/api/eliminarObjetoPersonal', function (req, res) {
+  usuario.findOneAndUpdate({
+    _id: req.body.correoUsuario
+  },
+    {
+      $pull: { "objetosPersonales": { codigoQR: req.body.codigoQR } }
+    },
+    function (err, objetoPersonal) {
+      if (!err) {
+        res.json({ correcto: true, mensaje: 'Se ha eliminado el objeto exitosamente' });
+      } else {
+        res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
+      }
+    })
+});
 
 app.post('/api/registrarPuntoRecoleccion', function (req, res) {
-
-  req.body.nombre = req.body.nombre.toLowerCase();
 
   lugar.findOne({
     _id: req.body.correoLugar,
@@ -581,29 +615,9 @@ app.post('/api/registrarPuntoRecoleccion', function (req, res) {
             function (err, puntoRecoleccion2) {
               if (!err) {
                 if (puntoRecoleccion2) {
-                  res.json({ correcto: true, mensaje: 'Se ha vuelto a crear el punto de recoleccion:' + puntoRecoleccion2.puntosRecoleccion.nombre });
+                  res.json({ correcto: true, existio: true, mensaje: 'Se ha vuelto a crear el punto de recoleccion:' + puntoRecoleccion2.puntosRecoleccion.nombre });
                 } else {
-                  lugar.findOneAndUpdate(
-                    { _id: req.body.correoLugar },
-                    {
-                      $push: {
-                        "puntosRecoleccion": {
-                          nombre: req.body.nombre,
-                          telefono: req.body.telefono,
-                          direccion: req.body.direccion,
-                          disponible: true,
-                          objetosPerdidos: [],
-                          objetosRetirados: []
-                        }
-                      }
-                    },
-                    function (err, puntoRecoleccion3) {
-                      if (!err) {
-                        res.json({ correcto: true, mensaje: 'Se registro el punto de recoleccion exitosamente' });
-                      } else {
-                        res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
-                      }
-                    })
+                  res.json({ correcto: true, existio: false });
                 }
               } else {
                 res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
@@ -618,14 +632,23 @@ app.post('/api/registrarPuntoRecoleccion', function (req, res) {
     })
 });
 
-app.post('/api/consultarLugares', function (req, res) {
-
-  lugar.aggregate(
-    { $project: { nombre: 1 } },
-    { $sort: { nombre: 1 } },
-    function (err, lugares) {
+app.post('/api/registrarNuevoPuntoRecoleccion', function (req, res) {
+  lugar.findOneAndUpdate({ _id: req.body.correoLugar },
+    {
+      $push: {
+        "puntosRecoleccion": {
+          nombre: req.body.nombre,
+          telefono: req.body.telefono,
+          direccion: req.body.direccion,
+          disponible: true,
+          objetosPerdidos: [],
+          objetosRetirados: []
+        }
+      }
+    },
+    function (err, puntoRecoleccion) {
       if (!err) {
-        res.json(lugares)
+        res.json({ correcto: true, mensaje: 'Se registro el punto de recoleccion exitosamente' });
       } else {
         res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
       }
@@ -635,8 +658,18 @@ app.post('/api/consultarLugares', function (req, res) {
 app.post('/api/consultarNombrePuntosRecoleccion', function (req, res) {
 
   lugar.aggregate(
-    { $match: { _id: req.body.correoLugar }},
+    { $match: { _id: req.body.correoLugar } },
     { $unwind: '$puntosRecoleccion' },
+    {
+      $group: {
+        _id: {
+          objetosPerdidos: "$puntosRecoleccion.objetosPerdidos.codigoBusqueda",
+          objetosRetirados: "$puntosRecoleccion.objetosRetirados.codigoBusqueda",
+        },
+        count: { $sum: 1 }
+      }
+    },
+    { $match: { count: { $gt: 1 } } },
     { $project: { 'puntosRecoleccion.nombre': 1 } },
     { $sort: { 'puntosRecoleccion.nombre': 1 } },
     function (err, puntosRecoleccion) {
@@ -686,6 +719,63 @@ app.post('/api/consultarPuntosRecoleccionDisponibles', function (req, res) {
         res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
       }
     })
+});
+
+app.post('/api/modificarDatosPuntoRecoleccion', function (req, res) {
+  lugar.findOneAndUpdate({
+    _id: req.body.correoLugar,
+    'puntosRecoleccion.nombre': req.body.nombrePuntoRecoleccion
+  },
+    {
+      $set: {
+        'puntosRecoleccion.$.telefono': req.body.telefono,
+        'puntosRecoleccion.$.direccion': req.body.direccion
+      }
+    }, function (err, puntoRecoleccion) {
+      if (!err) {
+        res.json({ correcto: true, mensaje: 'Se han realizado los cambios exitosamente' });
+      } else {
+        res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
+      }
+    })
+});
+
+app.post('/api/eliminarPuntoRecoleccion', function (req, res) {
+
+  lugar.findOne({
+    _id: req.body.correoLugar,
+    'puntosRecoleccion.nombre': req.body.nombrePuntoRecoleccion
+  },
+    {
+      'puntosRecoleccion.$.objetosPerdidos.codigoBusqueda': 1
+    },
+    function (err, puntoRecoleccion) {
+      if (!err) {
+        if (!puntoRecoleccion.objetosPerdidos) {
+
+          lugar.findOneAndUpdate({
+            _id: req.body.correoLugar,
+            'puntosRecoleccion.nombre': req.body.nombrePuntoRecoleccion
+          },
+            {
+              $set: {
+                'puntosRecoleccion.$.disponible': false
+              }
+            }, function (err, puntoRecoleccion) {
+              if (!err) {
+                res.json({ correcto: true, mensaje: 'Se elimino el punto de recoleccion exitosamente' });
+              } else {
+                res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
+              }
+            })
+        } else {
+          res.json({ correcto: false, mensaje: 'Error: Porfavor retirar o eliminar los objetos perdidos de este punto de recoleccion' });
+        }
+      } else {
+        res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
+      }
+    })
+
 });
 
 app.post('/api/registrarObjetoPerdido', function (req, res) {
@@ -752,28 +842,24 @@ app.post('/api/registrarObjetoPerdidoQR', function (req, res) {
                     incrementarValor('codigoRetiro', function (err2, codigoRetiro) {
                       if (!err1 && !err2) {
                         fecha = fechaActual();
-                        lugar.findOneAndUpdate(
+
+                        insertarObjetoPerdido(
+                          req.body.correoLugar,
+                          req.body.nombrePunto,
                           {
-                            _id: req.body.correoLugar,
-                            'puntosRecoleccion.nombre': req.body.nombrePunto
-                          },
-                          {
-                            $push: {
-                              'puntosRecoleccion.$.objetosPerdidos': {
-                                codigoBusqueda: codigoBusqueda.sequence_value.toString(),
-                                correoTrabajadorRegistro: req.body.correoTrabajador,
-                                fechaRegistro: {
-                                  anoMes: fecha.anoMes,
-                                  dia: fecha.dia
-                                },
-                                codigoQR: {
-                                  correoUsuario: cuenta._id,
-                                  objetoPersonalCodigoQR: req.body.codigoQR,
-                                  codigoRetiro: codigoRetiro.sequence_value.toString()
-                                }
-                              }
+                            codigoBusqueda: codigoBusqueda.sequence_value.toString(),
+                            correoTrabajadorRegistro: req.body.correoTrabajador,
+                            fechaRegistro: {
+                              anoMes: fecha.anoMes,
+                              dia: fecha.dia
+                            },
+                            codigoQR: {
+                              correoUsuario: cuenta._id,
+                              objetoPersonalCodigoQR: req.body.codigoQR,
+                              codigoRetiro: codigoRetiro.sequence_value.toString()
                             }
                           },
+
                           function (err, doc) {
                             if (!err) {
                               usuario.findOneAndUpdate(
@@ -784,7 +870,7 @@ app.post('/api/registrarObjetoPerdidoQR', function (req, res) {
                                 {
                                   $push: {
                                     'objetosPersonales.$.notificaciones': {
-                                      _id : mongoose.Types.ObjectId(),
+                                      _id: mongoose.Types.ObjectId(),
                                       correoElectronico: req.body.correoLugar,
                                       lugar: {
                                         nombrePuntoRecolecion: req.body.nombrePunto,
@@ -806,7 +892,7 @@ app.post('/api/registrarObjetoPerdidoQR', function (req, res) {
                             } else {
                               res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
                             }
-                          });
+                          })
                       } else {
                         res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
                       }
@@ -828,6 +914,111 @@ app.post('/api/registrarObjetoPerdidoQR', function (req, res) {
         } else {
           res.json({ correcto: false, mensaje: "Error: No se encuentra el codigo QR" });
         }
+      } else {
+        res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
+      }
+    })
+});
+
+app.post('/api/modificarDatosObjetoPerdido', function (req, res) {
+  
+  lugar.aggregate(
+    { $match : {_id : req.body.correoLugar}},
+    { $unwind: "$puntosRecoleccion" },
+    { $match : {"puntosRecoleccion.nombre": req.body.nombrePunto}},
+    { $unwind: "$puntosRecoleccion.objetosPerdidos" },
+    { $match: { "puntosRecoleccion.objetosPerdidos.codigoBusqueda" : req.body.codigoBusqueda }},
+    { $project : {
+      'puntosRecoleccion.objetosPerdidos':1,
+    }},
+    function (err, objetoPerdido) {
+      if (!err) {
+
+        objetoPerdido = objetoPerdido[0].puntosRecoleccion.objetosPerdidos;
+        objetoPerdido.sinCodigoQR.tags = req.body.tags
+        objetoPerdido.sinCodigoQR.descripcionOculta = req.body.descripcionOculta
+
+        lugar.findOneAndUpdate({
+          _id: req.body.correoLugar,
+          "puntosRecoleccion.nombre": req.body.nombrePunto
+        },
+          {
+            $pull: { "puntosRecoleccion.$.objetosPerdidos": { codigoBusqueda: req.body.codigoBusqueda } },
+          },
+          function (err, doc) {
+            if (!err) {
+              insertarObjetoPerdido(
+                req.body.correoLugar,
+                req.body.nombrePuntoInsertar,
+                objetoPerdido,
+                function (err, doc) {
+                  if (!err) {
+                    res.json({ correcto: true, mensaje: 'Se han realizado los cambios exitosamente' });
+                  } else {
+                    res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
+                  }
+                }
+              )
+            } else {
+              res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
+            }
+          })
+      } else {
+        res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
+      }
+    })
+});
+
+app.post('/api/eliminarObjetoPerdido', function (req, res) {
+
+  lugar.aggregate(
+    { $match: { _id: req.body.correoLugar } },
+    { $unwind: "$puntosRecoleccion" },
+    { $match: { "puntosRecoleccion.nombre": req.body.nombrePunto } },
+    { $unwind: "$puntosRecoleccion.objetosPerdidos" },
+    { $match: { "puntosRecoleccion.objetosPerdidos.codigoBusqueda": req.body.codigoBusqueda } },
+    {
+      $project: {
+        'puntosRecoleccion.objetosPerdidos': 1,
+      }
+    },
+    function (err, objetoPerdido) {
+      if (!err) {
+
+        objetoPerdido = objetoPerdido[0].puntosRecoleccion.objetosPerdidos;
+
+        lugar.findOneAndUpdate({
+          _id: req.body.correoLugar,
+          "puntosRecoleccion.nombre": req.body.nombrePunto
+        },
+          {
+            $pull: { "puntosRecoleccion.$.objetosPerdidos": { codigoBusqueda: req.body.codigoBusqueda } },
+          },
+          function (err, doc) {
+            if (!err) {
+              if(!objetoPerdido.codigoQR){
+                res.json({ correcto: true, mensaje: 'Se elimino el objeto exitosamente' });
+
+              }else{
+                usuario.findOneAndUpdate({
+                  _id: objetoPerdido.codigoQR.correoUsuario,
+                  "objetosPersonales.codigoQR": objetoPerdido.codigoQR.objetoPersonalCodigoQR
+                },
+                  {
+                    $pull: { "objetosPersonales.$.notificaciones": { lugar: { $exists: true } } },
+                  },
+                  function (err, doc) {
+                    if (!err) {
+                      res.json({ correcto: true, mensaje: 'Se elimino el objeto exitosamente' });
+                    } else {
+                      res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
+                    }
+                  })
+              }
+            } else {
+              res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
+            }
+          })
       } else {
         res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
       }
@@ -991,7 +1182,7 @@ app.post('/api/consultarObjetosPerdidosTrabajadorCodigo', function (req, res) {
 app.post('/api/consultarObjetosPerdidosLugar',function(req,res){
   consultaNombrePuntoRecoleccion = {};
   consultaTags = {};
-  if(req.body.nombrePuntoRecoleccion) consultaNombrePuntoRecoleccion = {'puntoRecoleccion.nombre' : req.body.nombrePuntoRecoleccion};
+  if(req.body.nombrePuntoRecoleccion != "Todos") consultaNombrePuntoRecoleccion = {'puntoRecoleccion.nombre' : req.body.nombrePuntoRecoleccion};
   if(req.body.tags.length) consultaTags = {'puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags' : {$in : req.body.tags}};
 
   lugar.aggregate(
@@ -1353,7 +1544,7 @@ app.post('/api/consultarObjetosRetiradosTrabajadorCodigo', function (req, res) {
 app.post('/api/consultarObjetosRetiradosLugar', function (req, res) {
   consultaTags = {};
   consultaNombrePuntoRecoleccion = {};
-  if (req.body.nombrePuntoRecoleccion) consultaNombrePuntoRecoleccion = { 'puntoRecoleccion.nombre': req.body.nombrePuntoRecoleccion };
+  if (req.body.nombrePuntoRecoleccion != "Todos") consultaNombrePuntoRecoleccion = { 'puntoRecoleccion.nombre': req.body.nombrePuntoRecoleccion };
   if (req.body.tags.length) consultaTags = { 'puntosRecoleccion.objetosRetirados.sinCodigoQR.tags': { $in: req.body.tags } };
 
   lugar.aggregate(
@@ -1547,6 +1738,23 @@ app.post('/api/notificacionUsuario_Usuario', function (req, res) {
     }) 
 });
 
+app.post('/api/eliminarNotificacion', function (req, res) {
+  usuario.findOneAndUpdate({
+    _id: req.body.correoUsuario,
+    "objetosPersonales.codigoQR" : req.body.codigoQR
+  },
+    {
+      $pull: { "objetosPersonales.$.notificaciones": { _id: req.body.idNotificacion } }
+    },
+    function (err, notificacion) {
+      if (!err) {
+        res.json({ correcto: true, mensaje: 'Se ha eliminado la notificacion exitosamente' });
+      } else {
+        res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
+      }
+    })
+});
+
 app.post('/api/consultarNotificacionesUsuario', function (req, res) {
 
   usuario.aggregate(
@@ -1651,7 +1859,6 @@ app.post('/api/consultarNotificacionesLugar', function (req, res) {
     })
 
 });
-
 
 
 var mongodbUri = 'mongodb://user:user@ds035776.mlab.com:35776/encontralopues';

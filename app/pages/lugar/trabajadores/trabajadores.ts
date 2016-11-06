@@ -8,6 +8,7 @@ import {TrabajadoresService} from '../../../providers/trabajadores-service/traba
 
 @Component({ 
    templateUrl: 'build/pages/lugar/trabajadores/trabajadores.html',
+   providers: [TrabajadoresService]
 })
 
 export class TrabajadoresPage {
@@ -15,13 +16,21 @@ export class TrabajadoresPage {
   private trabajadores: any; //variable para guardar el listado
   private correoLugar: any; //datos de login
 
-    constructor(private navCtrl: NavController, public navParams: NavParams){
+    constructor(private navCtrl: NavController, public navParams: NavParams, public trabajadoresService: TrabajadoresService){
       this.correoLugar = this.navParams.get('correoLugar');
   }
 
+    ionViewLoaded(){
+     this.consultarTrabajadores();
+    }
 
     public consultarTrabajadores(){
-        //llamar al provider
+        this.trabajadoresService.consultarTrabajadores(this.correoLugar)
+				.then(data => {
+            this.trabajadores = data;
+            console.log(this.trabajadores);
+        });
+					
     }
 
 

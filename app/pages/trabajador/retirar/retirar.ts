@@ -6,7 +6,7 @@ import {BarcodeScanner} from 'ionic-native';
 import { DetalleRetiroPage} from '../detalle-retiro/detalle-retiro';
 
 //pagina para resultado de la busqueda
-import { ConsultarPage} from '../consultar/consultar';
+import { ListarPerdidosPage} from '../../listar-perdidos/listar-perdidos';
 
 //proveedor del service
 import { RetirarService } from '../../../providers/retirar-service/retirar-service';
@@ -141,11 +141,12 @@ private correoTrabajador: string;
       console.log("2"+this.registros);
 			if(this.registros){
 				if(this.registros.correcto){
-					this.navCtrl.push(ConsultarPage,{ 	 					
+					this.navCtrl.push(ListarPerdidosPage,{ 	 					
 						correoLugar: this.correoLugar,
 						nombrePunto: this.nombrePunto,
 						registros: this.registros.mensaje, //pasarle especificamente el atributo sin el mensaje
-						correoTrabajador: this.correoTrabajador
+						correoTrabajador: this.correoTrabajador,
+						fecha: this.fecha
 					});
 				}else{
 					alert(this.registros.mensaje);

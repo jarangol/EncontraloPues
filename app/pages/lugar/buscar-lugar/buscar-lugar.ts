@@ -1,11 +1,20 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController,NavParams } from 'ionic-angular';
+
+//Pagina para mostrar en detalle cada item
+import { DetalleRetiradoPage} from '../../detalle-retirado/detalle-retirado';
+
+//page de detalle del retiro
+import { DetalleRetiroPage} from '../../trabajador/detalle-retiro/detalle-retiro';
 
 //Servicio de llamados http 
 import { LugarService} from '../../../providers/lugar-service/lugar-service';
 
 //pagina para resultado de la busqueda
-import { ResultadoLugarPage} from '../resultado-lugar/resultado-lugar';
+import { ListarRetiradosPage} from '../../listar-retirados/listar-retirados';
+
+//pagina para resultado de la busqueda
+import { ListarPerdidosPage} from '../../listar-perdidos/listar-perdidos';
 
 
 @Component({
@@ -27,15 +36,13 @@ export class BuscarLugarPage {
 	private puntosRecoleccion: any;
 
 
-
-
   //datos necesarios para consultas
   private correoLugar: any;
   private nombrePunto: any;
 
   private registros: any; //para guardar resultados de consultas.
 
-  constructor(private navCtrl: NavController,private lugarService: LugarService) {
+  constructor(private navCtrl: NavController,public navParams: NavParams,private lugarService: LugarService) {
   	//inicializando algunos campos
 		this.tags = [];
 		this.tipoBusqueda = 'fecha';
@@ -49,24 +56,32 @@ export class BuscarLugarPage {
 
 		//datos necesarios
 		this.correoLugar="Eafit@";
-		
+     this.nombrePunto="b";
 
   }
 
+
+	ionViewLoaded(){
+		this.cargarPuntos();
+	}
 	/**
 	 * Cargar los puntos de recoleccion para consultar 
 	 * Segun si son los objetos perdidos o retirados
 	 */
 	public cargarPuntos(){
-		if(this.tipoObjetos == 'perdidos')
-			this.lugarService.consultarPuntosPerdidos(this.correoLugar).then(data => {
+		if(this.tipoObjetos == 'perdidos'){
+			this.lugarService.consultarPuntosPerdidos(this.correoLugar)
+			.then(data => {
             this.puntosRecoleccion = data;
+						console.log("puntos"+this.puntosRecoleccion);
       });
-		else if(this.tipoObjetos == 'retirados')
-			this.lugarService.consultarPuntosRetirados(this.correoLugar).
-			then(data => {
+		}else if(this.tipoObjetos == 'retirados'){
+			this.lugarService.consultarPuntosRetirados(this.correoLugar)
+			.then(data => {
             this.puntosRecoleccion = data;
+						console.log(this.puntosRecoleccion);
       });
+		}
 	}
 
   public addTag(tagNameInput: any): void {
@@ -84,38 +99,72 @@ export class BuscarLugarPage {
   } 
 
    public buscar(){
-  	if(this.fecha){
-  		let consulta = {
-  			añoMesRegistro : this.fecha,
-  			codigoBusqueda: this.codigoBusqueda,
-  			tags: this.tags,
-  			correoLugar: this.correoLugar,
-	  		codigoObjeto: this.codigoBusqueda,
-	  		
-  		}
-  		
-			
-			this.lugarService.consultarPerdidosLugar(consulta)
+
+
+		 if(this.tipoBusqueda == 'fecha'){
+				let consulta = {
+          anoMesRegistro : this.fecha,
+          tags: this.tags,
+          correoLugar: this.correoLugar,
+          nombrePunto: this.nombrePunto
+				}
+
+				if(this.tipoObjetos == 'perdidos'){						
+					this.lugarService.consultarPerdidosFecha(consulta)
+					.then((data) => {
+							this.registros = data;
+							console.log("consulta perdidos-fecha: "+data);
+							
+							this.navCtrl.push(ListarPerdidosPage,{ 	 						
+								// correoLugar: this.correoLugar,
+								// nombrePunto: this.nombrePunto,
+								// registros: this.registros.mensaje,
+								// fecha: this.fecha,
+								// correoTrabajador: "correo"
+				 		 });
+					});
+					
+				}else if(this.tipoObjetos == 'retirados'){
+					this.lugarService.consultarRetiradosFecha(consulta)
+					.then((data) => {
+						this.registros = data;
+						console.log("consulta retirados-fecha: "+data);
+					});
+
+						this.navCtrl.push(ListarRetiradosPage,{ 	 						
+							correoLugar: this.correoLugar,
+							nombrePunto: this.nombrePunto,
+							codigoBusqueda: this.codigoBusqueda,
+							registros: this.registros.mensaje ,
+				  });
+				}
+		
+		}else if(this.tipoBusqueda == 'consecutivo'){
+			 	let consulta = {
+					codigoBusqueda: this.codigoBusqueda,
+					correoLugar: this.correoLugar,
+  			}
+			 if(this.tipoObjetos == 'perdidos'){
+				 	this.lugarService.consultarPerdidosCodigo(consulta)
+					.then((data) => {
+							this.registros = data;
+							console.log("Resultado consulta: "+data);
+					});
+				
+				//navegar
+
+			 }else if(this.tipoObjetos == 'retirados'){		
+		
+				this.lugarService.consultarRetiradosCodigo(consulta)
 				.then((data) => {
 						this.registros = data;
 						console.log("Resultado consulta: "+data);
 				});
-
-				this.registros = this.registros;
-				
-				this.navCtrl.push(ResultadoLugarPage,{ 	 	
-					
-					correoLugar: this.correoLugar,
-					nombrePunto: this.nombrePunto,
-					codigoBusqueda: this.codigoBusqueda,
-					registros: this.registros.lugar.puntosRecoleccion ,
-
-				});
+     		//navegar
+		
 				this.codigoBusqueda = "";
-			this.registros=null;
-		}	
-  }
-
-  
-
+				this.registros=null;
+  	 }
+		}
+	}
 }

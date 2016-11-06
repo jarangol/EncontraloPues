@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams,AlertController, Nav} from 'ionic-angular';
 
-//proveedor del service
-import { RetirarService } from '../../../providers/retirar-service/retirar-service';
-
-//Pagina inicial de retirar
-import { RetirarPage} from '../../../pages/trabajador/retirar/retirar';
 
 @Component({
   templateUrl: 'build/pages/trabajador/detalle-retirado/detalle-retirado.html',
 })
+
+
 export class DetalleRetiradoPage {
 
 private registro: any;//contiene la informacion para mostrar
@@ -31,7 +28,7 @@ private nombrePersona: any;
 private numeroIdPersona: any;
 private telefonoPersona: any;
 
-  constructor(private navCtrl: NavController,public navParams: NavParams, public alertCtrl: AlertController, public retirarService: RetirarService, public nav:Nav) {
+  constructor(private navCtrl: NavController,public navParams: NavParams, public alertCtrl: AlertController, public nav:Nav) {
       this.tags=[];
       this.registro = this.navParams.get('registro');
      

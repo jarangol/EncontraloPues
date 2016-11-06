@@ -5,10 +5,10 @@ import { NavController, NavParams, Alert } from 'ionic-angular';
 import { RetiradosService} from '../../../providers/retirados-service/retirados-service';
 
 //Pagina para mostrar en detalle cada item
-import { DetalleRetiradoPage} from '../detalle-retirado/detalle-retirado';
+import { DetalleRetiradoPage} from '../../detalle-retirado/detalle-retirado';
 
 //pagina para resultado de la busqueda
-import { ListarRetiradosPage} from '../listar-retirados/listar-retirados';
+import { ListarRetiradosPage} from '../../listar-retirados/listar-retirados';
 
 
 
@@ -61,13 +61,13 @@ export class RetiradosPage {
 
    
         this.retiradosService.consultarRetiradosFecha(consulta)
-          .then(data => {
+        .then(data => {
             this.objetos = data;
-            console.log(this.objetos);
+            console.log("then: "+this.objetos);
         });
+            console.log("no: "+this.objetos); //por alguna razon 
         
         if(this.objetos){
-          console.log(this.objetos);
           if(this.objetos.correcto){  
             this.navCtrl.push(ListarRetiradosPage,{ 	 					
               registros: this.objetos.mensaje, //pasarle especificamente el atributo sin el mensaje
@@ -92,9 +92,10 @@ export class RetiradosPage {
           this.retiradosService.consultarRetiradosCodigo(consulta)
           .then(data => {
             this.objetos = data;
-            console.log(this.objetos);
-         });
-          
+            console.log("en then"+this.objetos);
+           });
+           
+           console.log(this.objetos);
           if(this.objetos){
           
             if(this.objetos.correcto){

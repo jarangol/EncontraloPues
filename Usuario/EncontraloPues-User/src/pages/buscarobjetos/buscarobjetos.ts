@@ -13,7 +13,7 @@ import { NavController } from 'ionic-angular';
 })
 export class Buscarobjetos {
   tag: any;
-  private fecha: any;
+  fecha: any;
   
   public tags: Array<String>;
   constructor(public navCtrl: NavController) {

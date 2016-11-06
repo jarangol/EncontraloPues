@@ -12,6 +12,7 @@ import { Escaneoqr } from '../pages/escaneoqr/escaneoqr';
 import { Agregarobjts } from '../pages/agregarobjts/agregarobjts';
 import { Generarqr } from '../providers/generarqr/generarqr';
 import { Generadorqr } from '../pages/generadorqr/generadorqr';
+import { Objetos } from '../pages/objetos/objetos';
 
 
 let storage: Storage = new Storage();
@@ -31,6 +32,7 @@ export function getAuthHttp(http) {
     Escaneoqr,
     Agregarobjts,
     Generadorqr,
+    Objetos,
     TabsPage
   ],
   imports: [
@@ -44,6 +46,7 @@ export function getAuthHttp(http) {
     Escaneoqr,
     Agregarobjts,
     Generadorqr,
+    Objetos,
     TabsPage
   ],
   providers: [

@@ -10,6 +10,7 @@ import {ProfilePage } from '../pages/profile/profile';
 import { Escaneoqr } from '../pages/escaneoqr/escaneoqr';
 import { Agregarobjts } from '../pages/agregarobjts/agregarobjts';
 import { Generadorqr } from '../pages/generadorqr/generadorqr';
+import { Objetos } from '../pages/objetos/objetos';
 //
 
 @Component({
@@ -38,8 +39,8 @@ export class AuthApp {
       {title: 'Profile',component: ProfilePage},
       {title: 'Escanea el QR', component: Escaneoqr},
       {title: 'Agrega tu objeto', component: Agregarobjts},
-      {title: 'Generar QR', component: Generadorqr}    
-          
+      {title: 'Generar QR', component: Generadorqr},    
+      {title: 'Tus Objetos', component: Objetos}     
     ];
   
   }

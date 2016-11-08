@@ -46,7 +46,7 @@ export class RegistroService {
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;
-          console.log(this.data);
+          console.log(this.data.mensaje);
           resolve(this.data);
        });
      });

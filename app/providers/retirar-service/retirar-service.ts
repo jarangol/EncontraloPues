@@ -23,14 +23,10 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     let headers = new Headers();
     headers.append('Content-Type','application/json');
 
-      return new Promise(resolve => {
-       this.data = this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajador', body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-       });
-     });
+    this.data = this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajador', body, {headers: headers})
+    .map(res => res.json());
+
+    return this.data;
   }
  
  
@@ -43,14 +39,11 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     let body = JSON.stringify(consulta);
     let headers = new Headers();
     headers.append('Content-Type','application/json'); 
-      return new Promise(resolve => {
-         this.data = this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajadorCodigo', body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-       });
-     });
+
+    this.data = this.http.post(this.serverURL + '/api/consultarObjetosPerdidosTrabajadorCodigo', body, {headers: headers})
+    .map(res => res.json());
+
+    return this.data;    
   }
 
    
@@ -59,15 +52,10 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     let headers = new Headers();
     headers.append('Content-Type','application/json');
        
-      
-      return new Promise(resolve => {
-        this.http.post(this.serverURL + '/api/retirarObjetoPerdido', body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-       });
-     });
+    this.data = this.http.post(this.serverURL + '/api/retirarObjetoPerdido', body, {headers: headers})
+    .map(res => res.json());
+    return this.data;
+    
   } 
 
 
@@ -76,15 +64,11 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     let body = JSON.stringify(retiroQR);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-
-      return new Promise(resolve => {
-        this.http.post(this.serverURL + '/api/retirarObjetoPerdidoQR', body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-       });
-     });
+    
+    this.data = this.http.post(this.serverURL + '/api/retirarObjetoPerdidoQR', body, {headers: headers})
+    .map(res => res.json());
+    
+    return this.data;     
   } 
 
 }

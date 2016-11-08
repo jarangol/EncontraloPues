@@ -64,24 +64,15 @@ export class RetiradosPage {
           .then(data => {
             this.objetos = data;
             console.log(this.objetos);
-        });
-        
-        if(this.objetos){
-          console.log(this.objetos);
-          if(this.objetos.correcto){  
-            this.navCtrl.push(ListarRetiradosPage,{ 	 					
-              registros: this.objetos.mensaje, //pasarle especificamente el atributo sin el mensaje
-              fecha: this.fecha
-            });
+            if(this.objetos.correcto){  
+              this.navCtrl.push(ListarRetiradosPage,{ 	 					
+                registros: this.objetos.mensaje, //pasarle especificamente el atributo sin el mensaje
+                fecha: this.fecha
+              });
           }else{
             alert(this.objetos.mensaje);
           }
-        
-      
-        }else{
-					alert("Ha ocurrido un error, vuelve a intentarlo");
-				}
-
+        });
 
       }else if(this.tipoBusqueda=='consecutivo' && this.codigoBusqueda){
           let consulta = {
@@ -93,10 +84,6 @@ export class RetiradosPage {
           .then(data => {
             this.objetos = data;
             console.log(this.objetos);
-         });
-          
-          if(this.objetos){
-          
             if(this.objetos.correcto){
                 this.navCtrl.push(DetalleRetiradoPage,{ 	 					
                   registro: this.objetos.mensaje, //pasarle especificamente el atributo sin el mensaje
@@ -104,15 +91,9 @@ export class RetiradosPage {
               this.codigoBusqueda = "";
             }else{
               alert(this.objetos.mensaje);
-            }
-          
-        }else{
-					alert("Ha ocurrido un error, vuelve a intentarlo");
-				}
-          
-      }
-       
-      
+            }       
+         });    
+      }  
   }
 
 

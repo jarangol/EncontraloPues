@@ -47,6 +47,8 @@ private correoTrabajador: string;
      this.nombrePunto="b";
      this.correoTrabajador="m";
      this.nombreLugar="d";
+
+		 
   }
 
   public scan(): string {
@@ -124,33 +126,20 @@ private correoTrabajador: string;
   		}
 
 			this.retirarService.consultarPerdidosFecha(consulta)
-		  .then(data => {
+		  .subscribe(data => {
             this.registros = data;
-            console.log(this.registros);
-						// if(this.registros.correcto){
-						// 	this.navCtrl.push(ConsultarPage,{ 	 					
-						// 	correoLugar: this.correoLugar,
-						// 	nombrePunto: this.nombrePunto,
-						// 	registros: this.registros.mensaje, //pasarle especificamente el atributo sin el mensaje
-						// 	correoTrabajador: this.correoTrabajador
-			// 		});
-			// }else{
-			// 			alert(this.registros.mensaje);
-			// 		}
+            console.log(this.registros);		
+						if(this.registros.correcto){
+							this.navCtrl.push(ConsultarPage,{ 	 					
+								correoLugar: this.correoLugar,
+								nombrePunto: this.nombrePunto,
+								registros: this.registros.mensaje, //pasarle especificamente el atributo sin el mensaje
+								correoTrabajador: this.correoTrabajador
+							});
+						}else{
+							alert(this.registros.mensaje);
+						}
       });
-      console.log("2"+this.registros);
-			if(this.registros){
-				if(this.registros.correcto){
-					this.navCtrl.push(ConsultarPage,{ 	 					
-						correoLugar: this.correoLugar,
-						nombrePunto: this.nombrePunto,
-						registros: this.registros.mensaje, //pasarle especificamente el atributo sin el mensaje
-						correoTrabajador: this.correoTrabajador
-					});
-				}else{
-					alert(this.registros.mensaje);
-				}
-			}
 		
 		}else if(this.tipoBusqueda=='consecutivo' && this.codigoBusqueda){
 				let consulta = {
@@ -159,12 +148,10 @@ private correoTrabajador: string;
 					nombrePunto: this.nombrePunto,
   			}
 				this.retirarService.consultarPerdidosCodigo(consulta)
-				.then(data => {
+				.subscribe(data => {
             this.registros = data;
-            console.log(this.registros);
-        });
-					
-					if(this.registros){
+  	        console.log(this.registros);
+						
 						if(this.registros.correcto){
 							this.navCtrl.push(DetalleRetiroPage,{ 	 					
 								correoLugar: this.correoLugar,
@@ -176,15 +163,16 @@ private correoTrabajador: string;
 						}else{
 							alert(this.registros.mensaje);
 						}
-				}else{
-					alert("Ha ocurrido un error, vuelve a intentarlo");
-				}
-		}
-			
-}
+				});
+					
+		
+		
+		}		
+	}
 	
 
-    public addTag(tagNameInput: any): void {
+
+  public addTag(tagNameInput: any): void {
     if(tagNameInput.value) {
       this.tags.push(tagNameInput.value);
       tagNameInput.value = '';

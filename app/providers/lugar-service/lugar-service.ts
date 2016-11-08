@@ -100,39 +100,23 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
    * La diferencia es que aca  pueden 
    */
     public consultarPuntosPerdidos(correoLugar){
-    
       let body = JSON.stringify(correoLugar);
       let headers = new Headers();
       headers.append('Content-Type','application/json');
     
-     return new Promise(resolve => {
       this.data = this.http.post(this.serverURL + '/api/consultarNombrePuntosRecoleccionDisponibles', body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-       });
-     });
-        
+      .map(res => res.json());
+
+      return this.data;    
   }  
 
     public consultarPuntosRetirados(correoLugar){
-    
       let body = JSON.stringify(correoLugar);
       let headers = new Headers();
       headers.append('Content-Type','application/json');
-      
-      return new Promise(resolve => {
-        this.data = this.http.post(this.serverURL + '/api/consultarNombrePuntosRecoleccion', body, {headers: headers})
-          .map(res => res.json())
-          .subscribe(data => {
-            this.data = data;
-            resolve(this.data);
-        });
-      });
-        
+      this.data = this.http.post(this.serverURL + '/api/consultarNombrePuntosRecoleccion', body, {headers: headers})
+      .map(res => res.json());
+      return this.data;
     }
-
-
 }
 

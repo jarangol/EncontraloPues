@@ -6,7 +6,7 @@ import { DetalleRetiroPage} from '../trabajador/detalle-retiro/detalle-retiro';
 
 
 @Component({ 
-   templateUrl: 'build/pages/trabajador/listar-perdidos/listar-perdidos.html',
+   templateUrl: 'build/pages/listar-perdidos/listar-perdidos.html',
 })
 
 export class ListarPerdidosPage {
@@ -21,13 +21,13 @@ export class ListarPerdidosPage {
   private fecha: any;
 
     constructor(private navCtrl: NavController, public navParams: NavParams){
-      	 console.log("tiene que llegarW");
+      console.log("tiene que llegarW");
       this.correoLugar = this.navParams.get('correoLugar');
-      // this.nombrePunto = this.navParams.get('nombrePunto');
-      // this.registros = this.navParams.get('registros');
-      // this.correoTrabajador = this.navParams.get('correoTrabajador');
-      // this.fecha = this.navParams.get('fecha');
-      // console.log("Listar perdidos: "+this.registros);
+      this.nombrePunto = this.navParams.get('nombrePunto');
+      this.registros = this.navParams.get('registros');
+      this.correoTrabajador = this.navParams.get('correoTrabajador');
+      this.fecha = this.navParams.get('fecha');
+      console.log("Listar perdidos: "+this.registros);
       		
 
   }

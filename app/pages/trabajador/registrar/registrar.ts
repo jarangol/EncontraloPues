@@ -69,16 +69,17 @@ export class RegistrarPage {
         .then(data => {
             this.registro = data;
             console.log(this.registro);
+
+            if(this.registro.correcto){
+              alert(this.registro.mensaje);
+              console.log(this.registro.mensaje);
+              this.tags = [];
+              this.descripcionOculta="";
+            }else{
+              alert(this.registro.mensaje);
+            }
         });
 
-        if(this.registro){
-          alert(this.registro.mensaje);
-          console.log(this.registro.mensaje);
-          this.tags = [];
-          this.descripcionOculta="";
-        }else{
-          alert(this.registro.mensaje);
-        }
       }
     }
 
@@ -100,9 +101,10 @@ export class RegistrarPage {
             this.registroService.createRegistroQR(registroQR)
             .then(data => {
               this.registro = data;
+              alert(this.registro.mensaje);
             });
           
-            alert(this.registro.mensaje);
+          
 
         }, (err) => {
             alert("Ha ocurrido un error: "+err);

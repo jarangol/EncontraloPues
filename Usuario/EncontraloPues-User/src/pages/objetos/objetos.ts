@@ -22,7 +22,7 @@ export class Objetos {
   }
 
   addObjt(){
-    this.navCtrl.push(Agregarobjts);
+    this.navCtrl.push(Agregarobjts); // pasar despues los parametros de navegacion
 
     
         // let prompt = this.alertCtrl.create({

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Encontrados } from '../encontrados/encontrados';
 
 /*
   Generated class for the Buscarobjetos page.
@@ -14,6 +15,7 @@ import { NavController } from 'ionic-angular';
 export class Buscarobjetos {
   tag: any;
   fecha: any;
+  puntoRecoleccion: any;
   
   public tags: Array<String>;
   constructor(public navCtrl: NavController) {
@@ -44,5 +46,9 @@ export class Buscarobjetos {
     // Delete the tag in that index
     this.tags.splice(index, 1);
   } 
+
+  public listObjtPerdidos(){
+        this.navCtrl.push(Encontrados); //pasar desp los parametros de navegacion
+  }
 
 }

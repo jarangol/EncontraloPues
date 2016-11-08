@@ -14,6 +14,8 @@ import { Generarqr } from '../providers/generarqr/generarqr';
 import { Generadorqr } from '../pages/generadorqr/generadorqr';
 import { Objetos } from '../pages/objetos/objetos';
 import { Buscarobjetos } from '../pages/buscarobjetos/buscarobjetos';
+import { Encontrados } from '../pages/encontrados/encontrados';
+
 
 
 
@@ -36,6 +38,7 @@ export function getAuthHttp(http) {
     Generadorqr,
     Objetos,
     Buscarobjetos,
+    Encontrados,
     TabsPage
   ],
   imports: [
@@ -50,7 +53,8 @@ export function getAuthHttp(http) {
     Agregarobjts,
     Generadorqr,
     Objetos,
-    Buscarobjetos,    
+    Buscarobjetos,
+    Encontrados,    
     TabsPage
   ],
   providers: [

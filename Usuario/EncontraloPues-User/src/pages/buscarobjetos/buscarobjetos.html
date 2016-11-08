@@ -8,27 +8,36 @@
 
   
   <ion-navbar>
-    <ion-title>buscarobjetos</ion-title>
-    <button menuToggle>
+     <button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-  </ion-navbar>
-
+    <ion-title>buscar objetos</ion-title>
+  </ion-navbar> 
 </ion-header>
 
 
 <ion-content padding>
 
-    <ion-item>
-      <ion-label stacked>1.Palabras Clave</ion-label>
-    </ion-item>
+  <ion-item>
+    <ion-label>Punto de recoleccion</ion-label>
+    <ion-select [(ngModel)]="puntoRecoleccion">
+      <ion-option >Lugar1</ion-option>
+    </ion-select>
+  </ion-item>
+  
+   <ion-item>
+        <ion-label>Mes de pérdida</ion-label>
+        <ion-datetime  displayFormat="MMM/YYYY" pickerFormat="MMM-YYYY" [(ngModel)]="fecha" ></ion-datetime>
+  </ion-item>
 
-      <ion-item>     
-          <ion-input  #ntag [(ngModel)]="tag" type="text" placeholder="Palabras que caracterizen el objeto"></ion-input>
+    <ion-item>
+      <ion-label stacked>Palabras Clave</ion-label>
+      <ion-input  #ntag [(ngModel)]="tag" type="text" placeholder="Palabras que caracterizen el objeto"></ion-input>
           <button ion-button (click)="addTag(ntag)" item-right>
           <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>
         </button>
-      </ion-item>
+    </ion-item>
+
 
   <ion-item>
     <div class="tag-container"  *ngIf="tags.length > 0">
@@ -39,13 +48,8 @@
       </div>
   </ion-item>
 
-   <ion-item>
-        <ion-label>Mes de pérdida</ion-label>
-        <ion-datetime  displayFormat="MMM/YYYY" pickerFormat="MMM-YYYY" [(ngModel)]="fecha" ></ion-datetime>
-</ion-item>
-
-<button ion-button block  color="secondary" >
-      <ion-icon ios="ios-search" md="md-search"></ion-icon> 
+<button ion-button (click)="listObjtPerdidos()" block  color="secondary" >
+      <ion-icon  ios="ios-search" md="md-search"></ion-icon> 
        Buscar 
 </button>
 

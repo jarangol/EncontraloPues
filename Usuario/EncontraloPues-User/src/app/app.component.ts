@@ -12,6 +12,8 @@ import { Agregarobjts } from '../pages/agregarobjts/agregarobjts';
 import { Generadorqr } from '../pages/generadorqr/generadorqr';
 import { Objetos } from '../pages/objetos/objetos';
 import { Buscarobjetos } from '../pages/buscarobjetos/buscarobjetos';
+import { Encontrados } from '../pages/encontrados/encontrados';
+
 //
 
 @Component({
@@ -36,12 +38,13 @@ export class AuthApp {
     });
 
     this.pages = [
-      {title: 'Ping', component: PingPage},
+      // {title: 'Ping', component: PingPage},
       {title: 'Inicar Sesion',component: ProfilePage},
       {title: 'Escanea el QR', component: Escaneoqr},
       {title: 'Agrega tu objeto', component: Agregarobjts},
       {title: 'Generar QR', component: Generadorqr},
-      {title: 'Buscar', component: Buscarobjetos},              
+      {title: 'Buscar', component: Buscarobjetos}, 
+      {title: 'Encotrados', component: Encontrados},                                 
       {title: 'Tus Objetos', component: Objetos}     
     ];
   

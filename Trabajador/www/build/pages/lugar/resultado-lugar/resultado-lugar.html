@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar>
+  	 <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Resultados</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+    <ion-list> 
+     <button ion-item *ngFor="let registro of registros" (click)="itemTapped($event,registro)">
+      {{registro.nombre}}
+      </button>
+    </ion-list>
+
+</ion-content>

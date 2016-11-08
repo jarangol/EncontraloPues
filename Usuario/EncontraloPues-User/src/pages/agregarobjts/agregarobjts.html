@@ -1,0 +1,53 @@
+<!--
+  Generated template for the Agregarobjts page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Agrega tu objeto</ion-title>    
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content class= "agregarobjts">
+
+  <ion-list no-lines>
+
+    <ion-item>
+      <ion-label stacked>1.Palabras Clave</ion-label>
+    </ion-item>
+      
+      <ion-item>     
+          <ion-input  #ntag [(ngModel)]="tag" type="text" placeholder="Palabras que caracterizen el objeto"></ion-input>
+          <button ion-button (click)="addTag(ntag)" item-right>
+          <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>
+        </button>
+      </ion-item>
+
+  <ion-item>
+    <div class="tag-container"  *ngIf="tags.length > 0">
+      <span class="tag" *ngFor="let tag of tags">
+        {{ tag }}
+        <ion-icon name="close" (click)="deleteTag(tag)"></ion-icon>
+      </span>
+      </div>
+  </ion-item>
+
+ <ion-item>
+    <ion-label stacked>2.Descripción</ion-label>
+ </ion-item>
+ 
+  <ion-item>
+    <ion-textarea [(ngModel)]="descripcionOculta" rows="4" placeholder="Agrega una Descripción de tu objeto"></ion-textarea>
+  </ion-item>
+
+    </ion-list>
+
+    <button ion-button block >Confirmar</button>
+    
+</ion-content>

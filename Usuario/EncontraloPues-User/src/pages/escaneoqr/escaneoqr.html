@@ -1,0 +1,26 @@
+<!--
+  Generated template for the Escaneoqr page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+	<ion-navbar>
+		<ion-title>Escanea el codigo QR</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="escaneoqr">
+	<ion-list no-lines>
+
+    <ion-item>
+      <ion-label>Leer QR</ion-label>
+      <ion-toggle [(ngModel)]="qrToggle" value="foo" checked="false" (ionChange)="scan()"></ion-toggle>
+    </ion-item>
+
+	</ion-list>
+
+</ion-content>

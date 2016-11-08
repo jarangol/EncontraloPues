@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar>
+  	 <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Resultados</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+    <ion-list> 
+      
+      <ion-item>
+        <ion-label>Retirados de</ion-label>
+        <ion-datetime  displayFormat="MMM/YYYY" pickerFormat="MMM-YYYY" [(ngModel)]="fecha" disabled></ion-datetime>
+      </ion-item>
+      
+      <ion-list-header>
+        <ion-row>
+            <ion-col>Dia de Registro</ion-col>
+            <ion-col>Fecha Retiro</ion-col>
+            <ion-col>Tags </ion-col>
+        </ion-row>
+      </ion-list-header>
+      
+     <button ion-item *ngFor="let registro of registros"  (click)="itemTapped($event,registro)"
+     >
+        <ion-row>
+            <ion-col>
+                {{registro.puntosRecoleccion.objetosRetirados.fechaRegistro.dia}}
+            </ion-col>
+            
+            <ion-col>
+              {{registro.puntosRecoleccion.objetosRetirados.retirado.fechaRetiro.anoMes + '-' + registro.puntosRecoleccion.objetosRetirados.retirado.fechaRetiro.dia}}
+            </ion-col>
+
+            <ion-col>
+              {{registro.puntosRecoleccion.objetosRetirados.sinCodigoQR.tags}}
+            </ion-col>
+      </ion-row>
+     </button>
+
+   </ion-list>
+
+</ion-content>

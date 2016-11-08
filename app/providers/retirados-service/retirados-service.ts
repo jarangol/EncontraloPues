@@ -14,23 +14,47 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
   }
 
 
-  /**
-  * Get para obtener todos los elementos retirados de un lugar
+
+/**
+   *  Permite hacer una consulta de los objetos perdidos,
+   *  pasandole la fecha y opcionalmente los tags
+   * El usuario debe ser un trabajador
   **/
-  public consultarRetiradosTrabajador() {
-    if (this.data) {
-      return Promise.resolve(this.data);
-    }
-    return new Promise(resolve => {
-      this.http.get(this.serverURL + '/api/prueba')
+  public consultarRetiradosFecha(consulta) {
+    let body = JSON.stringify(consulta);
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+
+      return new Promise(resolve => {
+        this.data=this.http.post(this.serverURL + '/api/consultarObjetosRetiradosTrabajador',body, {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;
           resolve(this.data);
-        });
-    });
- 
+       });
+     });
   }
+
+  /**
+   *  Permite hacer una consulta de los objetos perdidos,
+   *  pasandole el codigo de registro
+   * El usuario debe ser un trabajador
+  **/
+  public consultarRetiradosCodigo(consulta) {
+    let body = JSON.stringify(consulta);
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+
+    return new Promise(resolve => {
+        this.data=this.http.post(this.serverURL + '/api/consultarObjetosRetiradosTrabajadorCodigo',body, {headers: headers})
+        .map(res => res.json())
+        .subscribe(data => {
+          this.data = data;
+          resolve(this.data);
+       });
+     });
+  }
+
 
 
 } 

@@ -6,7 +6,7 @@ import { DetalleRetiradoPage} from '../detalle-retirado/detalle-retirado';
 
 
 @Component({
-  templateUrl: 'build/pages/trabajador/listar-retirados/listar-retirados.html',
+  templateUrl: 'build/pages/listar-retirados/listar-retirados.html',
 })
 
 export class ListarRetiradosPage {

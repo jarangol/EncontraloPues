@@ -3,7 +3,7 @@ import { NavController, NavParams,AlertController, Nav} from 'ionic-angular';
 
 
 @Component({
-  templateUrl: 'build/pages/trabajador/detalle-retirado/detalle-retirado.html',
+  templateUrl: 'build/pages/detalle-retirado/detalle-retirado.html',
 })
 
 

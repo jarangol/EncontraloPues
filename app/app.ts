@@ -44,7 +44,8 @@ class MyApp {
        { title: 'Registrar', component: RegistrarPage},
        { title: 'Retirar', component: RetirarPage},
       { title: 'Retirados', component: RetiradosPage },
-      { title: 'Login', component: Login},
+      //{ title: 'Login', component: Login},
+      { title: 'Buscar', component: BuscarLugarPage},
       { title: 'trabajadores', component: TrabajadoresPage},
        { title: 'trabajador', component: TrabajadorPage},
     ];

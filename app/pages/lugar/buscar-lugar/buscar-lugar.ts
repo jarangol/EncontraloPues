@@ -152,7 +152,6 @@ export class BuscarLugarPage {
 							console.log("Resultado consulta: "+data);
 					});
 				
-				//navegar
 
 			 }else if(this.tipoObjetos == 'retirados'){		
 		

@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams,AlertController} from 'ionic-angular';
+import { NavController, NavParams,AlertController, Nav} from 'ionic-angular';
 
 //proveedor del service
 import { RetirarService } from '../../../providers/retirar-service/retirar-service';
 
+//Pagina inicial de retirar
+import { RetirarPage} from '../../../pages/trabajador/retirar/retirar';
 
 @Component({
   templateUrl: 'build/pages/trabajador/detalle-retiro/detalle-retiro.html',
@@ -12,7 +14,7 @@ export class DetalleRetiroPage {
 
 //me los pasan como navParams desde la vista retirar
 private correoLugar: any;
-private nombrePunto: any;
+private nombrePunto: any; //punto actual
 private codigoBusqueda: any;
 private registro: any;
 private correoTrabajador: any;
@@ -20,27 +22,35 @@ private correoTrabajador: any;
 //pertenecen a registro
 private tags: any;
 private descripcion: string;
-private fecha: any;
+private fechaRegistro: any;
+private actual: any; //me dice si esta en el punto actual para poder retirarlo
+private puntoRecoleccion: any; //Lugar  registrado
 
 //para dividir la fecha en varios.
 private dia: any;
-private añoMes: any; //año y mes concatenados AAAA-MM
+private anoMes: any; //año y mes concatenados AAAA-MM
 
-  constructor(private navCtrl: NavController,public navParams: NavParams, public alertCtrl: AlertController, public retirarService: RetirarService) {
+//private nav: Nav;
+
+  constructor(private navCtrl: NavController,public navParams: NavParams, public alertCtrl: AlertController, public retirarService: RetirarService, public nav:Nav) {
       this.tags=[];
       this.registro = this.navParams.get('registro');
       this.correoLugar = this.navParams.get('correoLugar');
       this.nombrePunto = this.navParams.get('nombrePunto'); 
-      this.codigoBusqueda = this.navParams.get('codigoBusqueda');
 	    this.correoTrabajador = this.navParams.get('correoTrabajador');
-
    
      if(this.registro){  
+         this.registro = this.registro.puntosRecoleccion;
+         this.dia = this.registro.objetosPerdidos.fechaRegistro.dia; 
+         this.anoMes = this.registro.objetosPerdidos.fechaRegistro.anoMes; 
+         this.fechaRegistro = this.anoMes + '-' + this.dia ; //para concatenar la fecha que viene separada
+   	     
+         this.codigoBusqueda = this.registro.objetosPerdidos.codigoBusqueda;
          this.tags = this.registro.objetosPerdidos.sinCodigoQR.tags;
     	   this.descripcion = this.registro.objetosPerdidos.sinCodigoQR.descripcionOculta;
-    	  
-         this.dia = this.registro.objetosPerdidos.fechaRegistro.dia; 
-         this.fecha =this.añoMes + '-' + this.dia ;
+         this.actual =  this.registro.actual;
+         this.puntoRecoleccion =  this.registro.nombre;
+       
     }
   }
 
@@ -78,25 +88,25 @@ private añoMes: any; //año y mes concatenados AAAA-MM
               text: 'Retirar',
               handler: data => {
                 if(data.id && data.tel && data.nombre){
-                  console.log(data.id);
-                  console.log(data.nombre);
-                  console.log(data.tel);
-                  console.log(typeof data.id);
                   let retiro={
                     numeroIdPersona: data.id,
                     nombrePersona: data.nombre,
                     celularPersona: data.tel,
-
+                    nombrePunto: this.nombrePunto,
                     correoLugar: this.correoLugar ,
                     codigoBusqueda:this.codigoBusqueda,
                     correoTrabajador: this.correoTrabajador 
                   };
 
                   this.retirarService.createRetiro(retiro)
-                    .then((res) => {
-                      alert(res);
-                      this.registro = res;
-                    });
+                  .subscribe(data => {
+                      this.registro = data;
+                      console.log(this.registro);
+                      alert(this.registro.mensaje);
+                      if(this.registro.correcto == true){
+                        this.nav.setRoot(RetirarPage);
+                      }
+                 });
                 }
               }
             }

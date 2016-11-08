@@ -21,7 +21,7 @@ import { Buscarobjetos } from '../pages/buscarobjetos/buscarobjetos';
 export class AuthApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = TabsPage;
+  rootPage: any = Buscarobjetos;
   pages: Array<{title: string, component: any}>;
 
   constructor(platform: Platform, private auth: AuthService) {

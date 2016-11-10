@@ -41,7 +41,7 @@ class MyApp {
     this.pages = [
        { title: 'Registrar', component: RegistrarPage},
        { title: 'Retirar', component: RetirarPage},
-      { title: 'Retirados', component: RetiradosPage },
+      { title: 'Historial de retiros', component: RetiradosPage },
     ];
 
   }

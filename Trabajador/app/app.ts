@@ -30,7 +30,7 @@ import { LogInService } from './providers/logIn-service/logIn-service';
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = BuscarLugarPage;
+  rootPage: any = RegistrarPage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -41,7 +41,7 @@ class MyApp {
     this.pages = [
        { title: 'Registrar', component: RegistrarPage},
        { title: 'Retirar', component: RetirarPage},
-      { title: 'Retirados', component: RetiradosPage },
+      { title: 'Historial de retiros', component: RetiradosPage },
     ];
 
   }

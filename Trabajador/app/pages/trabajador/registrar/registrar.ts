@@ -32,7 +32,7 @@ export class RegistrarPage {
 
          //datos necesarios
          this.correoLugar="Eafit@";
-         this.nombrePunto="b";
+         this.nombrePunto="as";
          this.correoTrabajador="m";
     }
 

@@ -40,7 +40,7 @@ export class BuscarLugarPage {
 		this.tags = [];
 		this.tipoBusqueda = 'fecha';
 		this.tipoObjetos = 'perdidos';
-		
+		this.puntoRecoleccion = 'Todos'
 		//actualizar fecha a la actual (mes y ano)
 		var hoy = new Date();
 		var mm = hoy.getMonth()+1; //hoy es 0!
@@ -53,19 +53,29 @@ export class BuscarLugarPage {
 
   }
 
+	ionViewLoaded(){
+		this.cargarPuntos();
+	}
+
 	/**
 	 * Cargar los puntos de recoleccion para consultar 
 	 * Segun si son los objetos perdidos o retirados
 	 */
 	public cargarPuntos(){
+		let correo={
+			correoLugar: this.correoLugar
+		}
 		if(this.tipoObjetos == 'perdidos')
-			this.lugarService.consultarPuntosPerdidos(this.correoLugar).then(data => {
+			this.lugarService.consultarPuntosPerdidos(correo)
+			.then(data => {
             this.puntosRecoleccion = data;
+						console.log(data);
       });
 		else if(this.tipoObjetos == 'retirados')
-			this.lugarService.consultarPuntosRetirados(this.correoLugar).
-			then(data => {
+			this.lugarService.consultarPuntosRetirados(correo)
+			.then(data => {
             this.puntosRecoleccion = data;
+						console.log(data);
       });
 	}
 
@@ -84,38 +94,81 @@ export class BuscarLugarPage {
   } 
 
    public buscar(){
-  	if(this.fecha){
+  	
+		if(this.tipoBusqueda == 'fecha'){ 
   		let consulta = {
   			añoMesRegistro : this.fecha,
-  			codigoBusqueda: this.codigoBusqueda,
   			tags: this.tags,
+				nombrePuntoRecoleccion: this.nombrePunto, 
   			correoLugar: this.correoLugar,
-	  		codigoObjeto: this.codigoBusqueda,
-	  		
   		}
-  		
-			
-			this.lugarService.consultarPerdidosLugar(consulta)
-				.then((data) => {
-						this.registros = data;
-						console.log("Resultado consulta: "+data);
-				});
-
-				this.registros = this.registros;
-				
-				this.navCtrl.push(ResultadoLugarPage,{ 	 	
+		
+			if(this.tipoObjetos == 'perdidos'){	
+					this.lugarService.consultarPerdidosFecha(consulta)
+					.subscribe((data) => {
+								this.registros = data;
+								console.log("fecha perdidos: "+data);
+								if(this.registros.correcto){
+									this.navCtrl.push(ResultadoLugarPage,{ 	 		
+										correoLugar: this.correoLugar,
+										nombrePunto: this.nombrePunto,
+										registros: this.registros.mensaje ,
+										añoMesRegistro: this.fecha
+									});
+								}else{
+									alert(this.registros.mensaje);
+								}
+					});		
+			}else if(this.tipoObjetos == 'retirados'){	
 					
-					correoLugar: this.correoLugar,
-					nombrePunto: this.nombrePunto,
-					codigoBusqueda: this.codigoBusqueda,
-					registros: this.registros.lugar.puntosRecoleccion ,
+					this.lugarService.consultarRetiradosFecha(consulta)
+					.then((data) => {
+								this.registros = data;
+								console.log("fecha retirados: "+data);
+								if(this.registros.correcto){
+									this.navCtrl.push(ResultadoLugarPage,{ 	 		
+										correoLugar: this.correoLugar,
+										nombrePunto: this.nombrePunto,
+										añoMesRegistro: this.fecha,
+										registros: this.registros.mensaje ,
+									});
+								}else{
+									alert(this.registros.mensaje);
+								}
+						});
+				}	
 
+		}	else if(this.tipoBusqueda == 'consecutivo'){ 
+  		let consulta = {
+  		  codigoBusqueda: this.codigoBusqueda,
+  			correoLugar: this.correoLugar,
+  		}
+
+			if(this.tipoObjetos == 'perdidos'){	
+				this.lugarService.consultarPerdidosCodigo(consulta)
+				.then((data) => {
+							this.registros = data;
+							console.log("con perdidos: "+data);
+						
+							if(this.registros.correcto){
+							 //mostrar aca
+							}else{
+								alert(this.registros.mensaje);
+							}
+					});
+			}else if(this.tipoObjetos == 'retirados'){	
+				
+				this.lugarService.consultarRetiradosCodigo(consulta)
+				.then((data) => {
+					this.registros = data;
+					console.log("con retirados: "+data);
+					if(this.registros.correcto){
+							 //mostrar aca
+							}else{
+								alert(this.registros.mensaje);
+					}
 				});
-				this.codigoBusqueda = "";
-			this.registros=null;
-		}	
-  }
-
-  
-
+			}	
+	 	}
+	 }
 }

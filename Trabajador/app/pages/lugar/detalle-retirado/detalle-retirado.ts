@@ -31,15 +31,16 @@ private añoMes: any; //año y mes concatenados AAAA-MM
       this.registro = this.navParams.get('registro');
       this.correoLugar = this.navParams.get('correoLugar');
       this.nombrePunto = this.navParams.get('nombrePunto'); 
-      this.codigoBusqueda = this.navParams.get('codigoBusqueda');
 	    this.correoTrabajador = this.navParams.get('correoTrabajador');
 
    
      if(this.registro){  
-         this.tags = this.registro.objetosPerdidos.sinCodigoQR.tags;
-    	   this.descripcion = this.registro.objetosPerdidos.sinCodigoQR.descripcionOculta;
+        this.registro=this.registro.puntosRecoleccion.objetosPerdidos;
+         this.tags = this.registro.tags;
+    	   this.descripcion = this.registro.sinCodigoQR.descripcionOculta;
     	  
-         this.dia = this.registro.objetosPerdidos.fechaRegistro.dia; 
+         this.dia = this.registro.fechaRegistro.dia; 
+         this.añoMes = this.registro.fechaRegistro.anoMes; 
          this.fecha =this.añoMes + '-' + this.dia ;
     }
   }

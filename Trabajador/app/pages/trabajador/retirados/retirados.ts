@@ -14,7 +14,7 @@ import { ListarRetiradosPage} from '../listar-retirados/listar-retirados';
 
 @Component({
   templateUrl: 'build/pages/trabajador/retirados/retirados.html',
-    providers: [RetiradosService],
+   // providers: [RetiradosService],
 })
 
 export class RetiradosPage {

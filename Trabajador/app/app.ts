@@ -11,6 +11,7 @@ import { RetiradosPage } from './pages/trabajador/retirados/retirados';
 
 //lugar
 import {BuscarLugarPage} from './pages/lugar/buscar-lugar/buscar-lugar'
+import {ResultadoLugarPage} from './pages/lugar/resultado-lugar/resultado-lugar'
 
 //paginas generales
 import { Login } from './pages/login/login';
@@ -30,7 +31,7 @@ import { LogInService } from './providers/logIn-service/logIn-service';
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = RegistrarPage;
+  rootPage: any = BuscarLugarPage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -39,9 +40,51 @@ class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-       { title: 'Registrar', component: RegistrarPage},
-       { title: 'Retirar', component: RetirarPage},
+      // { title: 'Registrar', component: RegistrarPage},
+      // { title: 'Retirar', component: RetirarPage},
+      //{ title: 'Historial de retiros', component: RetiradosPage },
+       { title: 'Buscar', component: BuscarLugarPage },
+       { title: 'Resultado', component: ResultadoLugarPage },
+    ];
+
+  }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      StatusBar.styleDefault();
+    });
+  }
+
+
+   ionViewLoaded(){
+    }
+
+  openPage(page) {
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
+    this.nav.setRoot(page.component);
+  }
+}
+
+class LugarApp {
+  @ViewChild(Nav) nav: Nav;
+
+  rootPage: any = BuscarLugarPage;
+
+  pages: Array<{title: string, component: any}>;
+
+  constructor(public platform: Platform) {
+    this.initializeApp();
+
+    // used for an example of ngFor and navigation
+    this.pages = [
+      { title: 'Registrar', component: RegistrarPage},
+      { title: 'Retirar', component: RetirarPage},
       { title: 'Historial de retiros', component: RetiradosPage },
+       { title: 'Buscar', component: BuscarLugarPage },
+       { title: 'Resultado', component: ResultadoLugarPage },
     ];
 
   }

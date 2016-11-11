@@ -15,14 +15,17 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
 
 
   /**
-  * Get para datos de prueba
+  * Consultar objetos perdidos por fecha
+  * devolviendo observables
   **/
   public consultarPerdidosFecha(consulta) {
     let body = JSON.stringify(consulta);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
-    this.data=this.http.post(this.serverURL + '/api/consultarObjetosPerdidosLugar',body, {headers: headers})
+    
+    this.data = this.http.post(this.serverURL + '/api/consultarObjetosPerdidosLugar',body, {headers: headers})
     .map(res => res.json());
+    
     return this.data; 
   }
 

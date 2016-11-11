@@ -10,10 +10,21 @@
 
 <ion-content padding>
 	<ion-list no-lines>
-	  <ion-item>
-	    <ion-label>Fecha:</ion-label>
-	    <ion-input [(ngModel)]="fecha" type="text" disabled></ion-input>
-	  </ion-item>
+	   	
+		<ion-item>
+			<ion-label>Fecha de pérdida</ion-label>
+			<ion-datetime  displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="fecha" disabled></ion-datetime>
+		</ion-item>
+
+		<ion-item>
+			<ion-label>Punto de recolección</ion-label>	
+			<ion-label>{{punto}}</ion-label>
+		</ion-item>
+
+		<ion-item>
+			<ion-label>Consecutivo</ion-label>
+			<ion-label>{{registro.codigoBusqueda}}</ion-label>
+		</ion-item>
 
 		<ion-item>
 		  <ion-label>Tags:</ion-label>
@@ -29,7 +40,7 @@
 
 		 <ion-item>
 	        <ion-label stacked>Descripción oculta:</ion-label>
-	    	  <ion-textarea id="descripcion" [(ngModel)]="descripcion" rows="5" disabled></ion-textarea>
+	    	  <ion-textarea [(ngModel)]="descripcion" rows="5" disabled>{{registro.sinCodigoQR.descripcionOculta}}</ion-textarea>
 		</ion-item>
 
 	</ion-list>
@@ -37,3 +48,5 @@
 	<button (click)="actualizar()" secondary block>Actualizar</button>
 
 </ion-content>
+
+

@@ -14,16 +14,27 @@
         <ion-row>
             <ion-col>Dia</ion-col>
             <ion-col>Tags </ion-col>
-            <ion-col>Ubicación</ion-col>
+            <ion-col>Punto</ion-col>
+             <!--<ion-col>QR</ion-col>-->
         </ion-row>
       </ion-list-header>
 
-     <button ion-item *ngFor="let registro of registros" (click)="itemTapped($event,registro)">
-        <ion-row>
+     <button ion-item *ngFor="let registro of registros" (click)="itemTapped($event,registro)" >
+        
+        <ion-row *ngIf="tipoObjetos == 'perdidos'">
               <ion-col>{{registro.puntosRecoleccion.objetosPerdidos.fechaRegistro.dia}}</ion-col>
               <ion-col>{{registro.puntosRecoleccion.objetosPerdidos.tags}}</ion-col>
               <ion-col>{{registro.puntosRecoleccion.nombre}}</ion-col>
+               <!--<ion-col *ngIf="registro.puntosRecoleccion.objetosPerdidos.sinCodigoQR">NO</ion-col>
+              <ion-col *ngIf="!registro.puntosRecoleccion.objetosPerdidos.sinCodigoQR">SI</ion-col>-->
         </ion-row>
+        
+        <ion-row *ngIf="tipoObjetos == 'retirados'">
+              <ion-col>{{registro.puntosRecoleccion.objetosRetirados.fechaRegistro.dia}}</ion-col>
+              <ion-col>{{registro.puntosRecoleccion.objetosRetirados.tags}}</ion-col>
+              <ion-col>{{registro.puntosRecoleccion.nombre}}</ion-col>
+        </ion-row>
+
       </button>
     </ion-list>
 

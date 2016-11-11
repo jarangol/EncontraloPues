@@ -6,7 +6,7 @@ import { NavController,Platform, Alert, Page, NavParams} from 'ionic-angular';
 import { LugarService} from '../../../providers/lugar-service/lugar-service';
 
 // Pagina para navegar
-import { DetalleBusquedaPage} from '../detalle-retirado/detalle-retirado';
+import { DetalleObjetoPage} from '../detalle-objeto/detalle-objeto';
 
 @Component({ 
    templateUrl: 'build/pages/lugar/resultado-lugar/resultado-lugar.html',
@@ -14,31 +14,27 @@ import { DetalleBusquedaPage} from '../detalle-retirado/detalle-retirado';
 })
 
 export class ResultadoLugarPage {
-  private registros: any;
-  private selectedItem: any;
-    //me los pasan como navParams desde la vista retirar
-  private correoLugar: any;
-  private nombrePunto: any;
-  private registro: any;
-  private correoTrabajador: any;
 
+  
+  //me los pasan como navParams desde la vista retirar
+  private correoLugar: any;
+  private anoMes: any; //año, mes con que se filtra la busqueda
+  private registros: any; //resultado d ela busqueda
+  private tipoObjetos: any;
 
     constructor(private navCtrl: NavController, public lugarService: LugarService, public navParams: NavParams){
       this.correoLugar = this.navParams.get('correoLugar');
-      this.nombrePunto = this.navParams.get('nombrePunto');
+      this.anoMes= this.navParams.get('anoMes');
       this.registros = this.navParams.get('registros');
-      this.correoTrabajador = this.navParams.get('correoTrabajador');
-  }
+      this.tipoObjetos = this.navParams.get('tipoObjetos');
+    }
 
-//hacer dos vistas una para retirado y otra registrado
     itemTapped(event, item) {
-     this.navCtrl.push(DetalleBusquedaPage, {
-      registro: item,
-      correoLugar: this.correoLugar,
-      nombrePunto: this.nombrePunto, 
-      correoTrabajador: this.correoTrabajador,
-            
-    });
+     this.navCtrl.push(DetalleObjetoPage, {
+        registro: item,
+        correoLugar: this.correoLugar,
+        tipoObjetos: this.tipoObjetos
+      });
   }
 
 

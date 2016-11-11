@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController,AlertController } from 'ionic-angular';
 import { Agregarobjts } from '../agregarobjts/agregarobjts'
-import {AuthService} from '../../services/auth/auth.service';
+import { AuthService } from '../../services/auth/auth.service';
+import { ObtenerObjetos } from '../../providers/obtener-objetos';
 
 
 /*
@@ -12,16 +13,22 @@ import {AuthService} from '../../services/auth/auth.service';
 */
 @Component({
   selector: 'page-objetos',
-  templateUrl: 'objetos.html'
+  templateUrl: 'objetos.html',
+  providers: [ObtenerObjetos],
 })
+
 export class Objetos {
   objetos: any = [];
+  usuario: any;
   
   constructor(public navCtrl: NavController, private alertCtrl: AlertController,
-  public auth: AuthService) {}
+  public auth: AuthService, private obtenerService : ObtenerObjetos ) {
+    this.usuario = auth.user;
+  }
 
   ionViewDidLoad() {
     console.log('Hello Objetos Page');
+    this.obtenerObjetos();
   }
 
   addObjt(){
@@ -87,6 +94,15 @@ export class Objetos {
 
     refresh(){
         this.navCtrl.setRoot(Objetos);
+    }
+
+    public obtenerObjetos(){
+        if(this.auth.authenticated()){
+            console.log(this.usuario.email);
+            console.log("esta autentificado");
+            
+        }else
+        console.log("no esta autentificado");
     }
  
 

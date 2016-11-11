@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController,AlertController } from 'ionic-angular';
 import { Agregarobjts } from '../agregarobjts/agregarobjts'
+import {AuthService} from '../../services/auth/auth.service';
+
 
 /*
   Generated class for the Objetos page.
@@ -15,7 +17,8 @@ import { Agregarobjts } from '../agregarobjts/agregarobjts'
 export class Objetos {
   objetos: any = [];
   
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController) {}
+  constructor(public navCtrl: NavController, private alertCtrl: AlertController,
+  public auth: AuthService) {}
 
   ionViewDidLoad() {
     console.log('Hello Objetos Page');
@@ -80,6 +83,10 @@ export class Objetos {
         if(index > -1){
             this.objetos.splice(obj, 1);
         }
+    }
+
+    refresh(){
+        this.navCtrl.setRoot(Objetos);
     }
  
 

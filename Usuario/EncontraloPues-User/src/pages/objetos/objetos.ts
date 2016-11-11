@@ -100,9 +100,8 @@ export class Objetos {
         if(this.auth.authenticated()){
             console.log(this.usuario.email);
             console.log("esta autentificado");
-            
-        }else
-        console.log("no esta autentificado");
+         
+        }
     }
  
 

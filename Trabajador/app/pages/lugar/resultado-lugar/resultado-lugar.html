@@ -10,9 +10,23 @@
 
 <ion-content>
     <ion-list> 
+       <ion-list-header>
+        <ion-row>
+            <ion-col>Dia</ion-col>
+            <ion-col>Tags </ion-col>
+            <ion-col>Ubicación</ion-col>
+        </ion-row>
+      </ion-list-header>
+
      <button ion-item *ngFor="let registro of registros" (click)="itemTapped($event,registro)">
-      {{registro.nombre}}
+        <ion-row>
+              <ion-col>{{registro.puntosRecoleccion.objetosPerdidos.fechaRegistro.dia}}</ion-col>
+              <ion-col>{{registro.puntosRecoleccion.objetosPerdidos.tags}}</ion-col>
+              <ion-col>{{registro.puntosRecoleccion.nombre}}</ion-col>
+        </ion-row>
       </button>
     </ion-list>
 
 </ion-content>
+
+

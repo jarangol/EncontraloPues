@@ -30,7 +30,7 @@ export class LogInService {
     return new Promise(resolve =>{
       this.http.post(this.serverURL + '/api/iniciarSesion', body, {headers : headers})
       .subscribe(res => {
-        this.data = res.json();
+        this.data = res.text();
         resolve(this.data);
       });
     });

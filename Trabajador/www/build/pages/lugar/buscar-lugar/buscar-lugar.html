@@ -3,33 +3,54 @@
   	 <button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-     	<ion-title>Buscar Lugar</ion-title>
+    <ion-title>Buscar objetos</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+
+<ion-content>
+  <div padding>
+        <ion-segment [(ngModel)]="tipoBusqueda">
+          <ion-segment-button value='fecha'>
+            Fecha
+          </ion-segment-button>
+          <ion-segment-button value='consecutivo'>
+            Consecutivo
+          </ion-segment-button>
+        </ion-segment>
+      </div>
   
-  <ion-list no-lines>
-      <ion-item>
-            <ion-input [(ngModel)]="codigoBusqueda" type="search" placeholder="Código de Busqueda" clearInput></ion-input>
-      </ion-item>
-      
-     <ion-item>
-        <ion-label>Fecha de pérdida</ion-label>
+  <ion-item>
+    <ion-label>Tipo de objetos</ion-label>
+    <ion-select [(ngModel)]="tipoObjetos">
+      <ion-option value="perdidos" selected="true">Perdidos</ion-option>
+      <ion-option value="retirados">Retirados</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Punto de recoleccion</ion-label>
+    <ion-select [(ngModel)]="puntoRecoleccion">
+      <ion-option value="retirados">Lugar1</ion-option>
+    </ion-select>
+  </ion-item>
+
+
+<div [ngSwitch]="tipoBusqueda">
+ 
+  <ion-list *ngSwitchCase="'fecha'" no-lines> 
+       <ion-item>
+        <ion-label>Fecha</ion-label>
         <ion-datetime  displayFormat="MMM/YYYY" pickerFormat="MMM-YYYY" [(ngModel)]="fecha" ></ion-datetime>
       </ion-item>
 
-      
-    <ion-label stacked>Tags</ion-label>
-       
-      
-      <ion-item>     
-          <ion-input  #ntag type="text" placeholder="Escriba aquí la etiqueta"></ion-input>
+      <ion-item>   
+         <ion-label stacked>Palabras clave</ion-label>  
+          <ion-input  #ntag type="text" placeholder="Escriba aqui la nueva palabra"></ion-input>
           <button ion-button (click)="addTag(ntag)" ng-enter="addTag(ntag)"  item-right>
           <ion-icon ios="ios-add-circle" md="md-add-circle"></ion-icon>
         </button>
       </ion-item>
-
 
       <ion-item>
           <div class="tag-container"  *ngIf="tags.length > 0">
@@ -38,14 +59,20 @@
             <ion-icon name="close" (click)="deleteTag(tag)"></ion-icon>
           </span>
           </div>
-      </ion-item>   
-   
+      </ion-item>    
   </ion-list> 
 
-    <button ion-button block  color="secondary" (click)="buscar()">
-    <ion-icon ios="ios-search" md="md-search"></ion-icon> 
-    Buscar 
-     </button>
 
+  <ion-list *ngSwitchCase="'consecutivo'" no-lines>
+      <ion-item>
+           <ion-label floating>Ingrese el consecutivo:</ion-label>
+          <ion-input [(ngModel)]="codigoBusqueda" type="search" clearInput></ion-input>
+      </ion-item>
+  </ion-list> 
 
+  </div>
+  <button ion-button block  color="secondary" (click)="buscar()">
+      <ion-icon ios="ios-search" md="md-search"></ion-icon> 
+       Buscar 
+  </button>
 </ion-content>

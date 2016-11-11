@@ -22,23 +22,27 @@
   
   <ion-item>
     <ion-label>Tipo de objetos</ion-label>
-    <ion-select [(ngModel)]="tipoObjetos">
+    <ion-select [(ngModel)]="tipoObjetos" (ionChange)="cargarPuntos()">
       <ion-option value="perdidos" selected="true">Perdidos</ion-option>
       <ion-option value="retirados">Retirados</ion-option>
-    </ion-select>
+    </ion-select> 
   </ion-item>
 
-  <ion-item>
-    <ion-label>Punto de recoleccion</ion-label>
-    <ion-select [(ngModel)]="puntoRecoleccion">
-      <ion-option value="retirados">Lugar1</ion-option>
-    </ion-select>
-  </ion-item>
+
 
 
 <div [ngSwitch]="tipoBusqueda">
  
   <ion-list *ngSwitchCase="'fecha'" no-lines> 
+
+    <ion-item>
+      <ion-label>Punto de recoleccion</ion-label>
+      <ion-select [(ngModel)]="puntoRecoleccion" >
+        <ion-option selected="true">Todos</ion-option>
+        <ion-option *ngFor="let punto of puntosRecoleccion">{{punto.puntosRecoleccion.nombre}}</ion-option>
+      </ion-select>
+    </ion-item>
+
        <ion-item>
         <ion-label>Fecha</ion-label>
         <ion-datetime  displayFormat="MMM/YYYY" pickerFormat="MMM-YYYY" [(ngModel)]="fecha" ></ion-datetime>
@@ -76,3 +80,6 @@
        Buscar 
   </button>
 </ion-content>
+
+
+

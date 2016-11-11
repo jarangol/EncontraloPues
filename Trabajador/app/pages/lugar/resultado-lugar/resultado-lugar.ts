@@ -6,7 +6,7 @@ import { NavController,Platform, Alert, Page, NavParams} from 'ionic-angular';
 import { LugarService} from '../../../providers/lugar-service/lugar-service';
 
 // Pagina para navegar
-import { DetalleBusquedaPage} from '../detalle-busqueda/detalle-busqueda';
+import { DetalleBusquedaPage} from '../detalle-retirado/detalle-retirado';
 
 @Component({ 
    templateUrl: 'build/pages/lugar/resultado-lugar/resultado-lugar.html',
@@ -19,30 +19,23 @@ export class ResultadoLugarPage {
     //me los pasan como navParams desde la vista retirar
   private correoLugar: any;
   private nombrePunto: any;
-  private codigoBusqueda: any;
   private registro: any;
   private correoTrabajador: any;
 
-  //pertenecen a registro
-  private descripcion: string;
-  private fecha: any;
 
     constructor(private navCtrl: NavController, public lugarService: LugarService, public navParams: NavParams){
       this.correoLugar = this.navParams.get('correoLugar');
       this.nombrePunto = this.navParams.get('nombrePunto');
-      this.codigoBusqueda = this.navParams.get('codigoBusqueda');  
       this.registros = this.navParams.get('registros');
       this.correoTrabajador = this.navParams.get('correoTrabajador');
   }
 
-
-    itemTapped(event, registro) {
-      alert("seleccionó un registro");
+//hacer dos vistas una para retirado y otra registrado
+    itemTapped(event, item) {
      this.navCtrl.push(DetalleBusquedaPage, {
-      registro: registro,
+      registro: item,
       correoLugar: this.correoLugar,
       nombrePunto: this.nombrePunto, 
-      codigoBusqueda: this.codigoBusqueda,
       correoTrabajador: this.correoTrabajador,
             
     });

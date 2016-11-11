@@ -17,14 +17,26 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
   /**
   * Get para datos de prueba
   **/
-  public consultarPerdidosLugar(consulta) {
+  public consultarPerdidosFecha(consulta) {
+    let body = JSON.stringify(consulta);
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    this.data=this.http.post(this.serverURL + '/api/consultarObjetosPerdidosLugar',body, {headers: headers})
+    .map(res => res.json());
+    return this.data; 
+  }
+
+  /**
+  * Get para datos de prueba
+  **/
+  public consultarPerdidosCodigo(consulta) {
     let body = JSON.stringify(consulta);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     
    
    return new Promise(resolve => {
-       this.data=this.http.post(this.serverURL + '/api/consultarObjetosPerdidosLugar',body, {headers: headers})
+       this.data=this.http.post(this.serverURL + '/api/consultarObjetosPerdidosLugarCodigo',body, {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;
@@ -33,38 +45,43 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
      }); 
   }
 
+
+    /**
+  * Get para datos de prueba
+  **/
+  public consultarRetiradosFecha(consulta) {
+    let body = JSON.stringify(consulta);
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+    
    
-  public createRetiro(retiro){
-    let body = JSON.stringify(retiro);
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
-       
-     return new Promise(resolve => {
-        this.data = this.http.post(this.serverURL + '/api/retirarObjetoPerdido', body, {headers: headers})
+   return new Promise(resolve => {
+       this.data=this.http.post(this.serverURL + '/api/consultarObjetosRetiradosLugar',body, {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;
           resolve(this.data);
        });
-     });
-  } 
+     }); 
+  }
 
-
-  public createRetiroQR(retiroQR){
-    
-    let body = JSON.stringify(retiroQR);
+  /**
+  * Get para datos de prueba
+  **/
+  public consultarRetiradosCodigo(consulta) {
+    let body = JSON.stringify(consulta);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     
-
-    return new Promise(resolve => {
-      this.data = this.http.post(this.serverURL + '/api/retirarObjetoPerdidoQR', body, {headers: headers})
+   
+   return new Promise(resolve => {
+       this.data=this.http.post(this.serverURL + '/api/consultarObjetosRetiradosLugarCodigo',body, {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;
           resolve(this.data);
        });
-     });
+     }); 
   }
 
     public consultarPuntosPerdidos(correoLugar){

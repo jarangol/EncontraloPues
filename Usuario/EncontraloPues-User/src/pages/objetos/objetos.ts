@@ -20,6 +20,7 @@ import { ObtenerObjetos } from '../../providers/obtener-objetos';
 export class Objetos {
   objetos: any = [];
   usuario: any;
+  resulConsulta: any;
   
   constructor(public navCtrl: NavController, private alertCtrl: AlertController,
   public auth: AuthService, private obtenerService : ObtenerObjetos ) {
@@ -100,7 +101,21 @@ export class Objetos {
         if(this.auth.authenticated()){
             console.log(this.usuario.email);
             console.log("esta autentificado");
-         
+            let consulta = {
+                correoUsuario : this.usuario.email
+            }
+
+            this.obtenerService.consultarObjetosUsuario(consulta).subscribe((data) =>
+            {
+                // this.resulConsulta = data;
+                
+                if(data.correcto){
+                     this.resulConsulta = data.mensaje;
+                    console.log("json de objetos " + this.resulConsulta[0].tags);
+                }else{
+                    alert(data.mensaje);
+                }
+            });
         }
     }
  

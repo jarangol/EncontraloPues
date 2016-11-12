@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { NavController,Platform, Alert, Page, NavParams} from 'ionic-angular';
 
-
 //Servicio de llamados http 
 import { LugarService} from '../../../providers/lugar-service/lugar-service';
 
-// Pagina para navegar
-import { DetalleObjetoPage} from '../detalle-objeto/detalle-objeto';
+// Pagina para navegar al detalle del objeto segun su tipo
+import { ObjetoPerdidoPage} from '../objeto-perdido/objeto-perdido';
+import { ObjetoRetiradoPage} from '../objeto-retirado/objeto-retirado';
+
+
+
 
 @Component({ 
    templateUrl: 'build/pages/lugar/resultado-lugar/resultado-lugar.html',
@@ -29,13 +32,17 @@ export class ResultadoLugarPage {
       this.tipoObjetos = this.navParams.get('tipoObjetos');
     }
 
-    itemTapped(event, item) {
-     this.navCtrl.push(DetalleObjetoPage, {
-        registro: item,
-        correoLugar: this.correoLugar,
-        tipoObjetos: this.tipoObjetos
-      });
-  }
+    itemTapped(event, registro) {
+      if(this.tipoObjetos == 'perdidos')
+        this.navCtrl.push(ObjetoPerdidoPage, {
+          registro: registro,
+          correoLugar: this.correoLugar,
+        });
+      else if(this.tipoObjetos == 'retirados')
+        this.navCtrl.push(ObjetoRetiradoPage, {
+          registro: registro,
+        });
+     }
 
 
  }

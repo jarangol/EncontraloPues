@@ -37,15 +37,10 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     
-   
-   return new Promise(resolve => {
-       this.data=this.http.post(this.serverURL + '/api/consultarObjetosPerdidosLugarCodigo',body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-       });
-     }); 
+    this.data=this.http.post(this.serverURL + '/api/consultarObjetosPerdidosLugarCodigo',body, {headers: headers})
+    .map(res => res.json());
+    
+    return this.data;
   }
 
 
@@ -57,15 +52,10 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     
-   
-   return new Promise(resolve => {
-       this.data=this.http.post(this.serverURL + '/api/consultarObjetosRetiradosLugar',body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-       });
-     }); 
+    this.data=this.http.post(this.serverURL + '/api/consultarObjetosRetiradosLugar',body, {headers: headers})
+    .map(res => res.json());
+    
+    return this.data;
   }
 
   /**
@@ -76,50 +66,36 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     
-   
-   return new Promise(resolve => {
-       this.data=this.http.post(this.serverURL + '/api/consultarObjetosRetiradosLugarCodigo',body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-       });
-     }); 
+    this.data=this.http.post(this.serverURL + '/api/consultarObjetosRetiradosLugarCodigo',body, {headers: headers})
+    .map(res => res.json());
+    
+    return this.data;
   }
 
-    public consultarPuntosPerdidos(correoLugar){
+ public consultarPuntosPerdidos(correoLugar){
     
       let body = JSON.stringify(correoLugar);
       let headers = new Headers();
       headers.append('Content-Type','application/json');
     
-     return new Promise(resolve => {
       this.data = this.http.post(this.serverURL + '/api/consultarNombrePuntosRecoleccion', body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-       });
-     });
-        
+      .map(res => res.json());
+      return this.data;  
   }  
 
-      public consultarPuntosRetirados(correoLugar){
+  public consultarPuntosRetirados(correoLugar){
     
       let body = JSON.stringify(correoLugar);
       let headers = new Headers();
       headers.append('Content-Type','application/json');
       
-      return new Promise(resolve => {
       this.data = this.http.post(this.serverURL + '/api/consultarNombrePuntosRecoleccionDisponibles', body, {headers: headers})
-        .map(res => res.json())
-        .subscribe(data => {
-          this.data = data;
-          resolve(this.data);
-       });
-     });
+      .map(res => res.json());
+      
+      return this.data;
         
   }  
+
 
 }
 

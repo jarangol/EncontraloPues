@@ -50,7 +50,6 @@ private correoTrabajador: string;
 
 		 
   }
-
   public scan(): string {
         this.platform.ready().then(() => {       
 			   BarcodeScanner.scan().then((barcodeData) => {

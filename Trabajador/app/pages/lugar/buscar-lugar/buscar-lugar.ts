@@ -65,13 +65,13 @@ export class BuscarLugarPage {
 
 		if(this.tipoObjetos == 'perdidos')
 			this.lugarService.consultarPuntosPerdidos(correo)
-			.then(data => {
+			.subscribe(data => {
             	this.puntosRecoleccion = data;
 				console.log(data);
       		});
 		else if(this.tipoObjetos == 'retirados')
 			this.lugarService.consultarPuntosRetirados(correo)
-			.then(data => {
+			.subscribe(data => {
             	this.puntosRecoleccion = data;		
 				console.log(data);
      		 });
@@ -121,7 +121,7 @@ export class BuscarLugarPage {
 
 			}else if(this.tipoObjetos == 'retirados'){	
 				this.lugarService.consultarRetiradosFecha(consulta)
-				.then((data) => {
+				.subscribe((data) => {
 					this.registros = data;
 					console.log("fecha retirados: "+data);
 					if(this.registros.correcto){
@@ -144,7 +144,7 @@ export class BuscarLugarPage {
 
 			if(this.tipoObjetos == 'perdidos'){	
 				this.lugarService.consultarPerdidosCodigo(consulta)
-				.then((data) => {
+				.subscribe((data) => {
 					this.registros = data;
 					console.log("con perdidos: "+data);
 				
@@ -156,7 +156,7 @@ export class BuscarLugarPage {
 				});
 			}else if(this.tipoObjetos == 'retirados'){			
 				this.lugarService.consultarRetiradosCodigo(consulta)
-				.then((data) => {
+				.subscribe((data) => {
 					this.registros = data;
 					console.log("con retirados: "+data);
 					if(this.registros.correcto){

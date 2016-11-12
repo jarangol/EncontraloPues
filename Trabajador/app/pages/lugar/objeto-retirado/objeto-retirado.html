@@ -10,15 +10,15 @@
 
 <ion-content padding>
 	<ion-list no-lines>
-    	
+	   	
 		<ion-item>
 			<ion-label>Fecha de pérdida</ion-label>
-			<ion-datetime  displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="fechaRegistro" disabled></ion-datetime>
+			<ion-datetime  displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="fecha" disabled></ion-datetime>
 		</ion-item>
 
     
 		<ion-item>
-		  <ion-label stacked>Palabras clave:</ion-label>
+		  <ion-label stacked>Tags:</ion-label>
 		</ion-item>
 
 	  <ion-item>
@@ -29,42 +29,44 @@
 		</div>
 	  </ion-item>
 
-		 <ion-item>
+	    <ion-item>
 	        <ion-label stacked>Descripción privada:</ion-label>
-	    	  <ion-textarea id="descripcion" [(ngModel)]="descripcion" rows="5" disabled></ion-textarea>
+		    <ion-textarea [(ngModel)]="descripcionOculta" rows="5" disabled></ion-textarea>
+		</ion-item>
+        
+		<ion-item>
+			<ion-label stacked>Punto de recolección:</ion-label>	
+			<ion-label>{{puntoRecoleccion}}</ion-label>
 		</ion-item>
 
 		<ion-item>
-    	<ion-label stacked>Punto de recolección:</ion-label>
-			<ion-label>{{puntoRecoleccion}}</ion-label>
-    </ion-item>  
-		
-		<ion-item>
-            <ion-label stacked>Consecutivo</ion-label>
-			<ion-label>{{codigoBusqueda}}</ion-label>
+			<ion-label stacked>Consecutivo:</ion-label>
+			<ion-label>{{registro.codigoBusqueda}}</ion-label>
 		</ion-item>
-	
+
+         	
         <ion-label>Datos del retiro</ion-label>
     
         <ion-item>
-					<ion-label>Fecha de retiro</ion-label>
-					<ion-datetime  displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="fechaRetiro"></ion-datetime>
-				</ion-item>
+            <ion-label>Fecha de retiro</ion-label>
+            <ion-datetime  displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="fechaRetiro" data-ng-disabled=""></ion-datetime>
+        </ion-item>
        
         <ion-item>
             <ion-label stacked>Nombre:</ion-label>
-						<ion-label>{{nombrePersona}}</ion-label>
+            <ion-label>{{personaReclamo.nombre}}</ion-label>
         </ion-item>
 
         <ion-item>
             <ion-label stacked>Identificacion:</ion-label>
-			<ion-label>{{numeroIdPersona}}</ion-label>
+			<ion-label>{{personaReclamo.numeroId}}</ion-label>
         </ion-item>
         
         <ion-item>
-            <ion-label stacked>Telefono:</ion-label>
-			 <ion-label>{{telefonoPersona}}</ion-label>
+            <ion-label stacked>Telefono o celular:</ion-label>
+			 <ion-label>{{personaReclamo.celular}}</ion-label>
         </ion-item>
-
 	</ion-list>
 </ion-content>
+
+

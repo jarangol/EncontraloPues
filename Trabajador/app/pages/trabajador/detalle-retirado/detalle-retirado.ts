@@ -22,9 +22,6 @@ private tags: any;
 private descripcion: string;
 private puntoRecoleccion: any;
 
-//para dividir la fecha en varios.
-private dia: any;
-private anoMes: any; //año y mes concatenados AAAA-MM
 
 //datos de la persona
 private nombrePersona: any;
@@ -38,9 +35,9 @@ private telefonoPersona: any;
      if(this.registro){  
          //sacamos la fecha de registro
          this.registro = this.registro.puntosRecoleccion;
-         this.dia = this.registro.objetosRetirados.fechaRegistro.dia; 
-         this.anoMes = this.registro.objetosRetirados.fechaRegistro.anoMes; 
-         this.fechaRegistro = this.anoMes + '-' + this.dia ; //para concatenar la fecha que viene separada
+         let dia = this.registro.objetosRetirados.fechaRegistro.dia; 
+         let anoMes = this.registro.objetosRetirados.fechaRegistro.anoMes; 
+         this.fechaRegistro = anoMes + '-' + dia ; //para concatenar la fecha que viene separada
        
          this.codigoBusqueda = this.registro.objetosRetirados.codigoBusqueda;
          this.tags = this.registro.objetosRetirados.sinCodigoQR.tags;
@@ -48,9 +45,9 @@ private telefonoPersona: any;
          this.puntoRecoleccion =  this.registro.nombre;
 
          //sacamos la fecha de retiro.
-         this.dia = this.registro.objetosRetirados.retirado.fechaRetiro.dia; 
-         this.anoMes = this.registro.objetosRetirados.retirado.fechaRetiro.anoMes; 
-         this.fechaRetiro = this.anoMes + '-' + this.dia ; //para concatenar la fecha que viene separada
+         dia = this.registro.objetosRetirados.retirado.fechaRetiro.dia; 
+         anoMes = this.registro.objetosRetirados.retirado.fechaRetiro.anoMes; 
+         this.fechaRetiro = anoMes + '-' + dia ; //para concatenar la fecha que viene separada
 
    	     this.nombrePersona = this.registro.objetosRetirados.retirado.personaReclamo.nombre;
          this.numeroIdPersona =  this.registro.objetosRetirados.retirado.personaReclamo.numeroId;

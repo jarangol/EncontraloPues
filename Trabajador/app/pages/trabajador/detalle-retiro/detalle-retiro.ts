@@ -30,9 +30,9 @@ private puntoRecoleccion: any; //Lugar  registrado
 private dia: any;
 private anoMes: any; //año y mes concatenados AAAA-MM
 
-//private nav: Nav;
 
-  constructor(private navCtrl: NavController,public navParams: NavParams, public alertCtrl: AlertController, public retirarService: RetirarService, public nav:Nav) {
+  constructor(private navCtrl: NavController,public navParams: NavParams, public alertCtrl: AlertController,
+             public retirarService: RetirarService, public nav:Nav) {
       this.tags=[];
       this.registro = this.navParams.get('registro');
       this.correoLugar = this.navParams.get('correoLugar');

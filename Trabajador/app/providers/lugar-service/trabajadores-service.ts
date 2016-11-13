@@ -69,11 +69,27 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     let headers = new Headers();
     headers.append('Content-Type','application/json');
    
-    this.data = this.http.post(this.serverURL + '',body, {headers: headers})
+    this.data = this.http.post(this.serverURL + '/api/registrarNuevoTrabajador',body, {headers: headers})
     .map(res => res.json());
 
     return this.data;
   }
+
+
+  /**
+   * Me confirma si el correo ya esta registrado
+   */
+  public confirmarTrabajador(correo){    
+    let body = JSON.stringify(correo);
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+   
+    this.data = this.http.post(this.serverURL + '/api/registrarTrabajador',body, {headers: headers})
+    .map(res => res.json())
+    return this.data;
+  }
+
+
 } 
 
 

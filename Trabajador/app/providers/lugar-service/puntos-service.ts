@@ -25,7 +25,7 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     let headers = new Headers();
     headers.append('Content-Type','application/json');
    
-    this.data = this.http.post(this.serverURL + '',body, {headers: headers})
+    this.data = this.http.post(this.serverURL + '/api/consultarPuntosRecoleccionDisponibles',body, {headers: headers})
     .map(res => res.json());
 
     return this.data;

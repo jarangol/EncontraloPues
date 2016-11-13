@@ -11,22 +11,25 @@ import { PuntosService} from '../../../providers/lugar-service/puntos-service';
 
 export class PuntosRecoleccionPage {
     private puntosRecoleccion: any; //resultado de la consulta
-    private correoLugar: any; //datos de acceso a la informacion
+    private correoLugar: any ="Eafit@";; //datos de acceso a la informacion
 
     constructor(private navCtrl: NavController, private alertCtrl: AlertController, private puntosService: PuntosService){
 
     }
 
 
-    ionViewLoaded(){
-        this.cargarPuntosRecoleccion();
+   ionViewWillEnter() { // se llama todo lo que se quiere que se refreseque en la pag
+      this.cargarPuntosRecoleccion();
     }
 
     public cargarPuntosRecoleccion(){
         let correo = {correoLugar: this.correoLugar}
         this.puntosService.consultarPuntos(correo)
         .subscribe( (data) => {
-            this.puntosRecoleccion = data;
+            if(data.correcto)
+                this.puntosRecoleccion = data.mensaje;
+            else 
+                alert(data.mensaje);
             console.log("cargando puntos de recoleccion "+this.puntosRecoleccion);
         });
     }

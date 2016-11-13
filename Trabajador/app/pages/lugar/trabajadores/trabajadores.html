@@ -5,13 +5,15 @@
     </button>
     <ion-title>Trabajadores</ion-title>
   </ion-navbar>
+
 </ion-header>
 
 
-<ion-content>      
+<ion-content>     
+    
     <ion-list> 
        <ion-list-header>
-        <ion-row>
+       <ion-row>
             <ion-col>Nombre</ion-col>
             <ion-col>Correo </ion-col>
         </ion-row>
@@ -25,7 +27,9 @@
     </button>
 
     </ion-list>
-  <ion-fab right bottom>
-    <button ion-fab mini (click)="nuevoTrabajador()"><ion-icon name="add"  ></ion-icon></button>
-  </ion-fab>
+  <ion-fab buttom>
+    <button ion-fab (click)="agregarTrabajador()">
+      <ion-icon name="add"></ion-icon>
+      </button>
+   </ion-fab>
 </ion-content>

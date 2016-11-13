@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { Generarqr } from '../../providers/generarqr/generarqr';
 
 /*
@@ -17,9 +17,13 @@ import { Generarqr } from '../../providers/generarqr/generarqr';
 export class Generadorqr {
    texto: any;
    data: any;
-   url: string;
+   url: string = "https://afternoon-crag-97293.herokuapp.com/qr/";
 
-  constructor(public navCtrl: NavController,public qrGenerador: Generarqr ) {}
+  constructor(public navCtrl: NavController,public qrGenerador: Generarqr, 
+              public navParams: NavParams ) {
+  this.url = this.url + this.navParams.get('codigoQr');
+   
+}
 
   ionViewDidLoad() {
     console.log('Hello Generadorqr Page');

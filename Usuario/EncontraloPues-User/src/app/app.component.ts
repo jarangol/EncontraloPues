@@ -39,12 +39,11 @@ export class AuthApp {
 
     this.pages = [
       // {title: 'Ping', component: PingPage},
-      {title: 'Inicar Sesion',component: ProfilePage},
+      {title: 'Sesion',component: ProfilePage},
       {title: 'Escanea el QR', component: Escaneoqr},
-      {title: 'Agrega tu objeto', component: Agregarobjts},
       {title: 'Generar QR', component: Generadorqr},
       {title: 'Buscar', component: Buscarobjetos}, 
-      {title: 'Encotrados', component: Encontrados},                                 
+      {title: 'Encontrados', component: Encontrados},                                 
       {title: 'Tus Objetos', component: Objetos}     
     ];
   

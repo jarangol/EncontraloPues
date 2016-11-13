@@ -3,6 +3,7 @@ import { NavController,AlertController } from 'ionic-angular';
 import { Agregarobjts } from '../agregarobjts/agregarobjts'
 import { AuthService } from '../../services/auth/auth.service';
 import { ObtenerObjetos } from '../../providers/obtener-objetos';
+import { Generadorqr } from '../generadorqr/generadorqr';
 
 
 /*
@@ -34,54 +35,12 @@ export class Objetos {
 
   addObjt(){
     this.navCtrl.push(Agregarobjts); // pasar despues los parametros de navegacion
-
-    
-        // let prompt = this.alertCtrl.create({
-        //     title: 'Add Note',
-        //     inputs: [{
-        //         name: 'title'
-        //     }],
-        //     buttons: [
-        //         {
-        //             text: 'Cancel'
-        //         },
-        //         {
-        //             text: 'Add',
-        //             handler: data => {
-        //                 this.objetos.push(data);
-        //             }
-        //         }
-        //     ]
-        // });
- 
-        // prompt.present();
     }
 
-    editObjt(obj){
+    editObjt(){
  
-        let prompt = this.alertCtrl.create({
-            title: 'Edita el Objeto',
-            inputs: [{
-                name: 'titulo'
-            }],
-            buttons: [
-                {
-                    text: 'Cancel'
-                },
-                {
-                    text: 'Save',
-                    handler: data => {
-                        let index = this.objetos.indexOf(obj);
- 
-                        if(index > -1){
-                          this.objetos[index] = obj;
-                        }
-                    }
-                }
-            ]
-        });
- 
-        prompt.present();       
+    this.navCtrl.push(Agregarobjts); // pasar despues los parametros de navegacion
+               
     }
 
      deleteObjt(obj){
@@ -93,9 +52,11 @@ export class Objetos {
         }
     }
 
-    refresh(){
-        this.navCtrl.setRoot(Objetos);
+    public generarQr(codigoQr){
+        this.navCtrl.push(Generadorqr,{codigoQr: codigoQr});
+        console.log(codigoQr);
     }
+
 
     public obtenerObjetos(){
         if(this.auth.authenticated()){
@@ -111,7 +72,7 @@ export class Objetos {
                 
                 if(data.correcto){
                      this.resulConsulta = data.mensaje;
-                    console.log("json de objetos " + this.resulConsulta[0].tags);
+                    // console.log("json de objetos " + this.resulConsulta.objetosPersonales.codigoQR);
                 }else{
                     alert(data.mensaje);
                 }

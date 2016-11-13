@@ -11,7 +11,7 @@ import { RetiradosPage } from './pages/trabajador/retirados/retirados';
 
 //lugar
 import {BuscarLugarPage} from './pages/lugar/buscar-lugar/buscar-lugar'
-import {ResultadoLugarPage} from './pages/lugar/resultado-lugar/resultado-lugar'
+
 
 //paginas generales
 import { Login } from './pages/login/login';
@@ -44,7 +44,10 @@ class MyApp {
       // { title: 'Retirar', component: RetirarPage},
       //{ title: 'Historial de retiros', component: RetiradosPage },
        { title: 'Buscar', component: BuscarLugarPage },
-       { title: 'Resultado', component: ResultadoLugarPage },
+      //  { title: 'Resultado', component: ResultadoLugarPage },
+      //  { title: 'Perdido', component: ObjetoPerdidoPage },
+      //  { title: 'Retirado', component: ObjetoRetiradoPage },
+     
     ];
 
   }
@@ -80,11 +83,7 @@ class LugarApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Registrar', component: RegistrarPage},
-      { title: 'Retirar', component: RetirarPage},
-      { title: 'Historial de retiros', component: RetiradosPage },
        { title: 'Buscar', component: BuscarLugarPage },
-       { title: 'Resultado', component: ResultadoLugarPage },
     ];
 
   }

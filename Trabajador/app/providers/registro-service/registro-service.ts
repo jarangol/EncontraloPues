@@ -53,6 +53,28 @@ export class RegistroService {
 
   }  
 
+  public actualizarPerdido(perdido){
+      let body = JSON.stringify(perdido);
+      let headers = new Headers();
+      headers.append('Content-Type','application/json');
+      
+      this.data = this.http.post(this.serverURL+'/api/modificarDatosObjetoPerdido' , body, {headers: headers})
+      .map(res => res.json());
+      
+      return this.data;
+  }
+
+
+  public borrarPerdido(perdido){
+      let body = JSON.stringify(perdido);
+      let headers = new Headers();
+      headers.append('Content-Type','application/json');
+      
+      this.data = this.http.post(this.serverURL+'/api/modificarDatosObjetoPerdido' , body, {headers: headers})
+      .map(res => res.json());
+      
+      return this.data;
+  }
 
 }
 

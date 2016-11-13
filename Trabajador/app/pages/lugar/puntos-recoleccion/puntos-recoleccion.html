@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+  	 <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Puntos de recolección</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>      
+    <ion-list> 
+       <ion-list-header>
+        <ion-row>
+            <ion-col>Nombre</ion-col>
+            <ion-col>Telefono</ion-col>
+        </ion-row>
+      </ion-list-header>
+
+     <button ion-item *ngFor="let punto of puntosRecoleccion" (click)="itemTapped($event,punto)" >
+       <ion-row>
+          <ion-col></ion-col>
+          <ion-col></ion-col>
+        </ion-row>
+      </button>
+   
+    </ion-list>
+ <ion-fab right bottom>
+    <button ion-fab mini (click)="nuevoPunto()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+</ion-content>

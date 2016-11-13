@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+  	 <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Trabajadores</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>      
+    <ion-list> 
+       <ion-list-header>
+        <ion-row>
+            <ion-col>Nombre</ion-col>
+            <ion-col>Correo </ion-col>
+        </ion-row>
+      </ion-list-header>
+
+     <button ion-item *ngFor="let trabajador of trabajadores" (click)="itemTapped($event,trabajador)" >
+        <ion-row>
+          <ion-col>{{trabajador.trabajadores.nombre}}</ion-col>
+          <ion-col>{{trabajador.trabajadores._id}}</ion-col>
+        </ion-row>
+    </button>
+
+    </ion-list>
+  <ion-fab right bottom>
+    <button ion-fab mini (click)="nuevoTrabajador()"><ion-icon name="add"  ></ion-icon></button>
+  </ion-fab>
+</ion-content>

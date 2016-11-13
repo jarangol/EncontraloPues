@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-navbar>
+  	 <button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Objeto perdido</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+	<ion-list no-lines *ngIf=qr>
+	   	
+		<ion-item>
+			<ion-label>Fecha de pérdida</ion-label>
+			<ion-datetime  displayFormat="DD/MMM/YYYY" pickerFormat="DD-MMM-YYYY" [(ngModel)]="fecha" disabled></ion-datetime>
+		</ion-item>
+
+		<!--seleccionar el punto para trasladar-->
+    <ion-item>
+      <ion-label>Punto de recoleccion</ion-label>
+      <ion-select [(ngModel)]="nombrePuntoInsertar" >
+        <ion-option *ngFor="let punto of puntosRecoleccion">{{punto.puntosRecoleccion.nombre}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+		<ion-item>
+			<ion-label stacked>Consecutivo:</ion-label>
+			<ion-label>{{registro.codigoBusqueda}}</ion-label>
+		</ion-item>
+
+		 <ion-item>
+          <ion-label stacked>Palabras clave del objeto</ion-label>     
+          <ion-input  #ntag [(ngModel)]="tag" type="text" placeholder="Agregue una palabra clave"></ion-input>
+          <button ion-button (click)="addTag(ntag)" item-right>
+          <ion-icon name="add"></ion-icon>
+        </button>
+      </ion-item>
+
+	
+      <ion-item>
+        <div class="tag-container"  *ngIf="tags.length > 0">
+          <span class="tag" *ngFor="let tag of tags">
+            {{ tag }}
+            <ion-icon name="close" (click)="deleteTag(tag)"></ion-icon>
+          </span>
+        </div>
+      </ion-item>
+
+		 <ion-item >
+	        <ion-label stacked>Descripción privada:</ion-label>
+	    	  <ion-textarea [(ngModel)]="descripcionOculta" rows="5"></ion-textarea>
+		</ion-item>
+
+	</ion-list>
+	
+	<button (click)="actualizar()" secondary block>Actualizar</button>
+
+</ion-content>
+
+

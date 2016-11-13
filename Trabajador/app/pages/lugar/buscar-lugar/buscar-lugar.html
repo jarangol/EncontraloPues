@@ -10,15 +10,15 @@
 
 <ion-content>
   <div padding>
-        <ion-segment [(ngModel)]="tipoBusqueda">
-          <ion-segment-button value='fecha'>
-            Fecha
-          </ion-segment-button>
-          <ion-segment-button value='consecutivo'>
-            Consecutivo
-          </ion-segment-button>
-        </ion-segment>
-      </div>
+    <ion-segment [(ngModel)]="tipoBusqueda">
+      <ion-segment-button value='fecha'>
+        Fecha
+      </ion-segment-button>
+      <ion-segment-button value='consecutivo'>
+        Consecutivo
+      </ion-segment-button>
+    </ion-segment>
+  </div>
   
   <ion-item>
     <ion-label>Tipo de objetos</ion-label>
@@ -37,8 +37,8 @@
 
     <ion-item>
       <ion-label>Punto de recoleccion</ion-label>
-      <ion-select [(ngModel)]="puntoRecoleccion" >
-        <ion-option selected="true">Todos</ion-option>
+      <ion-select [(ngModel)]="nombrePunto" >
+        <ion-option value="Todos">Todos</ion-option>
         <ion-option *ngFor="let punto of puntosRecoleccion">{{punto.puntosRecoleccion.nombre}}</ion-option>
       </ion-select>
     </ion-item>

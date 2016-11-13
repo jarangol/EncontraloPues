@@ -21,19 +21,14 @@ export class LogInService {
 
   public validarInfo(info) {
 
-    console.log('llame a validar info');
-
     let body = JSON.stringify(info);
     let headers = new Headers();
     headers.append('Content-Type','application/json');
 
-    return new Promise(resolve =>{
-      this.http.post(this.serverURL + '/api/iniciarSesion', body, {headers : headers})
-      .subscribe(res => {
-        this.data = res.text();
-        resolve(this.data);
-      });
-    });
+    this.data = this.http.post(this.serverURL + '/api/iniciarSesion', body, {headers : headers})
+    .map(res => res.json());
+
+    return this.data;
   }
 
 }

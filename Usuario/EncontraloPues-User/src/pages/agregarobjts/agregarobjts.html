@@ -38,16 +38,9 @@
       </div>
   </ion-item>
 
- <ion-item>
-    <ion-label stacked>2.Descripción</ion-label>
- </ion-item>
- 
-  <ion-item>
-    <ion-textarea [(ngModel)]="descripcionOculta" rows="4" placeholder="Agrega una Descripción de tu objeto"></ion-textarea>
-  </ion-item>
 
     </ion-list>
 
-    <button ion-button block >Confirmar</button>
+    <button ion-button block (click) = "confirmar()" >Confirmar</button>
     
 </ion-content>

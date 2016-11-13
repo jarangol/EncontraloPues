@@ -41,7 +41,6 @@ export class AuthApp {
       // {title: 'Ping', component: PingPage},
       {title: 'Sesion',component: ProfilePage},
       {title: 'Escanea el QR', component: Escaneoqr},
-      {title: 'Generar QR', component: Generadorqr},
       {title: 'Buscar', component: Buscarobjetos}, 
       {title: 'Encontrados', component: Encontrados},                                 
       {title: 'Tus Objetos', component: Objetos}     

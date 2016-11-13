@@ -26,11 +26,17 @@ export class Objetos {
   constructor(public navCtrl: NavController, private alertCtrl: AlertController,
   public auth: AuthService, private obtenerService : ObtenerObjetos ) {
     this.usuario = auth.user;
+
   }
+
+
+
+    ionViewWillEnter() { // se llama todo lo que se quiere que se refreseque en la pag
+        this.obtenerObjetos();
+    }
 
   ionViewDidLoad() {
     console.log('Hello Objetos Page');
-    this.obtenerObjetos();
   }
 
   addObjt(){

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, Alert} from 'ionic-angular';
+import { NavController, AlertController, Alert, ActionSheetController, Platform} from 'ionic-angular';
 
 //Servicio de llamados http 
 import { TrabajadoresService} from '../../../providers/lugar-service/trabajadores-service';
@@ -13,9 +13,9 @@ export class TrabajadoresPage {
     private trabajadores: any; //resultado de la consulta
     private correoLugar: any = 'Eafit@';//datos de acceso a la informacion
    
-    constructor(private navCtrl: NavController, private alertCtrl: AlertController, private trabajadoresService: TrabajadoresService){ 
-        console.log(this.correoLugar);
-    }
+    constructor(private navCtrl: NavController, private alertCtrl: AlertController, 
+                private trabajadoresService: TrabajadoresService,  private actionSheetCtrl: ActionSheetController,
+                 public platform: Platform){ }
    
    ionViewWillEnter() { // se llama todo lo que se quiere que se refreseque en la pag
      this.cargarTrabajadores();
@@ -135,4 +135,59 @@ export class TrabajadoresPage {
         });
         alerta.present();
    }
-}
+
+
+
+    public itemOptions(event, trabajador) {
+        let actionSheet = this.actionSheetCtrl.create({
+            title: 'Modificar Trabajador',
+            cssClass: 'action-sheets-basic-page',
+            buttons: [
+            { 
+            text: 'Editar',
+            icon: !this.platform.is('ios') ? 'build' : null,
+            handler: () => {
+            console.log('Share clicked');
+            }
+            },{ 
+            text: 'Cambiar contraseña',
+            icon: !this.platform.is('ios') ? 'share' : null,
+            handler: () => {
+            console.log('Share clicked');
+            }
+            },{
+            text: 'Borrar',
+            role: 'destructive',
+            icon: !this.platform.is('ios') ? 'trash' : null,
+            handler: () => {
+                console.log('Delete clicked');
+            }
+            },
+            { 
+            text: 'Play',
+            icon: !this.platform.is('ios') ? 'arrow-dropright-circle' : null,
+            handler: () => {
+                console.log('Play clicked');
+            }
+            },
+            {
+            text: 'Favorite',
+            icon: !this.platform.is('ios') ? 'heart-outline' : null,
+            handler: () => {
+                console.log('Favorite clicked');
+            }
+            },
+            {
+            text: 'Cancel',
+            role: 'cancel', // will always sort to be on the bottom
+            icon: !this.platform.is('ios') ? 'close' : null,
+            handler: () => {
+                console.log('Cancel clicked');
+            }
+            }
+        ]
+        });
+    actionSheet.present();;
+    }
+ }
+

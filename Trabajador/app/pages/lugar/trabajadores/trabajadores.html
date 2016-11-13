@@ -19,17 +19,23 @@
         </ion-row>
       </ion-list-header>
 
-     <button ion-item *ngFor="let trabajador of trabajadores" (click)="itemTapped($event,trabajador)" >
+     <button ion-item *ngFor="let trabajador of trabajadores" (click)="itemOptions($event,trabajador)" >
         <ion-row>
           <ion-col>{{trabajador.trabajadores.nombre}}</ion-col>
           <ion-col>{{trabajador.trabajadores._id}}</ion-col>
         </ion-row>
     </button>
 
+
     </ion-list>
+
+
   <ion-fab buttom>
     <button ion-fab (click)="agregarTrabajador()">
       <ion-icon name="add"></ion-icon>
       </button>
    </ion-fab>
+
+
+
 </ion-content>

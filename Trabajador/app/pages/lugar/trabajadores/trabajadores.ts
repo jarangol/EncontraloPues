@@ -17,12 +17,19 @@ export class TrabajadoresPage {
                 private trabajadoresService: TrabajadoresService,  private actionSheetCtrl: ActionSheetController,
                  public platform: Platform){ }
    
+   /**
+    * Se llama al iniciar la pagina para refrescar fatos
+    */
    ionViewWillEnter() { // se llama todo lo que se quiere que se refreseque en la pag
      this.cargarTrabajadores();
+     let trabajador;
+   //  this.editarTrabajador(trabajador);
     }
 
   
-
+    /**
+     * Consulta los trabajadores del lugar
+     */
     public cargarTrabajadores(){
         let correo = { correoLugar: this.correoLugar}
         this.trabajadoresService.consultarTrabajadores(correo)
@@ -35,10 +42,11 @@ export class TrabajadoresPage {
         })
     }
 
-    public itemTapped(event, trabajador) {
-        //detallar los datos
-    }
 
+    /**
+     * Alerta generada al acer clic en agregar
+     * y encargada de verificar si el correo existia 
+     */
     public agregarTrabajador(){
         let alerta = this.alertCtrl.create({
             title: 'Agregar trabajador',
@@ -69,14 +77,16 @@ export class TrabajadoresPage {
                     }
                
                     this.trabajadoresService.confirmarTrabajador(correo).subscribe((datos) => {
-                    console.log("respondiendo"+datos.correcto);
-                    console.log("respondiendo"+datos.existio);
                         if(datos.correcto && !datos.existio){             
                             navTransition.then(() => {
                                 this.nuevoTrabajador(correoTrabajador);
                             });
                         }else{
-                            alert(datos.mensaje);
+                            navTransition.then(() => {
+                                 alert(datos.mensaje);
+                                 this.cargarTrabajadores();
+                            });
+                         
                         }
                     });
                     return false;
@@ -87,7 +97,10 @@ export class TrabajadoresPage {
         alerta.present();
    }
 
-
+   /**
+    * Luego de verificar el correo,
+    * si este no existia, creamos un nuevo trabajador.
+    */
    public nuevoTrabajador(correo){
        let alerta = this.alertCtrl.create({
             title: 'Nuevo trabajador',
@@ -121,14 +134,14 @@ export class TrabajadoresPage {
                         nombre: data.nombre,
                         contraseña: data.contrasena,
                     }
-    
-                    this.trabajadoresService.crearTrabajador(trabajador)
-                    .subscribe(data => {           
+
+                    this.trabajadoresService.crearTrabajador(trabajador).subscribe(data => {           
                         navTransition.then(() => {
-                             alert(data.mensaje);
-                              this.cargarTrabajadores();
+                            alert(data.mensaje);
+                            this.cargarTrabajadores();
                         }); 
                     });
+                    return false;
                 }
             }
             ]
@@ -137,57 +150,209 @@ export class TrabajadoresPage {
    }
 
 
-
-    public itemOptions(event, trabajador) {
+    /**
+     * ActionSheet de opciones del trabajador
+     */
+    public opcionesTrabajador(event, trabajador) {
         let actionSheet = this.actionSheetCtrl.create({
             title: 'Modificar Trabajador',
             cssClass: 'action-sheets-basic-page',
             buttons: [
             { 
-            text: 'Editar',
-            icon: !this.platform.is('ios') ? 'build' : null,
-            handler: () => {
-            console.log('Share clicked');
-            }
+                text: 'Editar',
+                icon: !this.platform.is('ios') ? 'create' : null,
+                handler: () => {
+                    console.log('editar clicked');
+                    let navTransition = actionSheet.dismiss();                    
+                    navTransition.then(() => {
+                        this.editarTrabajador(trabajador);
+
+                    });  
+                  
+                }
             },{ 
-            text: 'Cambiar contraseña',
-            icon: !this.platform.is('ios') ? 'share' : null,
-            handler: () => {
-            console.log('Share clicked');
-            }
+                text: 'Cambiar contraseña',
+                icon: !this.platform.is('ios') ? 'key' : null,
+                handler: () => {
+                    console.log('cambiar contraseña clicked');
+                    let navTransition = actionSheet.dismiss();
+                     navTransition.then(() => {
+                         this.cambiarContrasena(trabajador);
+                    });  
+                }
             },{
-            text: 'Borrar',
-            role: 'destructive',
-            icon: !this.platform.is('ios') ? 'trash' : null,
-            handler: () => {
-                console.log('Delete clicked');
-            }
-            },
-            { 
-            text: 'Play',
-            icon: !this.platform.is('ios') ? 'arrow-dropright-circle' : null,
-            handler: () => {
-                console.log('Play clicked');
-            }
-            },
-            {
-            text: 'Favorite',
-            icon: !this.platform.is('ios') ? 'heart-outline' : null,
-            handler: () => {
-                console.log('Favorite clicked');
-            }
-            },
-            {
-            text: 'Cancel',
-            role: 'cancel', // will always sort to be on the bottom
-            icon: !this.platform.is('ios') ? 'close' : null,
-            handler: () => {
-                console.log('Cancel clicked');
-            }
+                text: 'Eliminar',
+                role: 'destructive',
+                icon: !this.platform.is('ios') ? 'trash' : null,
+                handler: () => {
+                    console.log('Delete clicked');
+                    let navTransition = actionSheet.dismiss();
+                     navTransition.then(() => {
+                    });
+                        this.eliminarTrabajador(trabajador);
+                   
+                }
+            },{
+                text: 'Cancelar',
+                role: 'cancel', // will always sort to be on the bottom
+                icon: !this.platform.is('ios') ? 'close' : null,
+                handler: () => {
+                    console.log('Cancel clicked');
+                }
             }
         ]
         });
     actionSheet.present();;
     }
+
+       /**
+        * editar nombre y correo del trabajador
+        */ 
+       public editarTrabajador(trabajador){
+        let alerta = this.alertCtrl.create({
+                title: 'Editar trabajador',
+                inputs: [
+                    {
+                        name: 'nombre',
+                        placeholder: 'Nombre',
+                        type: 'text',
+                        value: trabajador.trabajadores.nombre,
+                    },
+                    {
+                        name: 'correo',
+                        placeholder: 'Correo',
+                        type: 'email',  
+                        value: trabajador.trabajadores._id   
+                    }
+                ],
+                buttons: [
+                {
+                    text: 'Atrás',
+                    role: 'cancel',
+                    handler: data => {
+                      console.log('Cancel clicked');
+                     }
+                },
+                {
+                    text: 'Aceptar',
+                    handler: data => {
+                        console.log(data.correo);
+                
+                        let navTransition = alerta.dismiss();
+                        let datos = {
+                            correoLugar: this.correoLugar,
+                            correoTrabajador: data.correo,
+                            nombre: data.nombre,
+                            //la contraseña no cambia
+                            contraseña: trabajador.trabajadores.contrasena,
+                        }
+        
+                        this.trabajadoresService.modificarTrabajador(datos).
+                        subscribe(data => {           
+                            navTransition.then(() => {
+                                alert(data.mensaje);
+                                this.cargarTrabajadores();
+                            }); 
+                        });
+                        return false;
+                    }
+                }
+                ]
+            });
+    alerta.present();
+   }
+
+   /**
+    * cambiar contraseña de un trabajador
+    */
+   public cambiarContrasena(trabajador){
+        let alerta = this.alertCtrl.create({
+                title: 'Editar trabajador',
+                inputs: [
+                    {
+                        name: 'nueva',
+                        placeholder: 'Nueva contraseña',
+                        type: 'password',
+                    },
+                    {
+                        name: 'repetir',
+                        placeholder: 'Repetir nueva contraseña',
+                        type: 'password',     
+                    }
+                ],
+                buttons: [
+                {
+                    text: 'Atrás',
+                    role: 'cancel',
+                },
+                {
+                    text: 'Aceptar',
+                    handler: data => {
+                        
+                        if(data.nueva == data.repetir){
+                            let navTransition = alerta.dismiss();
+                            let datos = {
+                                correoLugar: this.correoLugar,
+                                correoTrabajador: trabajador.trabajadores._id,
+                                nombre: trabajador.trabajadores.nombre,
+                                contraseña: data.nueva,
+                            }
+            
+                            this.trabajadoresService.modificarTrabajador(datos).subscribe(data => {           
+                                navTransition.then(() => {
+                                    alert(data.mensaje);
+                                    this.cargarTrabajadores();
+                                }); 
+                            });
+                        }else
+                            alerta.setMessage("Las constraseñas no coinciden, intente de nuevo.");
+                        return false;
+                    }
+                }
+                ]
+            });
+    alerta.present();
+   }
+
+   /**
+    * Eliminar un trabajador de un lugar
+    */
+   eliminarTrabajador(trabajador) {
+    let alerta = this.alertCtrl.create({
+        title: 'Eliminar trabajador',
+        message: '¿Quiere borrar a '+trabajador.trabajadores.nombre+'?',
+        buttons: [
+        {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: () => {
+            console.log('Cancel clicked');
+            }
+        },
+        {
+            text: 'Eliminar',
+            handler: () => {
+                console.log('eliminar clicked');
+                let navTransition = alerta.dismiss();
+                let datos = {
+                    correoLugar: this.correoLugar,
+                    correoTrabajador: trabajador.trabajadores._id
+                }
+                this.trabajadoresService.eliminarTrabajador(datos)
+                .subscribe( (data) => {
+                    navTransition.then(() => {
+                        alert(data.mensaje);
+                        this.cargarTrabajadores();
+                    }); 
+                });
+                return false;
+            }
+        }
+        ]
+    });
+    alerta.present();
+    }
+
+
  }
 

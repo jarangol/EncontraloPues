@@ -17,7 +17,7 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
 
 
 /**
-   *  Consulta de los puntos de recoleccion de un lugar
+   *  Consulta los puntos de recoleccion disponibles de un lugar
    * El usuario debe ser un admin (lugar)
   **/
   public consultarPuntos(consulta) {
@@ -26,11 +26,46 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     let headers = new Headers();
     headers.append('Content-Type','application/json');
     
-    this.data = this.http.post(this.serverURL + '/api/consultarNombrePuntosRecoleccion', body, {headers: headers})
+    this.data = this.http.post(this.serverURL + '/api/consultarPuntosRecoleccionDisponibles', body, {headers: headers})
     .map(res => res.json());
     
     return this.data;
   }
+
+/**
+ * Crear un punto de recoleccion de un lugar   
+ *  El usuario debe ser un admin (lugar)
+ * 
+ **/
+  public confirmarPunto(punto) {
+    let body = JSON.stringify(punto);
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+   
+    this.data = this.http.post(this.serverURL +'/api/registrarPuntoRecoleccion',body, {headers: headers})
+    .map(res => res.json());
+
+    return this.data;
+  }
+
+
+
+/**
+ * Crear un punto de recoleccion de un lugar   
+ *  El usuario debe ser un admin (lugar)
+ * 
+ **/
+  public crearPunto(punto) {
+    let body = JSON.stringify(punto);
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+   
+    this.data = this.http.post(this.serverURL +'/api/registrarNuevoPuntoRecoleccion',body, {headers: headers})
+    .map(res => res.json());
+
+    return this.data;
+  }
+
 
 
 /**
@@ -43,7 +78,7 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     let headers = new Headers();
     headers.append('Content-Type','application/json');
    
-    this.data = this.http.post(this.serverURL + '',body, {headers: headers})
+    this.data = this.http.post(this.serverURL +'/api/eliminarPuntoRecoleccion',body, {headers: headers})
     .map(res => res.json());
 
     return this.data;
@@ -60,7 +95,7 @@ private serverURL = 'https://afternoon-crag-97293.herokuapp.com';
     let headers = new Headers();
     headers.append('Content-Type','application/json');
    
-    this.data = this.http.post(this.serverURL + '',body, {headers: headers})
+    this.data = this.http.post(this.serverURL + '/api/modificarDatosPuntoRecoleccion',body, {headers: headers})
     .map(res => res.json());
 
     return this.data;

@@ -17,15 +17,15 @@
         </ion-row>
       </ion-list-header>
 
-     <button ion-item *ngFor="let punto of puntosRecoleccion" (click)="itemTapped($event,punto)" >
+     <button ion-item *ngFor="let punto of puntosRecoleccion" (click)="opcionesPunto($event,punto)" >
        <ion-row>
-          <ion-col></ion-col>
-          <ion-col></ion-col>
+          <ion-col>{{punto.puntosRecoleccion.nombre}}</ion-col>
+          <ion-col>{{punto.puntosRecoleccion.telefono}}</ion-col>
         </ion-row>
       </button>
    
     </ion-list>
  <ion-fab right bottom>
-    <button ion-fab mini (click)="nuevoPunto()"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab mini (click)="agregarPunto()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 </ion-content>

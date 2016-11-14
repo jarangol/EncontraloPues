@@ -22,8 +22,6 @@ export class TrabajadoresPage {
     */
    ionViewWillEnter() { // se llama todo lo que se quiere que se refreseque en la pag
      this.cargarTrabajadores();
-     let trabajador;
-   //  this.editarTrabajador(trabajador);
     }
 
   

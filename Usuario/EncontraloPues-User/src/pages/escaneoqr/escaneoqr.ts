@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController,Platform, Alert } from 'ionic-angular';
-import {BarcodeScanner} from 'ionic-native';
+import { NavController, Platform, Alert } from 'ionic-angular';
+import { BarcodeScanner } from 'ionic-native';
+import { Qrnotificator } from '../../providers/qrnotificator';
+import { AuthService } from '../../services/auth/auth.service';
+
 
 
 /*
@@ -11,31 +14,53 @@ import {BarcodeScanner} from 'ionic-native';
 */
 @Component({
   selector: 'page-escaneoqr',
-  templateUrl: 'escaneoqr.html'
+  templateUrl: 'escaneoqr.html',
+  providers: [Qrnotificator]
 })
+
 export class Escaneoqr {
 
   codigoQR: string;
-   qrToggle: any;
+  qrToggle: any;
+  usuario: any;
+  resulConsulta: any;
 
-  constructor(public platform: Platform,public navCtrl: NavController) {}
+  constructor(public platform: Platform, public navCtrl: NavController,
+    public qrService: Qrnotificator, public auth: AuthService) {
+    this.usuario = auth.user;
+  }
 
   ionViewDidLoad() {
     console.log('Hello Escaneoqr Page');
   }
 
-  public scan(): string {
-    this.platform.ready().then(() => {
-      BarcodeScanner.scan().then((barcodeData) => {
-        alert("scan");
-        alert(barcodeData.text);
-        this.codigoQR = barcodeData.text;
-        return barcodeData.text;
-      }, (err) => {
-        alert("Ha ocurrido un error: " + err);
+  public scan() {
+    if (this.auth.authenticated()) {
+      this.platform.ready().then(() => {
+        BarcodeScanner.scan().then((barcodeData) => {
+          alert("scan");
+          alert(barcodeData.text);
+          this.codigoQR = barcodeData.text;
+          alert(barcodeData.text);
+
+          let consulta = {
+            correoUsuario: this.usuario.email,
+            codigoQR : barcodeData.text
+          }
+
+          this.qrService.notificarQr(consulta).subscribe((data) =>
+            {
+                    alert(data.mensaje);
+            });
+
+        }, (err) => {
+          alert("Ha ocurrido un error: " + err);
+        });
       });
-    });
-    return "";
+    } else {
+      alert("Tienes que iniciar sesion");
+    }
+
   }
 
 

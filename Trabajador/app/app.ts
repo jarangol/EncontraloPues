@@ -10,8 +10,9 @@ import { RetirarPage} from './pages/trabajador/retirar/retirar';
 import { RetiradosPage } from './pages/trabajador/retirados/retirados';
 
 //lugar
-import {BuscarLugarPage} from './pages/lugar/buscar-lugar/buscar-lugar'
-
+import {BuscarLugarPage} from './pages/lugar/buscar-lugar/buscar-lugar';
+import {PuntosRecoleccionPage} from './pages/lugar/puntos-recoleccion/puntos-recoleccion';
+import {TrabajadoresPage} from './pages/lugar/trabajadores/trabajadores';
 
 //paginas generales
 import { Login } from './pages/login/login';
@@ -31,7 +32,7 @@ import { LogInService } from './providers/logIn-service/logIn-service';
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = BuscarLugarPage;
+  rootPage: any = TrabajadoresPage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -44,10 +45,8 @@ class MyApp {
       // { title: 'Retirar', component: RetirarPage},
       //{ title: 'Historial de retiros', component: RetiradosPage },
        { title: 'Buscar', component: BuscarLugarPage },
-      //  { title: 'Resultado', component: ResultadoLugarPage },
-      //  { title: 'Perdido', component: ObjetoPerdidoPage },
-      //  { title: 'Retirado', component: ObjetoRetiradoPage },
-     
+       { title: 'Trabajadores', component: TrabajadoresPage },
+       { title: 'Puntos Recoleccion', component: PuntosRecoleccionPage },
     ];
 
   }
@@ -84,6 +83,8 @@ class LugarApp {
     // used for an example of ngFor and navigation
     this.pages = [
        { title: 'Buscar', component: BuscarLugarPage },
+        { title: 'Trabajadores', component: TrabajadoresPage },
+         { title: 'Puntos Recoleccion', component: PuntosRecoleccionPage },
     ];
 
   }

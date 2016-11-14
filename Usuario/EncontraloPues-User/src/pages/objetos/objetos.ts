@@ -78,7 +78,6 @@ export class Objetos {
                 
                 if(data.correcto){
                      this.resulConsulta = data.mensaje;
-                    // console.log("json de objetos " + this.resulConsulta.objetosPersonales.codigoQR);
                 }else{
                     alert(data.mensaje);
                 }

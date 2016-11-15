@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Alert } from 'ionic-angular';
+import { NavController, Alert, AlertController} from 'ionic-angular';
 
 //Service para los llamados http
 import { RetiradosService} from '../../../providers/retirados-service/retirados-service';
@@ -20,7 +20,6 @@ import { ListarRetiradosPage} from '../listar-retirados/listar-retirados';
 export class RetiradosPage {
   //atributos de la vista
   private tipoBusqueda: any; //Indica el tipo de busqueda que se desea hacer
-  private qrCode: string; //codigo escaneado
   private tags: Array<String>; //arreglo de tags ingresados
   private fecha: any; //fecha del registro (YYYY-MM)
   private codigoBusqueda: any; //ingresado por el usuario  
@@ -34,7 +33,8 @@ export class RetiradosPage {
   private correoTrabajador: string; 
  // private retiradosService: RetiradosService;
 
-  constructor(private navCtrl: NavController, private retiradosService: RetiradosService) {
+  constructor(private navCtrl: NavController, private retiradosService: RetiradosService,
+              private alertCtrl: AlertController) {
     this.tipoBusqueda = 'fecha';
 
 		 this.tags = [];
@@ -73,29 +73,58 @@ export class RetiradosPage {
             alert(this.objetos.mensaje);
           }
         });
-
-      }else if(this.tipoBusqueda=='consecutivo' && this.codigoBusqueda){
-          let consulta = {
-            codigoBusqueda: this.codigoBusqueda,
-            correoLugar: this.correoLugar,
-          }
-
-          this.retiradosService.consultarRetiradosCodigo(consulta)
-          .then(data => {
-            this.objetos = data;
-            console.log(this.objetos);
-            if(this.objetos.correcto){
-                this.navCtrl.push(DetalleRetiradoPage,{ 	 					
-                  registro: this.objetos.mensaje, //pasarle especificamente el atributo sin el mensaje
-                });
-              this.codigoBusqueda = "";
-            }else{
-              alert(this.objetos.mensaje);
-            }       
-         });    
-      }  
+      }
   }
 
+   /**
+    * Busca un objeto retirado por su consecutivo
+    */
+   public buscarConsecutivo() {
+    this.tipoBusqueda = "fecha";
+    let prompt = this.alertCtrl.create({
+      title: 'Buscar consecutivo',
+      message: "Ingrese el consecutivo completo del objeto retirado.",
+      inputs: [
+        {
+          name: 'consecutivo',
+          placeholder: 'Consecutivo',
+					type: 'text',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+					
+          }
+        },
+        {
+          text: 'Buscar',
+          handler: data => {
+            let consulta = {
+              codigoBusqueda: data.consecutivo,
+              correoLugar: this.correoLugar,
+            }
+
+            this.retiradosService.consultarRetiradosCodigo(consulta)
+            .subscribe(data => {
+              if(data.correcto){
+                  prompt.dismiss().then(() => {                 
+                    this.navCtrl.push(DetalleRetiradoPage,{ 	 					
+                      registro: data.mensaje, 
+                    });
+                  });
+              }else{
+                alert(data.mensaje);
+              }       
+            });  
+         }
+        }
+      ]
+    });
+    prompt.present();
+  }
 
 /**
  * Para agregar un nuevo tag al arreglo

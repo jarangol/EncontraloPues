@@ -174,8 +174,9 @@ export class PuntosRecoleccionPage {
                     console.log('Delete clicked');
                     let navTransition = actionSheet.dismiss();
                      navTransition.then(() => {
-                    });
                         this.eliminarPunto(punto);
+                    });
+                     
                    
                 }
             },{
@@ -259,7 +260,7 @@ export class PuntosRecoleccionPage {
    eliminarPunto(punto) {
     let alerta = this.alertCtrl.create({
         title: 'Eliminar punto',
-        message: '¿Quiere borrar '+punto.puntosRecoleccion.nombre+'?',
+        message: '¿Quiere borrar el punto '+punto.puntosRecoleccion.nombre+'?',
         buttons: [
         {
             text: 'Cancelar',
@@ -272,6 +273,7 @@ export class PuntosRecoleccionPage {
             text: 'Eliminar',
             handler: () => {
                 console.log('eliminar clicked');
+                console.log(punto.puntosRecoleccion.nombre);
                 let navTransition = alerta.dismiss();
                 let datos = {
                     correoLugar: this.correoLugar,

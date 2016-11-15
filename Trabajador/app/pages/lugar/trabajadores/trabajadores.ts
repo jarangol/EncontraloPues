@@ -186,8 +186,9 @@ export class TrabajadoresPage {
                     console.log('Delete clicked');
                     let navTransition = actionSheet.dismiss();
                      navTransition.then(() => {
+                          this.eliminarTrabajador(trabajador);
                     });
-                        this.eliminarTrabajador(trabajador);
+                       
                    
                 }
             },{

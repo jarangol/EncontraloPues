@@ -453,13 +453,10 @@ app.post('/api/registrarTrabajador', function (req, res) {
                     {
                       $set: { 'trabajadores.$.disponible': true }
                     },
-                    { 
-                      projection: { 'trabajadores.$.nombre': 1 } 
-                    },
                     function (err, cuentaTrabajador2) {
                       if (!err) {
                         if (cuentaTrabajador2) {
-                          res.json({ correcto: true, existio: true , mensaje: 'Se ha vuelto a crear la cuenta de:' + cuentaTrabajador2.trabajadores.nombre });
+                          res.json({ correcto: true, existio: true , mensaje: 'Se ha vuelto a crear la cuenta de:' +  req.body.correoTrabajador});
                         } else {
                           res.json({ correcto: true, existio: false });
                         }
@@ -734,7 +731,7 @@ app.post('/api/consultarNombrePuntosRecoleccion', function (req, res) {
     { $sort: { 'puntosRecoleccion.nombre': 1 } },
     function (err, puntosRecoleccion) {
       if (!err) {
-        res.json(puntosRecoleccion)
+        res.json({ correcto: true, mensaje:puntosRecoleccion})
       } else {
         res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
       }
@@ -751,7 +748,7 @@ app.post('/api/consultarNombrePuntosRecoleccionDisponibles', function (req, res)
     { $sort: { 'puntosRecoleccion.nombre': 1 } },
     function (err, puntosRecoleccion) {
       if (!err) {
-        res.json(puntosRecoleccion)
+        res.json({ correcto: true, mensaje:puntosRecoleccion})
       } else {
         res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
       }
@@ -774,7 +771,7 @@ app.post('/api/consultarPuntosRecoleccionDisponibles', function (req, res) {
     { $sort: { 'puntosRecoleccion.nombre': 1 } },
     function (err, puntosRecoleccion) {
       if (!err) {
-        res.json(puntosRecoleccion)
+        res.json({ correcto: true, mensaje:puntosRecoleccion})
       } else {
         res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
       }
@@ -806,15 +803,9 @@ app.post('/api/eliminarPuntoRecoleccion', function (req, res) {
     { $match: { _id: req.body.correoLugar } },
     { $unwind: "$puntosRecoleccion" },
     { $match: { 'puntosRecoleccion.nombre': req.body.nombrePuntoRecoleccion } },
-    {
-      $project: {
-        'puntosRecoleccion.objetosPerdidos.codigoBusqueda': 1,
-        'puntosRecoleccion.objetosRetirados.codigoBusqueda': 1
-      }
-    },
     function (err, puntoRecoleccion) {
       if (!err) {
-        puntoRecoleccion = puntoRecoleccion[0];
+        puntoRecoleccion = puntoRecoleccion[0].puntosRecoleccion;
         if (!puntoRecoleccion.objetosPerdidos.length) {
           if (!puntoRecoleccion.objetosRetirados.length) {
             lugar.findOneAndUpdate({
@@ -850,7 +841,7 @@ app.post('/api/eliminarPuntoRecoleccion', function (req, res) {
               })
           }
         } else {
-          res.json({ correcto: false, mensaje: 'Error: Porfavor retirar o eliminar los objetos perdidos de este punto de recoleccion' });
+          res.json({ correcto: false, mensaje: 'Error: Retirar o eliminar los objetos perdidos de este punto de recoleccion' });
         }
       } else {
         res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
@@ -1255,8 +1246,7 @@ app.post('/api/consultarObjetosPerdidosTrabajadorCodigo', function (req, res) {
     { $unwind: "$puntosRecoleccion.objetosPerdidos" },
     {
       $match: {
-        $and: [{ 'puntosRecoleccion.objetosPerdidos.codigoBusqueda': req.body.codigoBusqueda },
-          consultaTags]
+        'puntosRecoleccion.objetosPerdidos.codigoBusqueda': req.body.codigoBusqueda
       }
     },
     {
@@ -1515,7 +1505,7 @@ app.post('/api/retirarObjetoPerdidoQR',function(req,res){
             res.json({ correcto: false, mensaje: "Error: El objeto no se encuentra en este punto de Recoleccion \n Dirijase al punto de Recoleccion: " + objetoPerdido.nombre});
           }
         } else {
-          res.json({ correcto: false, mensaje: "Error: No se encontro el registro del objeto como perdido, por favor registrelo"});
+          res.json({ correcto: false, mensaje: "Error: No se encontro el registro del objeto como perdido"});
         }
       } else {
          res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });
@@ -1834,6 +1824,8 @@ app.post('/api/consultarObjetosRetiradosLugarCodigo', function (req, res) {
 
 
 //Notificaciones
+
+// Evitar autonotificarse
 app.post('/api/notificacionUsuario_Usuario', function (req, res) {
 
   fecha = fechaActual();
@@ -1860,7 +1852,7 @@ app.post('/api/notificacionUsuario_Usuario', function (req, res) {
         if (usuarioDueño) {
           res.json({ correcto: true, mensaje: 'Se notifico al dueño exitosamente' });
         } else {
-          res.json({ correcto: false, mensaje: "Error: No se encuentra el codigo QR"  });
+          res.json({ correcto: false, mensaje: "Error: No se registro el objeto"  });
         }
       } else {
         res.json({ correcto: false, mensaje: 'Error: Ha ocurrido un error' });

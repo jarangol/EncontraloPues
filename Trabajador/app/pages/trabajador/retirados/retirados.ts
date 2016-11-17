@@ -11,6 +11,8 @@ import { DetalleRetiradoPage} from '../detalle-retirado/detalle-retirado';
 import { ListarRetiradosPage} from '../listar-retirados/listar-retirados';
 
 
+//datos de acceso
+import { LogInService } from '../../../providers/logIn-service/logIn-service';
 
 @Component({
   templateUrl: 'build/pages/trabajador/retirados/retirados.html',
@@ -29,12 +31,11 @@ export class RetiradosPage {
   //campos para la consulta
   private nombrePunto: any;
   private correoLugar: string;
-  private nombreLugar: string;
   private correoTrabajador: string; 
  // private retiradosService: RetiradosService;
 
   constructor(private navCtrl: NavController, private retiradosService: RetiradosService,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController, private login: LogInService) {
     this.tipoBusqueda = 'fecha';
 
 		 this.tags = [];
@@ -43,11 +44,10 @@ export class RetiradosPage {
 		 var yyyy = hoy.getFullYear();
 		 this.fecha = yyyy+'-'+mm;
 
-		 //temporal y desaparece con el login
-  	 this.correoLugar="Eafit@";
-     this.nombrePunto="b";
-     this.correoTrabajador="m";
-     this.nombreLugar="d";
+      //datos necesarios
+      this.correoLugar = this.login.getCorreoLugar();
+      this.nombrePunto = this.login.getPuntoTrabajador();
+      this.correoTrabajador = this.login.getCorreoTrabajador();
   }
 
   public buscar(){
@@ -61,12 +61,12 @@ export class RetiradosPage {
 
    
         this.retiradosService.consultarRetiradosFecha(consulta)
-          .then(data => {
+          .subscribe(data => {
             this.objetos = data;
             console.log(this.objetos);
             if(this.objetos.correcto){  
               this.navCtrl.push(ListarRetiradosPage,{ 	 					
-                registros: this.objetos.mensaje, //pasarle especificamente el atributo sin el mensaje
+                registros: this.objetos.mensaje, 
                 fecha: this.fecha
               });
           }else{

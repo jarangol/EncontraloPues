@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ionicBootstrap, Platform, Nav, MenuController} from 'ionic-angular';
+import { ionicBootstrap, Platform, Nav} from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
 //paginas
@@ -22,7 +22,7 @@ import { RegistroService} from './providers/registro-service/registro-service';
 import { RetiradosService} from './providers/retirados-service/retirados-service';
 import { RetirarService} from './providers/retirar-service/retirar-service';
 import { LogInService } from './providers/logIn-service/logIn-service';
-
+import { LugarService } from './providers/lugar-service/lugar-service';
 
 @Component({
   templateUrl: 'build/app.html'
@@ -32,12 +32,12 @@ import { LogInService } from './providers/logIn-service/logIn-service';
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = PuntosRecoleccionPage;
+  rootPage: any = Login;
 
   trabajadorPages: Array<{title: string, component: any}>;
   lugarPages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform,public menuCtrl: MenuController) {
+  constructor(public platform: Platform) {
     this.initializeApp();
 
     // paginas del trabajador
@@ -54,8 +54,7 @@ class MyApp {
     ];
 
   
-  this.menuCtrl.enable(true, 'trabajador');
-  this.menuCtrl.enable(false, 'lugar');
+
 
   }
 

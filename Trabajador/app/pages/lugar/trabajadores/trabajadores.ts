@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, Alert, ActionSheetController, Platform} from 'ionic-angular';
 
+//datos de acceso
+import { LogInService } from '../../../providers/logIn-service/logIn-service';
+
 //Servicio de llamados http 
 import { TrabajadoresService} from '../../../providers/lugar-service/trabajadores-service';
 
@@ -11,11 +14,13 @@ import { TrabajadoresService} from '../../../providers/lugar-service/trabajadore
 
 export class TrabajadoresPage {
     private trabajadores: any; //resultado de la consulta
-    private correoLugar: any = 'Eafit@';//datos de acceso a la informacion
+    private correoLugar: any;//datos de acceso a la informacion
    
     constructor(private navCtrl: NavController, private alertCtrl: AlertController, 
                 private trabajadoresService: TrabajadoresService,  private actionSheetCtrl: ActionSheetController,
-                 public platform: Platform){ }
+                public platform: Platform, private login:LogInService){ 
+                    this.correoLugar = this.login.getCorreoLugar();
+             }
    
    /**
     * Se llama al iniciar la pagina para refrescar fatos

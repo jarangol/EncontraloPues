@@ -7,6 +7,8 @@ import { LugarService} from '../../../providers/lugar-service/lugar-service';
 //pagina para resultado de la busqueda
 import { ResultadoLugarPage} from '../resultado-lugar/resultado-lugar';
 
+//datos de acceso
+import { LogInService } from '../../../providers/logIn-service/logIn-service';
 
 @Component({
   templateUrl: 'build/pages/lugar/buscar-lugar/buscar-lugar.html',
@@ -32,7 +34,8 @@ export class BuscarLugarPage {
 
 	private registros: any; //para guardar resultados de consultas.
 
-  constructor(private navCtrl: NavController,private lugarService: LugarService) {
+  constructor(private navCtrl: NavController,private lugarService: LugarService,
+  				private login:LogInService) {
   	//inicializando algunos campos
 		this.tags = [];
 		this.tipoBusqueda = 'fecha';
@@ -45,8 +48,7 @@ export class BuscarLugarPage {
 		var yyyy = hoy.getFullYear();
 		this.fecha = yyyy+'-'+mm;
 
-		//datos necesarios
-		this.correoLugar="Eafit@";
+		this.correoLugar = this.login.getCorreoLugar();
   }
 
 	ionViewLoaded(){
@@ -66,13 +68,13 @@ export class BuscarLugarPage {
 		if(this.tipoObjetos == 'perdidos')
 			this.lugarService.consultarPuntosPerdidos(correo)
 			.subscribe(data => {
-            	this.puntosRecoleccion = data;
+            	this.puntosRecoleccion = data.mensaje;
 				console.log(data);
       		});
 		else if(this.tipoObjetos == 'retirados')
 			this.lugarService.consultarPuntosRetirados(correo)
 			.subscribe(data => {
-            	this.puntosRecoleccion = data;		
+            	this.puntosRecoleccion = data.mensaje;		
 				console.log(data);
      		 });
 	}

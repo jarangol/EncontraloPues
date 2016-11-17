@@ -11,6 +11,10 @@ import { ConsultarPage} from '../consultar/consultar';
 //proveedor del service
 import { RetirarService } from '../../../providers/retirar-service/retirar-service';
 
+//datos de acceso
+import { LogInService } from '../../../providers/logIn-service/logIn-service';
+
+
 @Component({
   templateUrl: 'build/pages/trabajador/retirar/retirar.html',
   providers: [RetirarService],
@@ -26,10 +30,10 @@ private tipoBusqueda: any; //para guarda la seleccion hecha en el segment
 //necesarios para crear de un retiro
 private correoLugar: string;
 private nombrePunto: string;
-private nombreLugar: string;
 private correoTrabajador: string; 
 
-  constructor(public platform: Platform, private navCtrl: NavController,public retirarService: RetirarService,public alertCtrl: AlertController) {
+  constructor(public platform: Platform, private navCtrl: NavController,
+	public retirarService: RetirarService,public alertCtrl: AlertController, private login:LogInService) {
   	 this.tipoBusqueda = 'fecha';
 
 		 this.tags = [];
@@ -39,12 +43,9 @@ private correoTrabajador: string;
 		 this.fecha = yyyy+'-'+mm;
 
 		 //temporal y desaparece con el login
-  	 this.correoLugar="Eafit@";
-     this.nombrePunto="b";
-     this.correoTrabajador="m";
-     this.nombreLugar="d";
-
-		 
+  	 this.correoLugar = this.login.getCorreoLugar();
+     this.nombrePunto = this.login.getPuntoTrabajador();
+     this.correoTrabajador= this.login.getCorreoTrabajador(); 
   }
 
   public activarQR(){    

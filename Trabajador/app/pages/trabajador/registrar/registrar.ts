@@ -6,6 +6,10 @@ import {BarcodeScanner} from 'ionic-native';
 //proveedor del service
 import { RegistroService} from '../../../providers/registro-service/registro-service';
 
+
+//datos de acceso
+import { LogInService } from '../../../providers/logIn-service/logIn-service';
+
 @Component({
   templateUrl: 'build/pages/trabajador/registrar/registrar.html',
   //providers: [RegistroService]
@@ -26,30 +30,17 @@ export class RegistrarPage {
  private nombrePunto: string;
  private  correoTrabajador: string;
 
- 	constructor(public platform: Platform, private navCtrl: NavController,public registroService: RegistroService){   
+ 	constructor(public platform: Platform, private navCtrl: NavController,
+              public registroService: RegistroService, private login:LogInService){   
          this.tipoRegistro = 'manual'; //hace el tab de manual por defecto
          this.tags = []; //para inicializar el arreglo de tags
 
          //datos necesarios
-         this.correoLugar="Eafit@";
-         this.nombrePunto="as";
-         this.correoTrabajador="m";
+         this.correoLugar = this.login.getCorreoLugar();
+         this.nombrePunto = this.login.getPuntoTrabajador();
+         this.correoTrabajador = this.login.getCorreoTrabajador();
     }
 
-
-   public scan(): string {
-        this.platform.ready().then(() => {       
-			   BarcodeScanner.scan().then((barcodeData) => {
-				 alert("scan");
-         alert(barcodeData.text);
-         this.codigoQR=barcodeData.text;
-         return barcodeData.text;
-			}, (err) => {
-			    alert("Ha ocurrido un error: "+err);
-			}); 
-        });
-        return "";
-    }
 
     /**
     * Es llamado para confirmar registro manual.

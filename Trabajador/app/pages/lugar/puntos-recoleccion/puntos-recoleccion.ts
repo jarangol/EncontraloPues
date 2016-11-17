@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { NavController, Alert, AlertController, ActionSheetController, Platform} from 'ionic-angular';
 
 
+//datos de acceso
+import { LogInService } from '../../../providers/logIn-service/logIn-service';
+
 //Servicio de llamados http 
 import { PuntosService} from '../../../providers/lugar-service/puntos-service';
 
@@ -12,10 +15,13 @@ import { PuntosService} from '../../../providers/lugar-service/puntos-service';
 
 export class PuntosRecoleccionPage {
     private puntosRecoleccion: any; //resultado de la consulta
-    private correoLugar: any ="Eafit@";; //datos de acceso a la informacion
+    private correoLugar: any; //datos de acceso a la informacion
 
-    constructor(private navCtrl: NavController, private alertCtrl: AlertController, private puntosService: PuntosService,
-                 private actionSheetCtrl: ActionSheetController,public platform: Platform){} 
+    constructor(private navCtrl: NavController, private alertCtrl: AlertController, 
+                private puntosService: PuntosService, private actionSheetCtrl: ActionSheetController,
+                public platform: Platform, private login: LogInService){
+                    this.correoLugar = this.login.getCorreoLugar;
+                } 
  
   /**
    * Llamado cada que se entra en la pagina 

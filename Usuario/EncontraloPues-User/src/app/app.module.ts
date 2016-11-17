@@ -15,6 +15,7 @@ import { Generadorqr } from '../pages/generadorqr/generadorqr';
 import { Objetos } from '../pages/objetos/objetos';
 import { Buscarobjetos } from '../pages/buscarobjetos/buscarobjetos';
 import { Encontrados } from '../pages/encontrados/encontrados';
+import { Notificationes } from '../pages/notificationes/notificationes';
 
 
 
@@ -39,6 +40,7 @@ export function getAuthHttp(http) {
     Objetos,
     Buscarobjetos,
     Encontrados,
+    Notificationes,
     TabsPage
   ],
   imports: [
@@ -54,7 +56,8 @@ export function getAuthHttp(http) {
     Generadorqr,
     Objetos,
     Buscarobjetos,
-    Encontrados,    
+    Encontrados,
+    Notificationes,    
     TabsPage
   ],
   providers: [
@@ -67,4 +70,5 @@ export function getAuthHttp(http) {
     Generarqr
   ]
 })
+
 export class AppModule {}

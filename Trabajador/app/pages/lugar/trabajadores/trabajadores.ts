@@ -22,8 +22,6 @@ export class TrabajadoresPage {
     */
    ionViewWillEnter() { // se llama todo lo que se quiere que se refreseque en la pag
      this.cargarTrabajadores();
-     let trabajador;
-   //  this.editarTrabajador(trabajador);
     }
 
   
@@ -188,8 +186,9 @@ export class TrabajadoresPage {
                     console.log('Delete clicked');
                     let navTransition = actionSheet.dismiss();
                      navTransition.then(() => {
+                          this.eliminarTrabajador(trabajador);
                     });
-                        this.eliminarTrabajador(trabajador);
+                       
                    
                 }
             },{

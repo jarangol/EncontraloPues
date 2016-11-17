@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController,Page, Platform, Alert, AlertController,NavParams} from 'ionic-angular';
+import { NavController,Platform, Alert, AlertController} from 'ionic-angular';
 import {BarcodeScanner} from 'ionic-native';
 
 //page de detalle del retiro
@@ -19,13 +19,9 @@ import { RetirarService } from '../../../providers/retirar-service/retirar-servi
 
 export class RetirarPage {
 //Variables de la interfaz
-private qrCode: string; //codigo escaneado
 private tags: Array<String>; //arreglo de tags ingresados
 private fecha: any; //fecha del registro (YYYY-MM)
 private tipoBusqueda: any; //para guarda la seleccion hecha en el segment
-private codigoBusqueda: any; //ingresado por el usuario
-
-public registros: any; //para guardar lo que devuelve  la consulta 
 
 //necesarios para crear de un retiro
 private correoLugar: string;
@@ -50,23 +46,10 @@ private correoTrabajador: string;
 
 		 
   }
-  public scan(): string {
-        this.platform.ready().then(() => {       
-			   BarcodeScanner.scan().then((barcodeData) => {
-				 alert("scan");
-         		alert(barcodeData.text);
-         return barcodeData.text;
-			}, (err) => {
-			    alert("Ha ocurrido un error: "+err);
-			}); 
-        });
-        return "";
-    }
 
   public activarQR(){    
   	  this.platform.ready().then(() => {       
 				BarcodeScanner.scan().then((barcodeData) => {
-				this.qrCode=barcodeData.text;
 		    
 		    let prompt = this.alertCtrl.create({
 		      title: 'Retirar',
@@ -90,29 +73,37 @@ private correoTrabajador: string;
 		            console.log('data:'+data);
 
 		            let retiro={
-									codigoQR: this.qrCode,
+									codigoQR: barcodeData.text,
 									correoLugar: this.correoLugar ,
 									codigoRetiro: data,
 									nombrePunto: this.nombrePunto,
 									correoTrabajador: this.correoTrabajador 
-			    		};
+			    			};
 
+									 
 		            this.retirarService.createRetiroQR(retiro)
 								.then(data => {
-            				this.registros = data;
-            				console.log(this.registros);
-       					 });
-
+										if(data.correcto){
+											prompt.dismiss().then(() => {
+												alert(data.mensaje);
+											}); 
+										}else{
+											prompt.setMessage(data.mensaje);
+										}
+            				console.log(data.mensaje);
+										
+       					 });		
 		          }
 		        }
 		      ]
 		    });
 		    prompt.present();
 		
-		}, (err) => {
-			alert("Ha ocurrido un error: "+err);
-		}); 
-      });
+			}, (err) => {
+				alert("Ha ocurrido un error: "+err);
+				this.tipoBusqueda = 'fecha';
+			}); 
+				});
   }
 
   public buscar(){
@@ -126,49 +117,75 @@ private correoTrabajador: string;
 
 			this.retirarService.consultarPerdidosFecha(consulta)
 		  .subscribe(data => {
-            this.registros = data;
-            console.log(this.registros);		
-						if(this.registros.correcto){
+            console.log(data);		
+						if(data.correcto){
 							this.navCtrl.push(ConsultarPage,{ 	 					
 								correoLugar: this.correoLugar,
 								nombrePunto: this.nombrePunto,
-								registros: this.registros.mensaje, //pasarle especificamente el atributo sin el mensaje
+								registros: data.mensaje,
 								correoTrabajador: this.correoTrabajador
 							});
 						}else{
-							alert(this.registros.mensaje);
+							alert(data.mensaje);
 						}
       });
-		
-		}else if(this.tipoBusqueda=='consecutivo' && this.codigoBusqueda){
-				let consulta = {
-					codigoBusqueda: this.codigoBusqueda,
-					correoLugar: this.correoLugar,
-					nombrePunto: this.nombrePunto,
-  			}
-				this.retirarService.consultarPerdidosCodigo(consulta)
-				.subscribe(data => {
-            this.registros = data;
-  	        console.log(this.registros);
-						
-						if(this.registros.correcto){
-							this.navCtrl.push(DetalleRetiroPage,{ 	 					
-								correoLugar: this.correoLugar,
-								nombrePunto: this.nombrePunto,
-								registro: this.registros.mensaje, //pasarle especificamente el atributo sin el mensaje
-								correoTrabajador: this.correoTrabajador
-							});
-							this.codigoBusqueda = "";
-						}else{
-							alert(this.registros.mensaje);
-						}
-				});
-					
-		
-		
-		}		
+		}	
 	}
 	
+   /**
+    * Busca un objeto perdido por su consecutivo
+    */
+   public buscarConsecutivo() {
+		this.tipoBusqueda = 'fecha';
+    let prompt = this.alertCtrl.create({
+      title: 'Buscar consecutivo',
+      message: "Ingrese el consecutivo completo del objeto perdido.",
+      inputs: [
+        {
+          name: 'consecutivo',
+          placeholder: 'Consecutivo',
+					type: 'text',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+
+          }
+        },
+        {
+          text: 'Buscar',
+          handler: data => {
+            let consulta = {
+							codigoBusqueda: data.consecutivo,
+							correoLugar: this.correoLugar,
+							nombrePunto: this.nombrePunto,
+						}
+						this.retirarService.consultarPerdidosCodigo(consulta)
+						.subscribe(data => {
+								if(data.correcto){										
+										prompt.dismiss().then(() => {
+                  		 this.navCtrl.push(DetalleRetiroPage,{ 	 					
+												 correoLugar: this.correoLugar,
+												 nombrePunto: this.nombrePunto,
+										 		 registro: data.mensaje, 
+												 correoTrabajador: this.correoTrabajador
+												}); 
+										
+                		}); 
+								}else{
+									alert(data.mensaje);
+								}
+						});
+						return false;
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
 
 
   public addTag(tagNameInput: any): void {

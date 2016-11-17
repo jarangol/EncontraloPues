@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ionicBootstrap, Platform, Nav} from 'ionic-angular';
+import { ionicBootstrap, Platform, Nav, MenuController} from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
 //paginas
@@ -32,60 +32,30 @@ import { LogInService } from './providers/logIn-service/logIn-service';
 class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = TrabajadoresPage;
+  rootPage: any = PuntosRecoleccionPage;
 
-  pages: Array<{title: string, component: any}>;
+  trabajadorPages: Array<{title: string, component: any}>;
+  lugarPages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform) {
+  constructor(public platform: Platform,public menuCtrl: MenuController) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
-    this.pages = [
-      // { title: 'Registrar', component: RegistrarPage},
-      // { title: 'Retirar', component: RetirarPage},
-      //{ title: 'Historial de retiros', component: RetiradosPage },
-       { title: 'Buscar', component: BuscarLugarPage },
-       { title: 'Trabajadores', component: TrabajadoresPage },
-       { title: 'Puntos Recoleccion', component: PuntosRecoleccionPage },
+    // paginas del trabajador
+    this.trabajadorPages = [
+      { title: 'Registrar', component: RegistrarPage},
+      { title: 'Retirar', component: RetirarPage},
+      { title: 'Historial de retiros', component: RetiradosPage },
     ];
 
-  }
-
-  initializeApp() {
-    this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      StatusBar.styleDefault();
-    });
-  }
-
-
-   ionViewLoaded(){
-    }
-
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
-  }
-}
-
-class LugarApp {
-  @ViewChild(Nav) nav: Nav;
-
-  rootPage: any = BuscarLugarPage;
-
-  pages: Array<{title: string, component: any}>;
-
-  constructor(public platform: Platform) {
-    this.initializeApp();
-
-    // used for an example of ngFor and navigation
-    this.pages = [
-       { title: 'Buscar', component: BuscarLugarPage },
+      this.lugarPages = [
+        { title: 'Buscar', component: BuscarLugarPage },
         { title: 'Trabajadores', component: TrabajadoresPage },
-         { title: 'Puntos Recoleccion', component: PuntosRecoleccionPage },
+        { title: 'Puntos Recoleccion', component: PuntosRecoleccionPage },
     ];
+
+  
+  this.menuCtrl.enable(true, 'trabajador');
+  this.menuCtrl.enable(false, 'lugar');
 
   }
 

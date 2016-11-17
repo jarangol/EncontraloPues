@@ -11,22 +11,19 @@
 <ion-content>
   
   <div padding>
-        <ion-segment [(ngModel)]="tipoBusqueda">
-          <ion-segment-button value='fecha'>
-            Fecha
-          </ion-segment-button>
-          <ion-segment-button value='consecutivo'>
-            Consecutivo
-          </ion-segment-button>
-          <!--<ion-segment-button value="qr" (ionSelect)="activarQR()">
-            QR
-          </ion-segment-button>-->
-        </ion-segment>
-      </div>
+    <ion-segment [(ngModel)]="tipoBusqueda">
+      <ion-segment-button value="fecha">
+        Fecha
+      </ion-segment-button>
+      <ion-segment-button value="consecutivo"  (ionSelect)="buscarConsecutivo()">
+        Consecutivo
+      </ion-segment-button>
 
-<div [ngSwitch]="tipoBusqueda">
+    </ion-segment>
+  </div>
+
  
-  <ion-list *ngSwitchCase="'fecha'" no-lines> 
+  <ion-list no-lines> 
        <ion-item>
         <ion-label>Fecha de pérdida</ion-label>
         <ion-datetime  displayFormat="MMM/YYYY" pickerFormat="MMM-YYYY" [(ngModel)]="fecha" ></ion-datetime>
@@ -53,15 +50,6 @@
       </ion-item>    
   </ion-list> 
 
-
-  <ion-list *ngSwitchCase="'consecutivo'" no-lines>
-      <ion-item>
-           <ion-label floating>Ingrese el consecutivo:</ion-label>
-          <ion-input [(ngModel)]="codigoBusqueda" type="search" clearInput></ion-input>
-      </ion-item>
-  </ion-list> 
-
-</div>
 
   <button ion-button block  color="secondary" (click)="buscar()">
       <ion-icon ios="ios-search" md="md-search"></ion-icon> 

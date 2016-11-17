@@ -13,7 +13,7 @@ import { Generadorqr } from '../pages/generadorqr/generadorqr';
 import { Objetos } from '../pages/objetos/objetos';
 import { Buscarobjetos } from '../pages/buscarobjetos/buscarobjetos';
 import { Encontrados } from '../pages/encontrados/encontrados';
-
+import { Notificationes } from '../pages/notificationes/notificationes';
 //
 
 @Component({
@@ -38,11 +38,11 @@ export class AuthApp {
     });
 
     this.pages = [
-      // {title: 'Ping', component: PingPage},
       {title: 'Sesion',component: ProfilePage},
       {title: 'Escanea el QR', component: Escaneoqr},
       {title: 'Buscar', component: Buscarobjetos}, 
-      {title: 'Encontrados', component: Encontrados},                                 
+      {title: 'Notificaciones', component: Notificationes},       
+      // {title: 'Encontrados', component: Encontrados},                                 
       {title: 'Tus Objetos', component: Objetos}     
     ];
   

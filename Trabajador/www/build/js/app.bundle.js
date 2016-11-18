@@ -886,6 +886,7 @@ var ResultadoLugarPage = (function () {
         this.correoLugar = this.consulta.correoLugar;
         this.registros = this.navParams.get('registros');
         this.tipoObjetos = this.navParams.get('tipoObjetos');
+        this.anoMes = this.consulta.anoMesRegistro;
     }
     ResultadoLugarPage.prototype.ionViewLoaded = function () {
         this.cargarRegistros();

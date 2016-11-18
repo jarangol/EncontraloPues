@@ -35,6 +35,7 @@ export class ResultadoLugarPage {
       this.correoLugar = this.consulta.correoLugar;
       this.registros = this.navParams.get('registros');
       this.tipoObjetos = this.navParams.get('tipoObjetos');
+      this.anoMes = this.consulta.anoMesRegistro;
     }
 
 	ionViewLoaded(){

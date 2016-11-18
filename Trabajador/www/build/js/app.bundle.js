@@ -88,6 +88,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var ionic_angular_1 = require('ionic-angular');
 var logIn_service_1 = require('../../providers/logIn-service/logIn-service');
+var puntos_service_1 = require('../../providers/lugar-service/puntos-service');
 //paginas para navegar segun usuario
 var registrar_1 = require('../../pages/trabajador/registrar/registrar');
 var buscar_lugar_1 = require('../../pages/lugar/buscar-lugar/buscar-lugar');
@@ -98,14 +99,19 @@ var buscar_lugar_1 = require('../../pages/lugar/buscar-lugar/buscar-lugar');
   Ionic pages and navigation.
 */
 var Login = (function () {
-    function Login(navCtrl, loginService, menuCtrl, nav) {
+    function Login(navCtrl, loginService, menuCtrl, nav, alertCtrl, puntoService) {
         this.navCtrl = navCtrl;
         this.loginService = loginService;
         this.menuCtrl = menuCtrl;
         this.nav = nav;
+        this.alertCtrl = alertCtrl;
+        this.puntoService = puntoService;
         this.menuCtrl.enable(false, 'trabajador');
         this.menuCtrl.enable(false, 'lugar');
     }
+    /**
+     * Verifica si los datos de acceso son correctos y el el tipo de usuario
+     */
     Login.prototype.validar = function () {
         var _this = this;
         if (this.correo && this.contrasena) {
@@ -114,7 +120,6 @@ var Login = (function () {
                 contrasena: this.contrasena
             };
             console.log(this.correo);
-            this.correo = "";
             this.contrasena = "";
             this.loginService.validarInfo(validacion)
                 .subscribe(function (res) {
@@ -130,6 +135,7 @@ var Login = (function () {
                         _this.menuCtrl.enable(false, 'lugar');
                         _this.nav.setRoot(registrar_1.RegistrarPage);
                         _this.loginService.setCorreoTrabajador(res.mensaje.trabajadores._id);
+                        _this.seleccionarPunto();
                     }
                 }
                 else {
@@ -138,17 +144,54 @@ var Login = (function () {
             });
         }
     };
+    Login.prototype.seleccionarPunto = function () {
+        var alert = this.alertCtrl.create({
+            title: 'Punto de Recolección',
+            message: 'Seleccione el punto en el cual se encuentra.',
+            inputs: [
+                {}
+            ],
+            buttons: [
+                {
+                    text: 'Seleccionar',
+                    handler: function (data) {
+                        console.log(data.text);
+                    }
+                }
+            ]
+        });
+        var correoLugar = {
+            correoLugar: this.loginService.getCorreoLugar()
+        };
+        this.puntoService.consultarPuntos(correoLugar).subscribe(function (data) {
+            if (data.correcto) {
+                for (var _i = 0, _a = data.mensaje; _i < _a.length; _i++) {
+                    var punto = _a[_i];
+                    console.log(punto.puntosRecoleccion.nombre);
+                    var input = {
+                        type: "radio",
+                        name: punto.puntosRecoleccion.nombre,
+                        label: punto.puntosRecoleccion.nombre,
+                        value: 'hola'
+                    };
+                    alert.addInput(input);
+                }
+            }
+        });
+        alert.present();
+    };
     Login = __decorate([
         core_1.Component({
             templateUrl: 'build/pages/login/login.html',
+            providers: [puntos_service_1.PuntosService]
         }), 
-        __metadata('design:paramtypes', [ionic_angular_1.NavController, logIn_service_1.LogInService, ionic_angular_1.MenuController, ionic_angular_1.Nav])
+        __metadata('design:paramtypes', [ionic_angular_1.NavController, logIn_service_1.LogInService, ionic_angular_1.MenuController, ionic_angular_1.Nav, ionic_angular_1.AlertController, puntos_service_1.PuntosService])
     ], Login);
     return Login;
 }());
 exports.Login = Login;
 
-},{"../../pages/lugar/buscar-lugar/buscar-lugar":3,"../../pages/trabajador/registrar/registrar":13,"../../providers/logIn-service/logIn-service":16,"@angular/core":170,"ionic-angular":484}],3:[function(require,module,exports){
+},{"../../pages/lugar/buscar-lugar/buscar-lugar":3,"../../pages/trabajador/registrar/registrar":13,"../../providers/logIn-service/logIn-service":16,"../../providers/lugar-service/puntos-service":18,"@angular/core":170,"ionic-angular":484}],3:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -857,7 +900,7 @@ var TrabajadoresPage = (function () {
         this.correoLugar = this.login.getCorreoLugar();
     }
     /**
-     * Se llama al iniciar la pagina para refrescar fatos
+     * Se llama al iniciar la pagina para refrescar datos
      */
     TrabajadoresPage.prototype.ionViewWillEnter = function () {
         this.cargarTrabajadores();
@@ -945,6 +988,11 @@ var TrabajadoresPage = (function () {
                     type: 'text'
                 },
                 {
+                    name: 'apellidos',
+                    placeholder: 'Apellidos',
+                    type: 'text'
+                },
+                {
                     name: 'contrasena',
                     placeholder: 'Contraseña',
                     type: 'password'
@@ -961,11 +1009,12 @@ var TrabajadoresPage = (function () {
                 {
                     text: 'Crear',
                     handler: function (data) {
+                        console.log(data.nombre + ' ' + data.apellidos);
                         var navTransition = alerta.dismiss();
                         var trabajador = {
                             correoLugar: _this.correoLugar,
                             correoTrabajador: correo,
-                            nombre: data.nombre,
+                            nombre: data.nombre + ' ' + data.apellidos,
                             contraseña: data.contrasena,
                         };
                         _this.trabajadoresService.crearTrabajador(trabajador).subscribe(function (data) {
@@ -1203,50 +1252,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var ionic_angular_1 = require('ionic-angular');
-//Pagina para mostrar en detalle cada item
-var detalle_retiro_1 = require('../detalle-retiro/detalle-retiro');
-var ConsultarPage = (function () {
-    function ConsultarPage(navCtrl, navParams) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.correoLugar = this.navParams.get('correoLugar');
-        this.nombrePunto = this.navParams.get('nombrePunto');
-        this.registros = this.navParams.get('registros');
-        this.correoTrabajador = this.navParams.get('correoTrabajador');
-        console.log("Listar perdidos: " + this.registros);
-    }
-    //para ir a ver el detalle
-    ConsultarPage.prototype.itemTapped = function (event, registro) {
-        this.navCtrl.push(detalle_retiro_1.DetalleRetiroPage, {
-            registro: registro,
-            correoLugar: this.correoLugar,
-            nombrePunto: this.nombrePunto,
-            correoTrabajador: this.correoTrabajador,
-        });
-    };
-    ConsultarPage = __decorate([
-        core_1.Component({
-            templateUrl: 'build/pages/trabajador/consultar/consultar.html',
-        }), 
-        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_1.NavParams])
-    ], ConsultarPage);
-    return ConsultarPage;
-}());
-exports.ConsultarPage = ConsultarPage;
-
-},{"../detalle-retiro/detalle-retiro":11,"@angular/core":170,"ionic-angular":484}],10:[function(require,module,exports){
-"use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-var core_1 = require('@angular/core');
-var ionic_angular_1 = require('ionic-angular');
 //proveedor del service
 var retirar_service_1 = require('../../../providers/retirar-service/retirar-service');
 var DetalleRetiradoPage = (function () {
@@ -1287,7 +1292,7 @@ var DetalleRetiradoPage = (function () {
 }());
 exports.DetalleRetiradoPage = DetalleRetiradoPage;
 
-},{"../../../providers/retirar-service/retirar-service":22,"@angular/core":170,"ionic-angular":484}],11:[function(require,module,exports){
+},{"../../../providers/retirar-service/retirar-service":22,"@angular/core":170,"ionic-angular":484}],10:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1399,7 +1404,51 @@ var DetalleRetiroPage = (function () {
 }());
 exports.DetalleRetiroPage = DetalleRetiroPage;
 
-},{"../../../pages/trabajador/retirar/retirar":15,"../../../providers/retirar-service/retirar-service":22,"@angular/core":170,"ionic-angular":484}],12:[function(require,module,exports){
+},{"../../../pages/trabajador/retirar/retirar":15,"../../../providers/retirar-service/retirar-service":22,"@angular/core":170,"ionic-angular":484}],11:[function(require,module,exports){
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var core_1 = require('@angular/core');
+var ionic_angular_1 = require('ionic-angular');
+//Pagina para mostrar en detalle cada item
+var detalle_retiro_1 = require('../detalle-retiro/detalle-retiro');
+var ListarPerdidosPage = (function () {
+    function ListarPerdidosPage(navCtrl, navParams) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.correoLugar = this.navParams.get('correoLugar');
+        this.nombrePunto = this.navParams.get('nombrePunto');
+        this.registros = this.navParams.get('registros');
+        this.correoTrabajador = this.navParams.get('correoTrabajador');
+        this.anoMes = this.navParams.get('anoMes');
+    }
+    //para ir a ver el detalle
+    ListarPerdidosPage.prototype.itemTapped = function (event, registro) {
+        this.navCtrl.push(detalle_retiro_1.DetalleRetiroPage, {
+            registro: registro,
+            correoLugar: this.correoLugar,
+            nombrePunto: this.nombrePunto,
+            correoTrabajador: this.correoTrabajador,
+        });
+    };
+    ListarPerdidosPage = __decorate([
+        core_1.Component({
+            templateUrl: 'build/pages/trabajador/listar-perdidos/listar-perdidos.html',
+        }), 
+        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_1.NavParams])
+    ], ListarPerdidosPage);
+    return ListarPerdidosPage;
+}());
+exports.ListarPerdidosPage = ListarPerdidosPage;
+
+},{"../detalle-retiro/detalle-retiro":10,"@angular/core":170,"ionic-angular":484}],12:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1440,7 +1489,7 @@ var ListarRetiradosPage = (function () {
 }());
 exports.ListarRetiradosPage = ListarRetiradosPage;
 
-},{"../detalle-retirado/detalle-retirado":10,"@angular/core":170,"ionic-angular":484}],13:[function(require,module,exports){
+},{"../detalle-retirado/detalle-retirado":9,"@angular/core":170,"ionic-angular":484}],13:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1690,7 +1739,7 @@ var RetiradosPage = (function () {
 }());
 exports.RetiradosPage = RetiradosPage;
 
-},{"../../../providers/logIn-service/logIn-service":16,"../../../providers/retirados-service/retirados-service":21,"../detalle-retirado/detalle-retirado":10,"../listar-retirados/listar-retirados":12,"@angular/core":170,"ionic-angular":484}],15:[function(require,module,exports){
+},{"../../../providers/logIn-service/logIn-service":16,"../../../providers/retirados-service/retirados-service":21,"../detalle-retirado/detalle-retirado":9,"../listar-retirados/listar-retirados":12,"@angular/core":170,"ionic-angular":484}],15:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1707,7 +1756,7 @@ var ionic_native_1 = require('ionic-native');
 //page de detalle del retiro
 var detalle_retiro_1 = require('../detalle-retiro/detalle-retiro');
 //pagina para resultado de la busqueda
-var consultar_1 = require('../consultar/consultar');
+var listar_perdidos_1 = require('../listar-perdidos/listar-perdidos');
 //proveedor del service
 var retirar_service_1 = require('../../../providers/retirar-service/retirar-service');
 //datos de acceso
@@ -1724,12 +1773,18 @@ var RetirarPage = (function () {
         var hoy = new Date();
         var mm = hoy.getMonth() + 1; //hoy es 0!
         var yyyy = hoy.getFullYear();
-        this.fecha = yyyy + '-' + mm;
+        this.anoMes = yyyy + '-' + mm;
         //temporal y desaparece con el login
         this.correoLugar = this.login.getCorreoLugar();
         this.nombrePunto = this.login.getPuntoTrabajador();
         this.correoTrabajador = this.login.getCorreoTrabajador();
     }
+    /**
+   * Se llama al iniciar la pagina para refrescar fatos
+   */
+    RetirarPage.prototype.ionViewWillEnter = function () {
+        this.tipoBusqueda = "fecha";
+    };
     RetirarPage.prototype.activarQR = function () {
         var _this = this;
         this.platform.ready().then(function () {
@@ -1780,15 +1835,15 @@ var RetirarPage = (function () {
                 prompt.present();
             }, function (err) {
                 alert("Ha ocurrido un error: " + err);
-                _this.tipoBusqueda = 'fecha';
             });
         });
     };
     RetirarPage.prototype.buscar = function () {
         var _this = this;
-        if (this.tipoBusqueda == 'fecha' && this.fecha) {
+        console.log(this.tipoBusqueda);
+        if (this.anoMes) {
             var consulta = {
-                anoMesRegistro: this.fecha,
+                anoMesRegistro: this.anoMes,
                 tags: this.tags,
                 correoLugar: this.correoLugar,
                 nombrePunto: this.nombrePunto,
@@ -1797,11 +1852,12 @@ var RetirarPage = (function () {
                 .subscribe(function (data) {
                 console.log(data);
                 if (data.correcto) {
-                    _this.navCtrl.push(consultar_1.ConsultarPage, {
+                    _this.navCtrl.push(listar_perdidos_1.ListarPerdidosPage, {
                         correoLugar: _this.correoLugar,
                         nombrePunto: _this.nombrePunto,
                         registros: data.mensaje,
-                        correoTrabajador: _this.correoTrabajador
+                        correoTrabajador: _this.correoTrabajador,
+                        anoMes: _this.anoMes
                     });
                 }
                 else {
@@ -1815,7 +1871,6 @@ var RetirarPage = (function () {
      */
     RetirarPage.prototype.buscarConsecutivo = function () {
         var _this = this;
-        this.tipoBusqueda = 'fecha';
         var prompt = this.alertCtrl.create({
             title: 'Buscar consecutivo',
             message: "Ingrese el consecutivo completo del objeto perdido.",
@@ -1830,7 +1885,7 @@ var RetirarPage = (function () {
                 {
                     text: 'Cancel',
                     handler: function (data) {
-                        console.log('Cancel clicked');
+                        //this.tipoBusqueda = "fecha";
                     }
                 },
                 {
@@ -1841,6 +1896,9 @@ var RetirarPage = (function () {
                             correoLugar: _this.correoLugar,
                             nombrePunto: _this.nombrePunto,
                         };
+                        console.log(data.consecutivo);
+                        console.log(_this.correoLugar);
+                        console.log(_this.nombrePunto);
                         _this.retirarService.consultarPerdidosCodigo(consulta)
                             .subscribe(function (data) {
                             if (data.correcto) {
@@ -1885,7 +1943,7 @@ var RetirarPage = (function () {
 }());
 exports.RetirarPage = RetirarPage;
 
-},{"../../../providers/logIn-service/logIn-service":16,"../../../providers/retirar-service/retirar-service":22,"../consultar/consultar":9,"../detalle-retiro/detalle-retiro":11,"@angular/core":170,"ionic-angular":484,"ionic-native":511}],16:[function(require,module,exports){
+},{"../../../providers/logIn-service/logIn-service":16,"../../../providers/retirar-service/retirar-service":22,"../detalle-retiro/detalle-retiro":10,"../listar-perdidos/listar-perdidos":11,"@angular/core":170,"ionic-angular":484,"ionic-native":511}],16:[function(require,module,exports){
 "use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;

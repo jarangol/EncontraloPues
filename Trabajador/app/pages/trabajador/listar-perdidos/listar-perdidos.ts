@@ -6,12 +6,11 @@ import { DetalleRetiroPage} from '../detalle-retiro/detalle-retiro';
 
 
 @Component({ 
-   templateUrl: 'build/pages/trabajador/consultar/consultar.html',
+   templateUrl: 'build/pages/trabajador/listar-perdidos/listar-perdidos.html',
 })
 
-export class ConsultarPage {
-
-  private selectedItem: any; //item seleccionado de la lista 
+export class ListarPerdidosPage {
+  private anoMes: any
 
   //me los pasan como navParams desde la vista retirar
   private correoLugar: any;
@@ -24,7 +23,8 @@ export class ConsultarPage {
       this.nombrePunto = this.navParams.get('nombrePunto');
       this.registros = this.navParams.get('registros');
       this.correoTrabajador = this.navParams.get('correoTrabajador');
-      console.log("Listar perdidos: "+this.registros);
+      this.anoMes= this.navParams.get('anoMes');
+      
 
   }
 

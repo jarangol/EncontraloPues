@@ -37,13 +37,13 @@
             </ion-item>-->
 
             <ion-item-options>
-                <button (click)="editObjt()" light>
+                <button (click)="editObjt(objeto)" light>
                     <ion-icon name="paper"></ion-icon>
                 </button>
                 <button (click)="generarQr(objeto.objetosPersonales.codigoQR)" light>
                     <ion-icon name="barcode"></ion-icon>
                 </button>
-                <button (click)="deleteObjt(obj)" danger>
+                <button (click)="deleteObjt(objeto)" danger>
                     <ion-icon name="trash"></ion-icon>
                 </button>
             </ion-item-options>
@@ -57,7 +57,7 @@
       <ion-avatar item-left>
         <img src="{{ auth.user.picture }}">
       </ion-avatar>
-      <h2>{{ auth.user.given_name }}</h2>
+      <h2>{{ auth.user.nickname }}</h2>
       <p>{{ auth.user.email }}</p>
     </ion-item>
   

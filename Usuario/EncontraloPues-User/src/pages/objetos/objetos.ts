@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, Alert } from 'ionic-angular';
 import { Agregarobjts } from '../agregarobjts/agregarobjts'
 import { AuthService } from '../../services/auth/auth.service';
 import { ObtenerObjetos } from '../../providers/obtener-objetos';
 import { Generadorqr } from '../generadorqr/generadorqr';
+import { EliminarObjt } from '../eliminar-objt/eliminar-objt';
 
 
 /*
@@ -29,7 +30,6 @@ export class Objetos {
     }
 
 
-
     ionViewWillEnter() { // se llama todo lo que se quiere que se refreseque en la pag
         this.obtenerObjetos();
     }
@@ -42,19 +42,34 @@ export class Objetos {
         this.navCtrl.push(Agregarobjts); // pasar despues los parametros de navegacion
     }
 
-    editObjt() {
-
-        this.navCtrl.push(Agregarobjts); // pasar despues los parametros de navegacion
-
+    editObjt(objeto) {
+        this.navCtrl.push(EliminarObjt, { objeto: objeto }); // pasar despues los parametros de navegacion
     }
 
-    deleteObjt(obj) {
+    deleteObjt(objeto) {
 
-        let index = this.objetos.indexOf(obj);
-
-        if (index > -1) {
-            this.objetos.splice(obj, 1);
+        let consulta = {
+            correoUsuario: this.usuario.email,
+            codigoQR: objeto.objetosPersonales.codigoQR
         }
+
+        console.log("deleteObjt " + this.usuario.email);
+        console.log("deleteObjt " + objeto.objetosPersonales.codigoQR);
+        
+
+        this.obtenerService.eliminarObjetos(consulta).subscribe((data) => {
+                this.resulConsulta = data;
+
+                if (data.correcto) {
+                    this.resulConsulta = data.mensaje;
+                } else {
+                    alert(data.mensaje);
+                }
+            });
+
+        
+        this.navCtrl.setRoot(Objetos);
+       
     }
 
     public generarQr(codigoQr) {

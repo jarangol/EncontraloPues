@@ -29,6 +29,15 @@ export class ObtenerObjetos {
     
   }
 
+public eliminarObjetos(consulta){
+   let body = JSON.stringify(consulta);
+    let headers = new Headers();
+    headers.append('Content-Type','application/json');
+
+    this.data=this.http.post(this.serverURL + '/api/eliminarObjetoPersonal',body,
+    {headers: headers}).map(res => res.json());
+    return this.data;
+}
 
 
 

@@ -41,7 +41,7 @@ export class Escaneoqr {
           alert("scan");
           alert(barcodeData.text);
           this.codigoQR = barcodeData.text;
-          alert(barcodeData.text);
+          // alert(barcodeData.text);
 
           let consulta = {
             correoUsuario: this.usuario.email,
@@ -50,7 +50,7 @@ export class Escaneoqr {
 
           this.qrService.notificarQr(consulta).subscribe((data) =>
             {
-                    alert(data.mensaje);
+                    // alert(data.mensaje);
             });
 
         }, (err) => {

@@ -72,11 +72,11 @@ export class AuthApp {
     if (this.auth.authenticated()) {
       let consulta = {
         correoUsuario: this.usuario.email,
-        nombre: this.usuario.given_name + " " + this.usuario.family_name 
+        nombre: this.usuario.nickname
       }
 
       console.log(this.usuario.email + " insertar usuario ");
-      console.log(this.usuario.given_name + " insertar usuario ");
+      console.log(this.usuario.nickname + " insertar usuario ");
 
       this.usuarioProvider.ingresarUsuario(consulta).subscribe((data) => {
         // this.resulConsulta = data;

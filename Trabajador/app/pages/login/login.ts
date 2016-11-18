@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, MenuController,Alert, Nav } from 'ionic-angular';
+import { NavController, MenuController,Alert, Nav, AlertController } from 'ionic-angular';
 import { LogInService } from '../../providers/logIn-service/logIn-service';
+import { PuntosService } from '../../providers/lugar-service/puntos-service';
 
 //paginas para navegar segun usuario
 import { RegistrarPage} from '../../pages/trabajador/registrar/registrar';
@@ -13,7 +14,7 @@ import {BuscarLugarPage} from '../../pages/lugar/buscar-lugar/buscar-lugar';
 */
 @Component({
   templateUrl: 'build/pages/login/login.html',
-  //providers: [LogInService]
+  providers: [PuntosService]
 })
 
 export class Login {
@@ -21,13 +22,17 @@ export class Login {
   private correo: any;
   private contrasena: any;
 
-
   constructor(public navCtrl: NavController, public loginService: LogInService,
-              public menuCtrl: MenuController, public nav: Nav) {
+              public menuCtrl: MenuController, public nav: Nav,
+              private alertCtrl: AlertController, public puntoService:PuntosService) {
+              
                 this.menuCtrl.enable(false, 'trabajador');
                 this.menuCtrl.enable(false, 'lugar');
-               }
+              }
 
+  /**
+   * Verifica si los datos de acceso son correctos y el el tipo de usuario
+   */
   public validar() {
     if (this.correo && this.contrasena) {
       let validacion = {
@@ -50,14 +55,66 @@ export class Login {
                 this.menuCtrl.enable(false, 'lugar');                                
                 this.nav.setRoot(RegistrarPage);
                 this.loginService.setCorreoTrabajador(res.mensaje.trabajadores._id);
+                this.seleccionarPunto();
               }  
          }else{
            alert(res.mensaje);
          }
         });
-
-      // this.correo = "";
-      // this.contrasenia = "";
     }
   }
+
+
+
+
+
+  public seleccionarPunto() {
+  
+
+  
+  let alert = this.alertCtrl.create({
+    title: 'Punto de Recolección',
+    message: 'Seleccione el punto en el cual se encuentra.',
+    inputs: [
+      {
+             
+      } 
+    ],
+    buttons: [
+      {
+        text: 'Seleccionar',
+        handler: data => {
+          console.log(data.text);
+        }
+      }
+    ]
+  });
+  let correoLugar = {
+   correoLugar: this.loginService.getCorreoLugar()
+  }
+  this.puntoService.consultarPuntos(correoLugar).subscribe(data => {
+    if(data.correcto){
+    
+      for(let punto of data.mensaje){
+        console.log(punto.puntosRecoleccion.nombre);
+        let input = {
+          type: "radio",
+          name: punto.puntosRecoleccion.nombre,
+          label: punto.puntosRecoleccion.nombre,
+          value:'hola'
+        }
+        alert.addInput(input);
+      }
+    
+    }
+  });  
+
+
+   
+  alert.present();
+}
+
+
+
+
 }

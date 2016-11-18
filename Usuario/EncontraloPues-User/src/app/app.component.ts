@@ -42,7 +42,7 @@ export class AuthApp {
       auth.startupTokenRefresh();
       Splashscreen.hide();
       this.usuario = auth.user;
-      // this.insertarUsuario();
+      this.insertarUsuario();
     });
 
     this.pages = [
@@ -57,9 +57,9 @@ export class AuthApp {
 
   }
 
-  // ionViewWillEnter() { // se llama todo lo que se quiere que se refreseque en la pag
-  //   this.insertarUsuario();
-  // }
+  ionViewWillEnter() { // se llama todo lo que se quiere que se refreseque en la pag
+    this.insertarUsuario();
+  }
 
   openPage(page) {
     // Reset the content nav to have just this page
@@ -71,11 +71,11 @@ export class AuthApp {
     if (this.auth.authenticated()) {
       let consulta = {
         correoUsuario: this.usuario.email,
-        nombre: this.usuario.nickname
+        nombre: this.usuario.given_name + " " + this.usuario.family_name 
       }
 
       console.log(this.usuario.email + " insertar usuario ");
-      console.log(this.usuario.nickname + " insertar usuario ");
+      console.log(this.usuario.given_name + " insertar usuario ");
 
       this.usuarioProvider.ingresarUsuario(consulta).subscribe((data) => {
         // this.resulConsulta = data;

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController,AlertController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { Agregarobjts } from '../agregarobjts/agregarobjts'
 import { AuthService } from '../../services/auth/auth.service';
 import { ObtenerObjetos } from '../../providers/obtener-objetos';
@@ -13,21 +13,20 @@ import { Generadorqr } from '../generadorqr/generadorqr';
   Ionic pages and navigation.
 */
 @Component({
-  selector: 'page-objetos',
-  templateUrl: 'objetos.html',
-  providers: [ObtenerObjetos],
+    selector: 'page-objetos',
+    templateUrl: 'objetos.html',
+    providers: [ObtenerObjetos],
 })
 
 export class Objetos {
-  objetos: any = [];
-  usuario: any;
-  resulConsulta: any;
-  
-  constructor(public navCtrl: NavController, private alertCtrl: AlertController,
-  public auth: AuthService, private obtenerService : ObtenerObjetos ) {
-    this.usuario = auth.user;
+    objetos: any = [];
+    usuario: any;
+    resulConsulta: any;
 
-  }
+    constructor(public navCtrl: NavController, private alertCtrl: AlertController,
+                public auth: AuthService, private obtenerService: ObtenerObjetos) {
+        this.usuario = auth.user;
+    }
 
 
 
@@ -35,55 +34,54 @@ export class Objetos {
         this.obtenerObjetos();
     }
 
-  ionViewDidLoad() {
-    console.log('Hello Objetos Page');
-  }
-
-  addObjt(){
-    this.navCtrl.push(Agregarobjts); // pasar despues los parametros de navegacion
+    ionViewDidLoad() {
+        console.log('Hello Objetos Page');
     }
 
-    editObjt(){
- 
-    this.navCtrl.push(Agregarobjts); // pasar despues los parametros de navegacion
-               
+    addObjt() {
+        this.navCtrl.push(Agregarobjts); // pasar despues los parametros de navegacion
     }
 
-     deleteObjt(obj){
- 
+    editObjt() {
+
+        this.navCtrl.push(Agregarobjts); // pasar despues los parametros de navegacion
+
+    }
+
+    deleteObjt(obj) {
+
         let index = this.objetos.indexOf(obj);
- 
-        if(index > -1){
+
+        if (index > -1) {
             this.objetos.splice(obj, 1);
         }
     }
 
-    public generarQr(codigoQr){
-        this.navCtrl.push(Generadorqr,{codigoQr: codigoQr});
+    public generarQr(codigoQr) {
+        this.navCtrl.push(Generadorqr, { codigoQr: codigoQr });
         console.log(codigoQr);
     }
 
 
-    public obtenerObjetos(){
-        if(this.auth.authenticated()){
+    public obtenerObjetos() {
+        if (this.auth.authenticated()) {
             console.log(this.usuario.email);
             console.log("esta autentificado");
             let consulta = {
-                correoUsuario : this.usuario.email
+                correoUsuario: this.usuario.email
             }
 
-            this.obtenerService.consultarObjetosUsuario(consulta).subscribe((data) =>
-            {
+            this.obtenerService.consultarObjetosUsuario(consulta).subscribe((data) => {
                 // this.resulConsulta = data;
-                
-                if(data.correcto){
-                     this.resulConsulta = data.mensaje;
-                }else{
+
+                if (data.correcto) {
+                    this.resulConsulta = data.mensaje;
+                } else {
                     alert(data.mensaje);
                 }
             });
         }
     }
- 
+
 
 }

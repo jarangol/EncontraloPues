@@ -16,6 +16,8 @@ import { Objetos } from '../pages/objetos/objetos';
 import { Buscarobjetos } from '../pages/buscarobjetos/buscarobjetos';
 import { Encontrados } from '../pages/encontrados/encontrados';
 import { Notificationes } from '../pages/notificationes/notificationes';
+import { Usuarioprovider } from '../providers/usuarioprovider';
+
 
 
 
@@ -67,7 +69,8 @@ export function getAuthHttp(http) {
       useFactory: getAuthHttp,
       deps: [Http]
     },
-    Generarqr
+    Generarqr,
+    Usuarioprovider,
   ]
 })
 

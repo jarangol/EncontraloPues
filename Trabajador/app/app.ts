@@ -17,7 +17,7 @@ import {TrabajadoresPage} from './pages/lugar/trabajadores/trabajadores';
 
 //paginas generales
 import { Login } from './pages/login/login';
-import {CuentaLugarPage} from './pages/lugar/cuenta/cuenta';
+//import {CuentaLugarPage} from './pages/lugar/cuenta/cuenta';
 
 //providers
 import { RegistroService} from './providers/registro-service/registro-service';
@@ -44,17 +44,18 @@ class MyApp {
 
     // paginas del trabajador
     this.trabajadorPages = [
+      { title: 'Home', component: CuentaPage},
       { title: 'Registrar', component: RegistrarPage},
       { title: 'Retirar', component: RetirarPage},
       { title: 'Historial de retiros', component: RetiradosPage },
-       { title: 'Home', component: CuentaPage},
+      { title: 'Cerrar sesión', component: Login }
     ];
 
       this.lugarPages = [
         { title: 'Buscar', component: BuscarLugarPage },
         { title: 'Trabajadores', component: TrabajadoresPage },
         { title: 'Puntos Recoleccion', component: PuntosRecoleccionPage },
-        { title: 'Cerrar sesión', component: CuentaLugarPage },
+        { title: 'Cerrar sesión', component: Login },
     ];
 
   

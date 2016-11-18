@@ -9,7 +9,7 @@
 
 
 <ion-content padding>
-	<ion-list no-lines *ngIf=qr>
+	<ion-list no-lines>
 	   	
 		<ion-item>
 			<ion-label>Fecha de pérdida</ion-label>
@@ -23,6 +23,12 @@
         <ion-option *ngFor="let punto of puntosRecoleccion">{{punto.puntosRecoleccion.nombre}}</ion-option>
       </ion-select>
     </ion-item>
+
+    <ion-item>
+			<ion-label stacked>Tipo de registro:</ion-label>
+			<ion-label *ngIf=qr>QR</ion-label>
+      <ion-label *ngIf=!qr>manual</ion-label>
+		</ion-item>
 
 		<ion-item>
 			<ion-label stacked>Consecutivo:</ion-label>
@@ -48,13 +54,13 @@
       </ion-item>
 
 		 <ion-item >
-	        <ion-label stacked>Descripción privada:</ion-label>
+	        <ion-label stacked *ngIf=!qr>Descripción privada:</ion-label>
 	    	  <ion-textarea [(ngModel)]="descripcionOculta" rows="5"></ion-textarea>
 		</ion-item>
 
 	</ion-list>
 	
-	<button (click)="actualizar()" secondary block>Actualizar</button>
+	<button (click)="actualizar()" *ngIf="editando" secondary block>Actualizar</button>
 
 </ion-content>
 

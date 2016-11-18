@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 
 //Servicio de llamados http 
 import { LugarService} from '../../../providers/lugar-service/lugar-service';
@@ -35,7 +35,7 @@ export class BuscarLugarPage {
 	private registros: any; //para guardar resultados de consultas.
 
   constructor(private navCtrl: NavController,private lugarService: LugarService,
-  				private login:LogInService) {
+  				private login:LogInService,public alertCtrl: AlertController) {
   	//inicializando algunos campos
 		this.tags = [];
 		this.tipoBusqueda = 'fecha';
@@ -68,6 +68,7 @@ export class BuscarLugarPage {
 		if(this.tipoObjetos == 'perdidos')
 			this.lugarService.consultarPuntosPerdidos(correo)
 			.subscribe(data => {
+
             	this.puntosRecoleccion = data.mensaje;
 				console.log(data);
       		});
@@ -106,35 +107,31 @@ export class BuscarLugarPage {
 			if(this.tipoObjetos == 'perdidos'){	
 				this.lugarService.consultarPerdidosFecha(consulta)
 				.subscribe((data) => {
-					this.registros = data;
-					console.log("fecha perdidos: "+data);
 		
-					if(this.registros.correcto){
+					if(data.correcto){
 						this.navCtrl.push(ResultadoLugarPage,{ 	 		
-							correoLugar: this.correoLugar,
-							anoMes: this.fecha,
-							registros: this.registros.mensaje ,
-							tipoObjetos: this.tipoObjetos
+							registros: data.mensaje ,
+							tipoObjetos: this.tipoObjetos,
+							consulta: consulta
 						});
 					}else{
-						alert(this.registros.mensaje);
+						alert(data.mensaje);
 					}
 				});	
 
 			}else if(this.tipoObjetos == 'retirados'){	
 				this.lugarService.consultarRetiradosFecha(consulta)
 				.subscribe((data) => {
-					this.registros = data;
 					console.log("fecha retirados: "+data);
-					if(this.registros.correcto){
+					if(data.correcto){
 						this.navCtrl.push(ResultadoLugarPage,{ 	 		
 							correoLugar: this.correoLugar,
 							anoMes: this.fecha,
-							registros: this.registros.mensaje ,
+							registros: data.mensaje ,
 							tipoObjetos: this.tipoObjetos
 						});
 					}else{
-						alert(this.registros.mensaje);
+						alert(data.mensaje);
 					}
 				});
 			}	
@@ -147,13 +144,12 @@ export class BuscarLugarPage {
 			if(this.tipoObjetos == 'perdidos'){	
 				this.lugarService.consultarPerdidosCodigo(consulta)
 				.subscribe((data) => {
-					this.registros = data;
 					console.log("con perdidos: "+data);
 				
-					if(this.registros.correcto){
+					if(data.correcto){
 						//mostrar aca
 					}else{
-						alert(this.registros.mensaje);
+						alert(data.mensaje);
 					}
 				});
 			}else if(this.tipoObjetos == 'retirados'){			
@@ -170,4 +166,64 @@ export class BuscarLugarPage {
 			}	
 	 	}
 	 }
+
+
+
+// 	    /**
+//     * Busca un objeto perdido por su consecutivo
+//     */
+//    public buscarConsecutivo() {
+//     let prompt = this.alertCtrl.create({
+//       title: 'Buscar consecutivo',
+//       message: "Ingrese el consecutivo completo del objeto perdido.",
+//       inputs: [
+//         {
+//           name: 'consecutivo',
+//           placeholder: 'Consecutivo',
+// 					type: 'text',
+//         },
+//       ],
+//       buttons: [
+//         {
+//           text: 'Cancel',
+//           handler: data => {
+//           //this.tipoBusqueda = "fecha";
+
+//           }
+//         },
+//         {
+//           text: 'Buscar',
+//           handler: data => {
+//             let consulta = {
+// 				codigoBusqueda: data.consecutivo,
+// 				correoLugar: this.correoLugar,
+// 				nombrePunto: this.nombrePunto,
+// 			}
+// 			console.log(data.consecutivo);
+// 			console.log(this.correoLugar);
+// 			console.log(this.nombrePunto);
+// 			this.retirarService.consultarPerdidosCodigo(consulta)
+// 			.subscribe(data => {
+// 					if(data.correcto){										
+// 							prompt.dismiss().then(() => {
+// 				this.navCtrl.push(DetalleRetiroPage,{ 	 					
+// 										correoLugar: this.correoLugar,
+// 										nombrePunto: this.nombrePunto,
+// 										registro: data.mensaje, 
+// 										correoTrabajador: this.correoTrabajador
+// 									}); 
+							
+// 			}); 
+// 					}else{
+// 						alert(data.mensaje);
+// 					}
+// 			});
+// 			return false;
+// }
+//         }
+//       ]
+//     });
+//     prompt.present();
+//   }
+
 }

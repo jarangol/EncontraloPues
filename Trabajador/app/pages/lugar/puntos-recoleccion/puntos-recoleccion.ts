@@ -20,7 +20,7 @@ export class PuntosRecoleccionPage {
     constructor(private navCtrl: NavController, private alertCtrl: AlertController, 
                 private puntosService: PuntosService, private actionSheetCtrl: ActionSheetController,
                 public platform: Platform, private login: LogInService){
-                    this.correoLugar = this.login.getCorreoLugar;
+                    this.correoLugar = this.login.getCorreoLugar();
                 } 
  
   /**
@@ -41,6 +41,7 @@ export class PuntosRecoleccionPage {
                 this.puntosRecoleccion = data.mensaje;
             else 
                 alert(data.mensaje);
+                       console.log("cargando puntos de recoleccion "+this.correoLugar);
             console.log("cargando puntos de recoleccion "+this.puntosRecoleccion);
         });
     }

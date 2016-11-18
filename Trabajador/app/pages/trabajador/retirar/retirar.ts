@@ -172,9 +172,9 @@ private correoTrabajador: string;
 							correoLugar: this.correoLugar,
 							nombrePunto: this.nombrePunto,
 						}
-						console.log(data.consecutivo);
-						console.log(this.correoLugar);
-						console.log(this.nombrePunto);
+						// console.log(data.consecutivo);
+						// console.log(this.correoLugar);
+						// console.log(this.nombrePunto);
 						this.retirarService.consultarPerdidosCodigo(consulta)
 						.subscribe(data => {
 								if(data.correcto){										

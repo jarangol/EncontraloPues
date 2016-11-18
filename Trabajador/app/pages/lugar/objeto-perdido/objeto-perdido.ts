@@ -23,7 +23,7 @@ export class ObjetoPerdidoPage {
   //me los pasan como navParams desde la vista retirar
   private registro: any;  //objeto en detalle
   private correoLugar: any;
-
+  private editando: boolean; //me dice si estoy editando o no el dato
   //pertenecen al registro
   private fecha: any;
   private tags: any;
@@ -39,6 +39,7 @@ export class ObjetoPerdidoPage {
       //recibo datos como parametros
         this.registro = this.navParams.get('registro');
         this.correoLugar = this.navParams.get('correoLugar');
+        this.editando = this.navParams.get('editar');
 
      if(this.registro){  
          this.nombrePunto = this.registro.puntosRecoleccion.nombre; 
@@ -51,13 +52,13 @@ export class ObjetoPerdidoPage {
            this.qr=false;
          }else this.qr=true;
     	   
-         console.log("qr "+this.qr);
-        
-         this.tags = this.registro.tags;
-        
-         let dia = this.registro.fechaRegistro.dia; 
-         let añoMes = this.registro.fechaRegistro.anoMes; 
-         this.fecha = añoMes + '-' + dia ;
+         console.log("qr "+this.qr);   
+          this.tags = this.registro.tags;
+          let dia = this.registro.fechaRegistro.dia; 
+          let añoMes = this.registro.fechaRegistro.anoMes; 
+          this.fecha = añoMes + '-' + dia ;
+
+         console.log(this.fecha);   
     }
   }
 
@@ -76,8 +77,9 @@ export class ObjetoPerdidoPage {
       alert(data.mensaje);
       if(data.correcto){
         this.navCtrl.popToRoot();
-      }
-    })
+      }else
+        alert(data.mensaje);
+    });
   }
 
 
@@ -97,7 +99,8 @@ export class ObjetoPerdidoPage {
 
     this.lugarService.consultarPuntosPerdidos(correo)
     .subscribe(data => {
-        this.puntosRecoleccion = data;
+        if(data.correcto)
+          this.puntosRecoleccion = data.mensaje;
         console.log("cargando puntos"+data);
     });
 	}

@@ -30,8 +30,6 @@
               <ion-col>{{registro.puntosRecoleccion.objetosPerdidos.fechaRegistro.dia}}</ion-col>
               <ion-col>{{registro.puntosRecoleccion.objetosPerdidos.tags}}</ion-col>
               <ion-col>{{registro.puntosRecoleccion.nombre}}</ion-col>
-               <ion-col *ngIf="registro.puntosRecoleccion.objetosPerdidos.sinCodigoQR">NO</ion-col>
-              <ion-col *ngIf="!registro.puntosRecoleccion.objetosPerdidos.sinCodigoQR">SI</ion-col>
         </ion-row>
         
         <ion-row *ngIf="tipoObjetos == 'retirados'">

@@ -70,11 +70,13 @@ export class RegistroService {
       let headers = new Headers();
       headers.append('Content-Type','application/json');
       
-      this.data = this.http.post(this.serverURL+'/api/modificarDatosObjetoPerdido' , body, {headers: headers})
+      this.data = this.http.post(this.serverURL+'/api/eliminarObjetoPerdido' , body, {headers: headers})
       .map(res => res.json());
       
       return this.data;
   }
+
+
 
 }
 

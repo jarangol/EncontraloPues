@@ -19,7 +19,6 @@ export class LogInService {
 
   constructor(public http: Http) {
     this.data = null;
-    this.puntoTrabajador="b";
   }
 
   public validarInfo(info) {

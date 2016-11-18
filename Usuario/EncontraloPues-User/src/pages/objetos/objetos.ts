@@ -4,6 +4,7 @@ import { Agregarobjts } from '../agregarobjts/agregarobjts'
 import { AuthService } from '../../services/auth/auth.service';
 import { ObtenerObjetos } from '../../providers/obtener-objetos';
 import { Generadorqr } from '../generadorqr/generadorqr';
+import { EliminarObjt } from '../eliminar-objt/eliminar-objt';
 
 
 /*
@@ -42,10 +43,8 @@ export class Objetos {
         this.navCtrl.push(Agregarobjts); // pasar despues los parametros de navegacion
     }
 
-    editObjt() {
-
-        this.navCtrl.push(Agregarobjts); // pasar despues los parametros de navegacion
-
+    editObjt(objeto) {
+        this.navCtrl.push(EliminarObjt, { objeto: objeto }); // pasar despues los parametros de navegacion
     }
 
     deleteObjt(obj) {

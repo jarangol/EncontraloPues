@@ -17,6 +17,7 @@ import { Buscarobjetos } from '../pages/buscarobjetos/buscarobjetos';
 import { Encontrados } from '../pages/encontrados/encontrados';
 import { Notificationes } from '../pages/notificationes/notificationes';
 import { Usuarioprovider } from '../providers/usuarioprovider';
+import { EliminarObjt } from '../pages/eliminar-objt/eliminar-objt';
 
 
 
@@ -43,6 +44,7 @@ export function getAuthHttp(http) {
     Buscarobjetos,
     Encontrados,
     Notificationes,
+    EliminarObjt,
     TabsPage
   ],
   imports: [
@@ -59,7 +61,8 @@ export function getAuthHttp(http) {
     Objetos,
     Buscarobjetos,
     Encontrados,
-    Notificationes,    
+    Notificationes,
+    EliminarObjt,
     TabsPage
   ],
   providers: [

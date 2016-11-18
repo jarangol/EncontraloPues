@@ -10,6 +10,8 @@ import { ResultadoLugarPage} from '../resultado-lugar/resultado-lugar';
 //datos de acceso
 import { LogInService } from '../../../providers/logIn-service/logIn-service';
 
+import { ObjetoPerdidoPage} from '../objeto-perdido/objeto-perdido';
+
 @Component({
   templateUrl: 'build/pages/lugar/buscar-lugar/buscar-lugar.html',
   providers: [LugarService],
@@ -169,61 +171,60 @@ export class BuscarLugarPage {
 
 
 
-// 	    /**
-//     * Busca un objeto perdido por su consecutivo
-//     */
-//    public buscarConsecutivo() {
-//     let prompt = this.alertCtrl.create({
-//       title: 'Buscar consecutivo',
-//       message: "Ingrese el consecutivo completo del objeto perdido.",
-//       inputs: [
-//         {
-//           name: 'consecutivo',
-//           placeholder: 'Consecutivo',
-// 					type: 'text',
-//         },
-//       ],
-//       buttons: [
-//         {
-//           text: 'Cancel',
-//           handler: data => {
-//           //this.tipoBusqueda = "fecha";
+	    /**
+    * Busca un objeto perdido por su consecutivo
+    */
+   public buscarConsecutivo() {
+    let prompt = this.alertCtrl.create({
+      title: 'Buscar consecutivo',
+      message: "Ingrese el consecutivo completo del objeto perdido.",
+      inputs: [
+        {
+          name: 'consecutivo',
+          placeholder: 'Consecutivo',
+					type: 'text',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+          //this.tipoBusqueda = "fecha";
 
-//           }
-//         },
-//         {
-//           text: 'Buscar',
-//           handler: data => {
-//             let consulta = {
-// 				codigoBusqueda: data.consecutivo,
-// 				correoLugar: this.correoLugar,
-// 				nombrePunto: this.nombrePunto,
-// 			}
-// 			console.log(data.consecutivo);
-// 			console.log(this.correoLugar);
-// 			console.log(this.nombrePunto);
-// 			this.retirarService.consultarPerdidosCodigo(consulta)
-// 			.subscribe(data => {
-// 					if(data.correcto){										
-// 							prompt.dismiss().then(() => {
-// 				this.navCtrl.push(DetalleRetiroPage,{ 	 					
-// 										correoLugar: this.correoLugar,
-// 										nombrePunto: this.nombrePunto,
-// 										registro: data.mensaje, 
-// 										correoTrabajador: this.correoTrabajador
-// 									}); 
+          }
+        },
+        {
+          text: 'Buscar',
+          handler: data => {
+            let consulta = {
+				codigoBusqueda: data.consecutivo,
+				correoLugar: this.correoLugar,
+			}
+			console.log(data.consecutivo);
+			console.log(this.correoLugar);
+
+			this.lugarService.consultarPerdidosCodigo(consulta)
+			.subscribe(data => {
+					if(data.correcto){										
+						prompt.dismiss().then(() => {
+						this.navCtrl.push(DetalleRetiroPage,{ 	 					
+							correoLugar: this.correoLugar,
+							nombrePunto: this.nombrePunto,
+							registro: data.mensaje, 
+							correoTrabajador: this.correoTrabajador
+						}); 
 							
-// 			}); 
-// 					}else{
-// 						alert(data.mensaje);
-// 					}
-// 			});
-// 			return false;
-// }
-//         }
-//       ]
-//     });
-//     prompt.present();
-//   }
+			}); 
+					}else{
+						alert(data.mensaje);
+					}
+			});
+			return false;
+}
+        }
+      ]
+    });
+    prompt.present();
+  }
 
 }

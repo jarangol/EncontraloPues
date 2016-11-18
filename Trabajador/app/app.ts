@@ -8,6 +8,7 @@ import { StatusBar } from 'ionic-native';
 import { RegistrarPage} from './pages/trabajador/registrar/registrar';
 import { RetirarPage} from './pages/trabajador/retirar/retirar';
 import { RetiradosPage } from './pages/trabajador/retirados/retirados';
+import { CuentaPage } from './pages/trabajador/cuenta/cuenta';
 
 //lugar
 import {BuscarLugarPage} from './pages/lugar/buscar-lugar/buscar-lugar';
@@ -42,6 +43,7 @@ class MyApp {
 
     // paginas del trabajador
     this.trabajadorPages = [
+      { title: 'Home', component: CuentaPage},
       { title: 'Registrar', component: RegistrarPage},
       { title: 'Retirar', component: RetirarPage},
       { title: 'Historial de retiros', component: RetiradosPage },

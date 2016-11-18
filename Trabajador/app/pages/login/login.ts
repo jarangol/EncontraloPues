@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, MenuController,Alert, Nav, AlertController } from 'ionic-angular';
+import { NavController, MenuController,Alert, Nav, AlertController, Select } from 'ionic-angular';
 import { LogInService } from '../../providers/logIn-service/logIn-service';
 import { PuntosService } from '../../providers/lugar-service/puntos-service';
 
 //paginas para navegar segun usuario
-import { RegistrarPage} from '../../pages/trabajador/registrar/registrar';
+import { CuentaPage } from '../../pages/trabajador/cuenta/cuenta';
 import {BuscarLugarPage} from '../../pages/lugar/buscar-lugar/buscar-lugar';
 /*
   Generated class for the Login page.
@@ -51,11 +51,8 @@ export class Login {
                 this.menuCtrl.enable(true, 'lugar');
                 this.nav.setRoot(BuscarLugarPage);
               }else{
-                this.menuCtrl.enable(true, 'trabajador');
-                this.menuCtrl.enable(false, 'lugar');                                
-                this.nav.setRoot(RegistrarPage);
+                this.nav.setRoot(CuentaPage);           
                 this.loginService.setCorreoTrabajador(res.mensaje.trabajadores._id);
-                this.seleccionarPunto();
               }  
          }else{
            alert(res.mensaje);
@@ -77,7 +74,7 @@ export class Login {
     message: 'Seleccione el punto en el cual se encuentra.',
     inputs: [
       {
-             
+        
       } 
     ],
     buttons: [
@@ -94,14 +91,12 @@ export class Login {
   }
   this.puntoService.consultarPuntos(correoLugar).subscribe(data => {
     if(data.correcto){
-    
       for(let punto of data.mensaje){
         console.log(punto.puntosRecoleccion.nombre);
         let input = {
           type: "radio",
           name: punto.puntosRecoleccion.nombre,
           label: punto.puntosRecoleccion.nombre,
-          value:'hola'
         }
         alert.addInput(input);
       }

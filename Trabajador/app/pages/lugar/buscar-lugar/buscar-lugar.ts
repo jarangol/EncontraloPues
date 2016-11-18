@@ -171,60 +171,60 @@ export class BuscarLugarPage {
 
 
 
-	    /**
-    * Busca un objeto perdido por su consecutivo
-    */
-   public buscarConsecutivo() {
-    let prompt = this.alertCtrl.create({
-      title: 'Buscar consecutivo',
-      message: "Ingrese el consecutivo completo del objeto perdido.",
-      inputs: [
-        {
-          name: 'consecutivo',
-          placeholder: 'Consecutivo',
-					type: 'text',
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: data => {
-          //this.tipoBusqueda = "fecha";
+// 	    /**
+//     * Busca un objeto perdido por su consecutivo
+//     */
+//    public buscarConsecutivo() {
+//     let prompt = this.alertCtrl.create({
+//       title: 'Buscar consecutivo',
+//       message: "Ingrese el consecutivo completo del objeto perdido.",
+//       inputs: [
+//         {
+//           name: 'consecutivo',
+//           placeholder: 'Consecutivo',
+// 					type: 'text',
+//         },
+//       ],
+//       buttons: [
+//         {
+//           text: 'Cancel',
+//           handler: data => {
+//           //this.tipoBusqueda = "fecha";
 
-          }
-        },
-        {
-          text: 'Buscar',
-          handler: data => {
-            let consulta = {
-				codigoBusqueda: data.consecutivo,
-				correoLugar: this.correoLugar,
-			}
-			console.log(data.consecutivo);
-			console.log(this.correoLugar);
+//           }
+//         },
+//         {
+//           text: 'Buscar',
+//           handler: data => {
+//             let consulta = {
+// 							codigoBusqueda: data.consecutivo,
+// 							correoLugar: this.correoLugar,
+// 						}
+// 					console.log(data.consecutivo);
+// 					console.log(this.correoLugar);
 
-			this.lugarService.consultarPerdidosCodigo(consulta)
-			.subscribe(data => {
-					if(data.correcto){										
-						prompt.dismiss().then(() => {
-						this.navCtrl.push(DetalleRetiroPage,{ 	 					
-							correoLugar: this.correoLugar,
-							nombrePunto: this.nombrePunto,
-							registro: data.mensaje, 
-							correoTrabajador: this.correoTrabajador
-						}); 
+// 			this.lugarService.consultarPerdidosCodigo(consulta)
+// 			.subscribe(data => {
+// 					if(data.correcto){										
+// 						prompt.dismiss().then(() => {
+// 						this.navCtrl.push(DetalleRetiroPage,{ 	 					
+// 							correoLugar: this.correoLugar,
+// 							nombrePunto: this.nombrePunto,
+// 							registro: data.mensaje, 
+// 							correoTrabajador: this.correoTrabajador
+// 						}); 
 							
-			}); 
-					}else{
-						alert(data.mensaje);
-					}
-			});
-			return false;
-}
-        }
-      ]
-    });
-    prompt.present();
-  }
+// 			}); 
+// 					}else{
+// 						alert(data.mensaje);
+// 					}
+// 			});
+// 			return false;
+// }
+//         }
+//       ]
+//     });
+//     prompt.present();
+//   }
 
 }

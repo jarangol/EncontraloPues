@@ -83,21 +83,6 @@ export class ResultadoLugarPage {
                     });  
                   
                 }
-            },{ 
-                text: 'Editar',
-                icon: !this.platform.is('ios') ? 'create' : null,
-                handler: () => {
-                    console.log('editar clicked');
-                    actionSheet.dismiss().then(() => {
-                       this.navCtrl.push(ObjetoPerdidoPage, {
-                        registro: registro,
-                        correoLugar: this.correoLugar,
-                        editar: true, 
-                      });
-
-                    });   
-                  return false;
-                }
             },{
                 text: 'Eliminar',
                 role: 'destructive',
@@ -132,6 +117,25 @@ export class ResultadoLugarPage {
             }
         ]
         });
-    actionSheet.present();;
+        if(registro.puntosRecoleccion.objetosPerdidos.sinCodigoQR){ 
+            actionSheet.addButton({ 
+                  text: 'Editar',
+                  icon: !this.platform.is('ios') ? 'create' : null,
+                  handler: () => {
+                      console.log('editar clicked');
+                      actionSheet.dismiss().then(() => {
+                        this.navCtrl.push(ObjetoPerdidoPage, {
+                          registro: registro,
+                          correoLugar: this.correoLugar,
+                          editar: true, 
+                        });
+
+                      });   
+                    return false;
+                  }
+              });
+        }
+              
+    actionSheet.present();
     }
  }

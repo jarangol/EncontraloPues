@@ -370,7 +370,7 @@ var CuentaLugarPage = (function () {
     }
     CuentaLugarPage = __decorate([
         core_1.Component({
-            templateUrl: 'build/pages/trabajador/cuenta/cuenta.html',
+            templateUrl: 'build/pages/login/login.html'
         }), 
         __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_1.Nav])
     ], CuentaLugarPage);
@@ -931,20 +931,6 @@ var ResultadoLugarPage = (function () {
                         });
                     }
                 }, {
-                    text: 'Editar',
-                    icon: !this.platform.is('ios') ? 'create' : null,
-                    handler: function () {
-                        console.log('editar clicked');
-                        actionSheet.dismiss().then(function () {
-                            _this.navCtrl.push(objeto_perdido_1.ObjetoPerdidoPage, {
-                                registro: registro,
-                                correoLugar: _this.correoLugar,
-                                editar: true,
-                            });
-                        });
-                        return false;
-                    }
-                }, {
                     text: 'Eliminar',
                     role: 'destructive',
                     icon: !this.platform.is('ios') ? 'trash' : null,
@@ -976,8 +962,24 @@ var ResultadoLugarPage = (function () {
                 }
             ]
         });
+        if (registro.puntosRecoleccion.objetosPerdidos.sinCodigoQR) {
+            actionSheet.addButton({
+                text: 'Editar',
+                icon: !this.platform.is('ios') ? 'create' : null,
+                handler: function () {
+                    console.log('editar clicked');
+                    actionSheet.dismiss().then(function () {
+                        _this.navCtrl.push(objeto_perdido_1.ObjetoPerdidoPage, {
+                            registro: registro,
+                            correoLugar: _this.correoLugar,
+                            editar: true,
+                        });
+                    });
+                    return false;
+                }
+            });
+        }
         actionSheet.present();
-        ;
     };
     ResultadoLugarPage = __decorate([
         core_1.Component({

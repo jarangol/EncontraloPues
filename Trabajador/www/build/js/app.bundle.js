@@ -37,7 +37,7 @@ var MyApp = (function () {
         this.initializeApp();
         // paginas del trabajador
         this.trabajadorPages = [
-            { title: 'Home', component: cuenta_1.CuentaPage },
+            { title: 'Inicio', component: cuenta_1.CuentaPage },
             { title: 'Registrar', component: registrar_1.RegistrarPage },
             { title: 'Retirar', component: retirar_1.RetirarPage },
             { title: 'Historial de retiros', component: retirados_1.RetiradosPage },
@@ -220,7 +220,7 @@ var BuscarLugarPage = (function () {
         //inicializando algunos campos
         this.tags = [];
         this.tipoBusqueda = 'fecha';
-        this.tipoObjetos = 'perdidos';
+        this.tipoObjetosFecha = 'perdidos';
         //actualizar fecha a la actual (mes y ano)
         var hoy = new Date();
         var mm = hoy.getMonth() + 1; //hoy es 0!
@@ -241,13 +241,13 @@ var BuscarLugarPage = (function () {
         var correo = {
             correoLugar: this.correoLugar
         };
-        if (this.tipoObjetos == 'perdidos')
+        if (this.tipoObjetosFecha == 'perdidos')
             this.lugarService.consultarPuntosPerdidos(correo)
                 .subscribe(function (data) {
                 _this.puntosRecoleccion = data.mensaje;
                 console.log(data);
             });
-        else if (this.tipoObjetos == 'retirados')
+        else if (this.tipoObjetosFecha == 'retirados')
             this.lugarService.consultarPuntosRetirados(correo)
                 .subscribe(function (data) {
                 _this.puntosRecoleccion = data.mensaje;
@@ -274,13 +274,13 @@ var BuscarLugarPage = (function () {
                 nombrePuntoRecoleccion: this.nombrePunto,
                 correoLugar: this.correoLugar,
             };
-            if (this.tipoObjetos == 'perdidos') {
+            if (this.tipoObjetosFecha == 'perdidos') {
                 this.lugarService.consultarPerdidosFecha(consulta_1)
                     .subscribe(function (data) {
                     if (data.correcto) {
                         _this.navCtrl.push(resultado_lugar_1.ResultadoLugarPage, {
                             registros: data.mensaje,
-                            tipoObjetos: _this.tipoObjetos,
+                            tipoObjetos: _this.tipoObjetosFecha,
                             consulta: consulta_1
                         });
                     }
@@ -289,7 +289,7 @@ var BuscarLugarPage = (function () {
                     }
                 });
             }
-            else if (this.tipoObjetos == 'retirados') {
+            else if (this.tipoObjetosFecha == 'retirados') {
                 this.lugarService.consultarRetiradosFecha(consulta_1)
                     .subscribe(function (data) {
                     console.log("fecha retirados: " + data);
@@ -298,7 +298,8 @@ var BuscarLugarPage = (function () {
                             correoLugar: _this.correoLugar,
                             anoMes: _this.fecha,
                             registros: data.mensaje,
-                            tipoObjetos: _this.tipoObjetos
+                            tipoObjetos: _this.tipoObjetosFecha,
+                            consulta: consulta_1
                         });
                     }
                     else {
@@ -307,35 +308,104 @@ var BuscarLugarPage = (function () {
                 });
             }
         }
-        else if (this.tipoBusqueda == 'consecutivo') {
-            var consulta = {
-                codigoBusqueda: this.codigoBusqueda,
-                correoLugar: this.correoLugar,
-            };
-            if (this.tipoObjetos == 'perdidos') {
-                this.lugarService.consultarPerdidosCodigo(consulta)
-                    .subscribe(function (data) {
-                    console.log("con perdidos: " + data);
-                    if (data.correcto) {
+    };
+    //     // /**
+    //   * Busca un objeto perdido por su consecutivo
+    //   */
+    //  public buscarConsecutivo() {
+    //   let prompt = this.alertCtrl.create({
+    //     title: 'Buscar consecutivo',
+    //     message: "Ingrese el consecutivo completo del objeto perdido.",
+    //     inputs: [
+    //       {
+    //         name: 'consecutivo',
+    //         placeholder: 'Consecutivo',
+    // 				type: 'text',
+    //       },
+    //     ],
+    //     buttons: [
+    //       {
+    //         text: 'Cancel',
+    //         handler: data => {
+    // 					//this.tipoBusqueda = "fecha";
+    // 					console.log("cancel");
+    //         }
+    //       },
+    //       {
+    //         text: 'Buscar',
+    //         handler: data => {
+    // 					console.log("buscar");
+    // 						console.log(this.tipoObjetosCodigo);
+    //           let consulta = {
+    // 						codigoBusqueda: data.consecutivo,
+    // 						correoLugar: this.correoLugar,
+    // 					}
+    // 				console.log(data.consecutivo);
+    // 				console.log(this.correoLugar);
+    // 					console.log(this.tipoObjetosCodigo);
+    // 				// if(this.tipoObjetosCodigo == 'perdidos'){	
+    // 				// 		this.lugarService.consultarPerdidosCodigo(consulta)
+    // 				// 		.subscribe((data) => {
+    // 				// 			console.log("con perdidos: "+data);
+    // 				// 			if(data.correcto){
+    // 				// 				//mostrar aca
+    // 				// 				console.log("no problem");
+    // 				// 			}else{
+    // 				// 					// prompt.dismiss().then(() => {
+    // 				// 					// 		alert(data.mensaje);
+    // 				// 					// }); 
+    // 				// 			}
+    // 				// 		});
+    // 				//	}else if(this.tipoObjetosCodigo == 'retirados'){			
+    // 							// this.lugarService.consultarRetiradosCodigo(consulta)
+    // 							// .subscribe((data) => {
+    // 							// 		this.registros = data;
+    // 									console.log("con retirados: "+data);
+    // 							// 		if(this.registros.correcto){
+    // 							// 				//mostrar aca
+    // 							// 				console.log("no problem");
+    // 							// 		}else{	
+    // 							// 			// prompt.dismiss().then(() => {
+    //               //       //   	alert(data.mensaje);
+    //               //     	// });  
+    // 							// 		}
+    // 							// });
+    // 					//	}
+    // 				}
+    //       }
+    //     ]
+    //   });
+    //   prompt.present();
+    // }
+    BuscarLugarPage.prototype.buscarConsecutivo = function () {
+        var prompt = this.alertCtrl.create({
+            title: 'Login',
+            message: "Enter a name for this new album you're so keen on adding",
+            inputs: [
+                {
+                    name: 'title',
+                    placeholder: 'Title'
+                },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    handler: function (data) {
+                        console.log('Cancel clicked');
                     }
-                    else {
-                        alert(data.mensaje);
+                },
+                {
+                    text: 'Save',
+                    handler: function (data) {
+                        console.log('Saved clicked');
                     }
-                });
-            }
-            else if (this.tipoObjetos == 'retirados') {
-                this.lugarService.consultarRetiradosCodigo(consulta)
-                    .subscribe(function (data) {
-                    _this.registros = data;
-                    console.log("con retirados: " + data);
-                    if (_this.registros.correcto) {
-                    }
-                    else {
-                        alert(_this.registros.mensaje);
-                    }
-                });
-            }
-        }
+                }
+            ]
+        });
+        prompt.present();
+    };
+    BuscarLugarPage.prototype.cambiarTipoObjetos = function (hola) {
+        console.log(typeof hola);
     };
     BuscarLugarPage = __decorate([
         core_1.Component({
@@ -854,9 +924,12 @@ var ResultadoLugarPage = (function () {
         this.registroService = registroService;
         this.consulta = this.navParams.get('consulta');
         this.correoLugar = this.consulta.correoLugar;
-        this.registros = this.navParams.get('registros');
         this.tipoObjetos = this.navParams.get('tipoObjetos');
         this.anoMes = this.consulta.anoMesRegistro;
+        if (this.tipoObjetos == 'retirados')
+            this.objetosRetirados = this.navParams.get('registros');
+        else if (this.tipoObjetos == 'perdidos')
+            this.objetosPerdidos = this.navParams.get('registros');
     }
     ResultadoLugarPage.prototype.ionViewLoaded = function () {
         this.cargarRegistros();
@@ -917,7 +990,6 @@ var ResultadoLugarPage = (function () {
                         console.log(registro.puntosRecoleccion.objetosPerdidos.codigoBusqueda);
                         _this.registroService.borrarPerdido(datos).subscribe(function (data) {
                             actionSheet.dismiss().then(function () {
-                                alert(data.mensaje);
                                 _this.cargarRegistros();
                             });
                         });
@@ -1945,6 +2017,7 @@ var RetirarPage = (function () {
         var _this = this;
         this.platform.ready().then(function () {
             ionic_native_1.BarcodeScanner.scan().then(function (barcodeData) {
+                alert(barcodeData.text);
                 var prompt = _this.alertCtrl.create({
                     title: 'Retirar',
                     message: "Ingrese el código de retiro de este objeto",
@@ -1960,20 +2033,23 @@ var RetirarPage = (function () {
                             handler: function (data) {
                                 console.log('Cancel clicked');
                             }
-                        },
-                        {
+                        }, {
                             text: 'Confirmar',
                             handler: function (data) {
-                                console.log('data:' + data);
-                                var retiro = {
+                                console.log('data:' + data.codigo);
+                                var retiroQR = {
                                     codigoQR: barcodeData.text,
                                     correoLugar: _this.correoLugar,
-                                    codigoRetiro: data,
+                                    codigoRetiro: data.codigo,
                                     nombrePunto: _this.nombrePunto,
                                     correoTrabajador: _this.correoTrabajador
                                 };
-                                _this.retirarService.createRetiroQR(retiro)
-                                    .then(function (data) {
+                                console.log(_this.correoLugar);
+                                console.log(data.codigo);
+                                console.log(_this.nombrePunto);
+                                console.log(_this.correoTrabajador);
+                                _this.retirarService.createRetiroQR(retiroQR)
+                                    .subscribe(function (data) {
                                     if (data.correcto) {
                                         prompt.dismiss().then(function () {
                                             alert(data.mensaje);

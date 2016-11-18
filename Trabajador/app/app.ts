@@ -44,7 +44,7 @@ class MyApp {
 
     // paginas del trabajador
     this.trabajadorPages = [
-      { title: 'Home', component: CuentaPage},
+      { title: 'Inicio', component: CuentaPage},
       { title: 'Registrar', component: RegistrarPage},
       { title: 'Retirar', component: RetirarPage},
       { title: 'Historial de retiros', component: RetiradosPage },

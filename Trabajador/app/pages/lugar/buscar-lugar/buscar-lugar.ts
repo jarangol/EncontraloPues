@@ -21,7 +21,8 @@ import { ObjetoPerdidoPage} from '../objeto-perdido/objeto-perdido';
 export class BuscarLugarPage {
   //campos de la interfaz (ngModels)
 	private tipoBusqueda: any; //por fecha o consecutivo
-	private tipoObjetos: any; //perdidos o retirados
+	private tipoObjetosFecha: any; //perdidos o retirados
+	private tipoObjetosCodigo: any; //perdidos o retirados
 	private nombrePunto: any;	//elegido en un select
 	private fecha: any; 
 	private tags: any;
@@ -41,7 +42,7 @@ export class BuscarLugarPage {
   	//inicializando algunos campos
 		this.tags = [];
 		this.tipoBusqueda = 'fecha';
-		this.tipoObjetos = 'perdidos';
+		this.tipoObjetosFecha = 'perdidos';
 	
 
 		//actualizar fecha a la actual (mes y ano)
@@ -67,14 +68,13 @@ export class BuscarLugarPage {
 		 correoLugar: this.correoLugar
 		}
 
-		if(this.tipoObjetos == 'perdidos')
+		if(this.tipoObjetosFecha == 'perdidos')
 			this.lugarService.consultarPuntosPerdidos(correo)
 			.subscribe(data => {
-
-            	this.puntosRecoleccion = data.mensaje;
+      	this.puntosRecoleccion = data.mensaje;
 				console.log(data);
-      		});
-		else if(this.tipoObjetos == 'retirados')
+      });
+		else if(this.tipoObjetosFecha == 'retirados')
 			this.lugarService.consultarPuntosRetirados(correo)
 			.subscribe(data => {
             	this.puntosRecoleccion = data.mensaje;		
@@ -106,14 +106,14 @@ export class BuscarLugarPage {
 				correoLugar: this.correoLugar,
 			}
 		
-			if(this.tipoObjetos == 'perdidos'){	
+			if(this.tipoObjetosFecha == 'perdidos'){	
 				this.lugarService.consultarPerdidosFecha(consulta)
 				.subscribe((data) => {
 		
 					if(data.correcto){
 						this.navCtrl.push(ResultadoLugarPage,{ 	 		
 							registros: data.mensaje ,
-							tipoObjetos: this.tipoObjetos,
+							tipoObjetos: this.tipoObjetosFecha,
 							consulta: consulta
 						});
 					}else{
@@ -121,7 +121,7 @@ export class BuscarLugarPage {
 					}
 				});	
 
-			}else if(this.tipoObjetos == 'retirados'){	
+			}else if(this.tipoObjetosFecha == 'retirados'){	
 				this.lugarService.consultarRetiradosFecha(consulta)
 				.subscribe((data) => {
 					console.log("fecha retirados: "+data);
@@ -130,101 +130,126 @@ export class BuscarLugarPage {
 							correoLugar: this.correoLugar,
 							anoMes: this.fecha,
 							registros: data.mensaje ,
-							tipoObjetos: this.tipoObjetos
+							tipoObjetos: this.tipoObjetosFecha,
+							consulta: consulta
 						});
 					}else{
 						alert(data.mensaje);
 					}
 				});
 			}	
-		}else if(this.tipoBusqueda == 'consecutivo'){ 
-			let consulta = {
-				codigoBusqueda: this.codigoBusqueda,
-				correoLugar: this.correoLugar,
-			}
-
-			if(this.tipoObjetos == 'perdidos'){	
-				this.lugarService.consultarPerdidosCodigo(consulta)
-				.subscribe((data) => {
-					console.log("con perdidos: "+data);
-				
-					if(data.correcto){
-						//mostrar aca
-					}else{
-						alert(data.mensaje);
-					}
-				});
-			}else if(this.tipoObjetos == 'retirados'){			
-				this.lugarService.consultarRetiradosCodigo(consulta)
-				.subscribe((data) => {
-					this.registros = data;
-					console.log("con retirados: "+data);
-					if(this.registros.correcto){
-			     		 //mostrar aca
-					}else{
-						alert(this.registros.mensaje);
-					}
-				});
-			}	
-	 	}
+		}
 	 }
 
 
 
-// 	    /**
-//     * Busca un objeto perdido por su consecutivo
-//     */
-//    public buscarConsecutivo() {
-//     let prompt = this.alertCtrl.create({
-//       title: 'Buscar consecutivo',
-//       message: "Ingrese el consecutivo completo del objeto perdido.",
-//       inputs: [
-//         {
-//           name: 'consecutivo',
-//           placeholder: 'Consecutivo',
-// 					type: 'text',
-//         },
-//       ],
-//       buttons: [
-//         {
-//           text: 'Cancel',
-//           handler: data => {
-//           //this.tipoBusqueda = "fecha";
+	//     // /**
+  //   * Busca un objeto perdido por su consecutivo
+  //   */
+  //  public buscarConsecutivo() {
+  //   let prompt = this.alertCtrl.create({
+  //     title: 'Buscar consecutivo',
+  //     message: "Ingrese el consecutivo completo del objeto perdido.",
+  //     inputs: [
+  //       {
+  //         name: 'consecutivo',
+  //         placeholder: 'Consecutivo',
+	// 				type: 'text',
+  //       },
+  //     ],
+  //     buttons: [
+  //       {
+  //         text: 'Cancel',
+  //         handler: data => {
+	// 					//this.tipoBusqueda = "fecha";
+	// 					console.log("cancel");
 
-//           }
-//         },
-//         {
-//           text: 'Buscar',
-//           handler: data => {
-//             let consulta = {
-// 							codigoBusqueda: data.consecutivo,
-// 							correoLugar: this.correoLugar,
-// 						}
-// 					console.log(data.consecutivo);
-// 					console.log(this.correoLugar);
+  //         }
+  //       },
+  //       {
+  //         text: 'Buscar',
+  //         handler: data => {
+	// 					console.log("buscar");
+	// 						console.log(this.tipoObjetosCodigo);
 
-// 			this.lugarService.consultarPerdidosCodigo(consulta)
-// 			.subscribe(data => {
-// 					if(data.correcto){										
-// 						prompt.dismiss().then(() => {
-// 						this.navCtrl.push(DetalleRetiroPage,{ 	 					
-// 							correoLugar: this.correoLugar,
-// 							nombrePunto: this.nombrePunto,
-// 							registro: data.mensaje, 
-// 							correoTrabajador: this.correoTrabajador
-// 						}); 
+  //           let consulta = {
+	// 						codigoBusqueda: data.consecutivo,
+	// 						correoLugar: this.correoLugar,
+	// 					}
+	// 				console.log(data.consecutivo);
+	// 				console.log(this.correoLugar);
+	// 					console.log(this.tipoObjetosCodigo);
+
+	// 				// if(this.tipoObjetosCodigo == 'perdidos'){	
+	// 				// 		this.lugarService.consultarPerdidosCodigo(consulta)
+	// 				// 		.subscribe((data) => {
+	// 				// 			console.log("con perdidos: "+data);
 							
-// 			}); 
-// 					}else{
-// 						alert(data.mensaje);
-// 					}
-// 			});
-// 			return false;
-// }
-//         }
-//       ]
-//     });
-//     prompt.present();
-//   }
+	// 				// 			if(data.correcto){
+	// 				// 				//mostrar aca
+	// 				// 				console.log("no problem");
+	// 				// 			}else{
+	// 				// 					// prompt.dismiss().then(() => {
+	// 				// 					// 		alert(data.mensaje);
+	// 				// 					// }); 
+	// 				// 			}
+	// 				// 		});
+	// 				//	}else if(this.tipoObjetosCodigo == 'retirados'){			
+	// 							// this.lugarService.consultarRetiradosCodigo(consulta)
+	// 							// .subscribe((data) => {
+	// 							// 		this.registros = data;
+	// 									console.log("con retirados: "+data);
+	// 							// 		if(this.registros.correcto){
+	// 							// 				//mostrar aca
+	// 							// 				console.log("no problem");
+	// 							// 		}else{	
+	// 							// 			// prompt.dismiss().then(() => {
+  //               //       //   	alert(data.mensaje);
+												
+  //               //     	// });  
+	// 							// 		}
+	// 							// });
+	// 					//	}
+						
+	// 				}
+  //       }
+  //     ]
+  //   });
+  //   prompt.present();
+  // }
 
+	  buscarConsecutivo() {
+    let prompt = this.alertCtrl.create({
+      title: 'Login',
+      message: "Enter a name for this new album you're so keen on adding",
+      inputs: [
+        {
+          name: 'title',
+          placeholder: 'Title'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            console.log('Saved clicked');
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+
+
+	public cambiarTipoObjetos(hola){
+		console.log(typeof hola);
+	}
 }
+
+

@@ -11,22 +11,15 @@
 <ion-content>
   <div padding>
     <ion-segment [(ngModel)]="tipoBusqueda">
-      <ion-segment-button value='fecha'>
+      <ion-segment-button value="fecha">
         Fecha
       </ion-segment-button>
-      <ion-segment-button value='consecutivo'>
+      <ion-segment-button value="consecutivo">
         Consecutivo
       </ion-segment-button>
     </ion-segment>
   </div>
   
-  <ion-item>
-    <ion-label>Tipo de objetos</ion-label>
-    <ion-select [(ngModel)]="tipoObjetos" (ionChange)="cargarPuntos()">
-      <ion-option value="perdidos" selected="true">Perdidos</ion-option>
-      <ion-option value="retirados">Retirados</ion-option>
-    </ion-select> 
-  </ion-item>
 
 
 
@@ -34,6 +27,13 @@
 <div [ngSwitch]="tipoBusqueda">
  
   <ion-list *ngSwitchCase="'fecha'" no-lines> 
+    <ion-item>
+      <ion-label>Tipo de objetos</ion-label>
+      <ion-select [(ngModel)]="tipoObjetosFecha" (ionChange)="cargarPuntos()">
+        <ion-option value="perdidos" selected="true">Perdidos</ion-option>
+        <ion-option value="retirados">Retirados</ion-option>
+      </ion-select> 
+    </ion-item>
 
     <ion-item>
       <ion-label>Punto de recoleccion</ion-label>
@@ -63,23 +63,31 @@
             <ion-icon name="close" (click)="deleteTag(tag)"></ion-icon>
           </span>
           </div>
-      </ion-item>    
+      </ion-item>
+    <button ion-button block  color="secondary" (click)="buscar()" bottom>
+        <ion-icon ios="ios-search" md="md-search"></ion-icon> 
+        Buscar 
+    </button>    
   </ion-list> 
-
+ 
 
   <ion-list *ngSwitchCase="'consecutivo'" no-lines>
       <ion-item>
-           <ion-label floating>Ingrese el consecutivo:</ion-label>
-          <ion-input [(ngModel)]="codigoBusqueda" type="search" clearInput></ion-input>
+        <ion-label>1.Seleccione el tipo de objeto.</ion-label>
       </ion-item>
+     <ion-item>
+        <ion-label>Tipo de objetos</ion-label>
+        <ion-select #hola [(ngModel)]="tipoObjetosCodigo" (ionChange)="cambiarTipoObjetos(hola)">
+          <ion-option value="perdidos" selected="true">Perdidos</ion-option>
+          <ion-option value="retirados">Retirados</ion-option>
+        </ion-select> 
+      </ion-item>
+
   </ion-list> 
 
 
   </div>
-  <button ion-button block  color="secondary" (click)="buscar()" bottom>
-      <ion-icon ios="ios-search" md="md-search"></ion-icon> 
-       Buscar 
-  </button>
+  
 
 </ion-content>
 

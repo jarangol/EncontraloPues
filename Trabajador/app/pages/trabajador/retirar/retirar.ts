@@ -59,7 +59,7 @@ private correoTrabajador: string;
   public activarQR(){    
   	  this.platform.ready().then(() => {       
 				BarcodeScanner.scan().then((barcodeData) => {
-		    
+		    alert(barcodeData.text);
 		    let prompt = this.alertCtrl.create({
 		      title: 'Retirar',
 		      message: "Ingrese el código de retiro de este objeto",
@@ -75,23 +75,27 @@ private correoTrabajador: string;
 		          handler: data => {
 		            console.log('Cancel clicked');
 		          }
-		        },
-		        {
+
+		        },{ 
 		          text: 'Confirmar',
 		          handler: data => {
-		            console.log('data:'+data);
+		            console.log('data:'+data.codigo);
 
-		            let retiro={
+		            let retiroQR={
 									codigoQR: barcodeData.text,
 									correoLugar: this.correoLugar ,
-									codigoRetiro: data,
+									codigoRetiro: data.codigo,
 									nombrePunto: this.nombrePunto,
 									correoTrabajador: this.correoTrabajador 
 			    			};
-
+									console.log(this.correoLugar);
+									console.log(data.codigo);
+									console.log(this.nombrePunto);
+									console.log(this.correoTrabajador);
+									
 									 
-		            this.retirarService.createRetiroQR(retiro)
-								.then(data => {
+		            this.retirarService.createRetiroQR(retiroQR)
+								.subscribe(data => {
 										if(data.correcto){
 											prompt.dismiss().then(() => {
 												alert(data.mensaje);

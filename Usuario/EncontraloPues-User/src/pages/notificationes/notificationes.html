@@ -27,9 +27,9 @@
         <ion-item-sliding *ngFor="let notificacion of resulConsulta">
  
              <ion-item>
-                {{notificacion.objetosPersonales.tags}}
+                {{   " usuario "  + notificacion.objetosPersonales.tags}}
             </ion-item>
-
+            <!--notificacion.objetosPersonales.notificaciones.usuario.cuenta.nombre-->
             <ion-item-options>
                 <button (click)="showAlert(notificacion)" danger>
                     <ion-icon name="information-circle"></ion-icon>
@@ -37,6 +37,21 @@
             </ion-item-options>
 
          </ion-item-sliding>
+
+         <ion-item-sliding *ngFor="let notificacion of resulConsultaLugar">
+ 
+             <ion-item>
+                {{ "lugar " + notificacion.objetosPersonales.tags}}
+            </ion-item>
+
+            <ion-item-options>
+                <button (click)="showAlertLugar(notificacion)" danger>
+                    <ion-icon name="information-circle"></ion-icon>
+                </button>
+            </ion-item-options>
+
+         </ion-item-sliding>
+
 
     </ion-list>
   

@@ -7,7 +7,6 @@
 // By default each design mode includes these shared imports.
 // App Shared Sass variables belong in app.variables.scss.
 
-@import "../pages/trabajador/consultar/consultar";
 @import "../pages/trabajador/registrar/registrar";
 
 //lugar pages
@@ -19,7 +18,7 @@
 @import "../pages/trabajador/detalle-retiro/detalle-retiro.scss";
 @import "../pages/trabajador/retirados/retirados.scss";
 @import "../pages/trabajador/registrar/registrar.scss";
-@import "../pages/trabajador/consultar/consultar.scss";
+
 
 
 
@@ -31,6 +30,6 @@
     background: -webkit-linear-gradient(top, #efad62 0%,#f7d47c 100%);
 }
 
-ion-header {
+ion-toolbar {
   background-color: red;
 }

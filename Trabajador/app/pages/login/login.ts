@@ -35,7 +35,6 @@ export class Login {
         contrasena: this.contrasena
       };
       console.log(this.correo);
-      this.correo = "";
       this.contrasena = "";
       
       this.loginService.validarInfo(validacion)

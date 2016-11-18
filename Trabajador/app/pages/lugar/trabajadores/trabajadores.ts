@@ -23,7 +23,7 @@ export class TrabajadoresPage {
              }
    
    /**
-    * Se llama al iniciar la pagina para refrescar fatos
+    * Se llama al iniciar la pagina para refrescar datos
     */
    ionViewWillEnter() { // se llama todo lo que se quiere que se refreseque en la pag
      this.cargarTrabajadores();
@@ -114,6 +114,11 @@ export class TrabajadoresPage {
                     type: 'text'
                 },
                 {
+                    name: 'apellidos',
+                    placeholder: 'Apellidos',
+                    type: 'text'
+                },
+                {
                     name: 'contrasena',
                     placeholder: 'Contraseña',
                     type: 'password'
@@ -130,11 +135,12 @@ export class TrabajadoresPage {
             {
                 text: 'Crear',
                 handler: data => {
+                    console.log(data.nombre + ' ' +data.apellidos);
                     let navTransition = alerta.dismiss();
                     let trabajador = {
                         correoLugar: this.correoLugar,
                         correoTrabajador: correo,
-                        nombre: data.nombre,
+                        nombre: data.nombre + ' ' +data.apellidos,
                         contraseña: data.contrasena,
                     }
 

@@ -6,7 +6,7 @@ import {BarcodeScanner} from 'ionic-native';
 import { DetalleRetiroPage} from '../detalle-retiro/detalle-retiro';
 
 //pagina para resultado de la busqueda
-import { ConsultarPage} from '../consultar/consultar';
+import { ListarPerdidosPage} from '../listar-perdidos/listar-perdidos';
 
 //proveedor del service
 import { RetirarService } from '../../../providers/retirar-service/retirar-service';
@@ -24,7 +24,7 @@ import { LogInService } from '../../../providers/logIn-service/logIn-service';
 export class RetirarPage {
 //Variables de la interfaz
 private tags: Array<String>; //arreglo de tags ingresados
-private fecha: any; //fecha del registro (YYYY-MM)
+private anoMes: any; //fecha del registro (YYYY-MM)
 private tipoBusqueda: any; //para guarda la seleccion hecha en el segment
 
 //necesarios para crear de un retiro
@@ -40,13 +40,21 @@ private correoTrabajador: string;
 		 var hoy = new Date();
 		 var mm = hoy.getMonth()+1; //hoy es 0!
 		 var yyyy = hoy.getFullYear();
-		 this.fecha = yyyy+'-'+mm;
+		 this.anoMes = yyyy+'-'+mm;
 
 		 //temporal y desaparece con el login
   	 this.correoLugar = this.login.getCorreoLugar();
      this.nombrePunto = this.login.getPuntoTrabajador();
      this.correoTrabajador= this.login.getCorreoTrabajador(); 
   }
+
+
+     /**
+    * Se llama al iniciar la pagina para refrescar fatos
+    */
+   ionViewWillEnter() { // se llama todo lo que se quiere que se refreseque en la pag
+     this.tipoBusqueda = "fecha";
+    }
 
   public activarQR(){    
   	  this.platform.ready().then(() => {       
@@ -102,15 +110,15 @@ private correoTrabajador: string;
 		
 			}, (err) => {
 				alert("Ha ocurrido un error: "+err);
-				this.tipoBusqueda = 'fecha';
 			}); 
 				});
   }
 
   public buscar(){
-		if(this.tipoBusqueda=='fecha' && this.fecha ){
+		console.log(this.tipoBusqueda);
+		if(this.anoMes){
   		let consulta = {
-  			anoMesRegistro : this.fecha,
+  			anoMesRegistro : this.anoMes,
   			tags: this.tags,
   			correoLugar: this.correoLugar,
   			nombrePunto: this.nombrePunto,
@@ -120,11 +128,12 @@ private correoTrabajador: string;
 		  .subscribe(data => {
             console.log(data);		
 						if(data.correcto){
-							this.navCtrl.push(ConsultarPage,{ 	 					
+							this.navCtrl.push(ListarPerdidosPage,{ 	 					
 								correoLugar: this.correoLugar,
 								nombrePunto: this.nombrePunto,
 								registros: data.mensaje,
-								correoTrabajador: this.correoTrabajador
+								correoTrabajador: this.correoTrabajador,
+								anoMes: this.anoMes
 							});
 						}else{
 							alert(data.mensaje);
@@ -137,7 +146,6 @@ private correoTrabajador: string;
     * Busca un objeto perdido por su consecutivo
     */
    public buscarConsecutivo() {
-		this.tipoBusqueda = 'fecha';
     let prompt = this.alertCtrl.create({
       title: 'Buscar consecutivo',
       message: "Ingrese el consecutivo completo del objeto perdido.",
@@ -152,7 +160,7 @@ private correoTrabajador: string;
         {
           text: 'Cancel',
           handler: data => {
-            console.log('Cancel clicked');
+          //this.tipoBusqueda = "fecha";
 
           }
         },
@@ -164,6 +172,9 @@ private correoTrabajador: string;
 							correoLugar: this.correoLugar,
 							nombrePunto: this.nombrePunto,
 						}
+						console.log(data.consecutivo);
+						console.log(this.correoLugar);
+						console.log(this.nombrePunto);
 						this.retirarService.consultarPerdidosCodigo(consulta)
 						.subscribe(data => {
 								if(data.correcto){										

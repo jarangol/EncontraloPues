@@ -29,4 +29,15 @@ export class Notificacionesprovider {
     return this.data;
   }
 
+  public obtenerNotificacionesLugar(consulta){
+    let body = JSON.stringify(consulta);
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    this.data = this.http.post(this.serverURL + '/api/consultarNotificacionesLugar', body,
+      { headers: headers }).map(res => res.json());
+
+    return this.data;
+  }
+
 }

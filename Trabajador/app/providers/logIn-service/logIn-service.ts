@@ -45,11 +45,11 @@ export class LogInService {
 
   public setCorreoTrabajador(correo){
     this.correoTrabajador = correo;
-    console.log("nuevo trabajador "+correo);
+    //console.log("nuevo trabajador "+correo);
   }
 
   public setCorreoLugar(correo){
-    console.log("nuevo lugar "+correo);
+    //console.log("nuevo lugar "+correo);
     this.correoLugar = correo;
   }
 
@@ -60,6 +60,5 @@ export class LogInService {
 
   public setPuntoTrabajador(punto){
     this.puntoTrabajador = punto;
-    console.log("nuevo punto "+punto);
   }
 }

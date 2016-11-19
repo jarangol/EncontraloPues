@@ -14,9 +14,9 @@
       <ion-segment-button value="fecha">
         Fecha
       </ion-segment-button>
-      <!--<ion-segment-button value="consecutivo">
+      <ion-segment-button value="consecutivo">
         Consecutivo
-      </ion-segment-button>-->
+      </ion-segment-button>
     </ion-segment>
   </div>
   
@@ -77,7 +77,7 @@
       </ion-item>
      <ion-item>
         <ion-label>Tipo de objetos</ion-label>
-        <ion-select #hola [(ngModel)]="tipoObjetosCodigo" (ionChange)="cambiarTipoObjetos(hola)">
+        <ion-select id=tipo [(ngModel)]="tipoObjetosCodigo" (ionChange)="buscarConsecutivo(tipo)">
           <ion-option value="perdidos" selected="true">Perdidos</ion-option>
           <ion-option value="retirados">Retirados</ion-option>
         </ion-select> 

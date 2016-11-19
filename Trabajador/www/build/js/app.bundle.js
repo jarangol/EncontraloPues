@@ -375,35 +375,40 @@ var BuscarLugarPage = (function () {
     //   });
     //   prompt.present();
     // }
-    BuscarLugarPage.prototype.buscarConsecutivo = function () {
-        var prompt = this.alertCtrl.create({
-            title: 'Login',
-            message: "Enter a name for this new album you're so keen on adding",
-            inputs: [
-                {
-                    name: 'title',
-                    placeholder: 'Title'
-                },
-            ],
-            buttons: [
-                {
-                    text: 'Cancel',
-                    handler: function (data) {
-                        console.log('Cancel clicked');
-                    }
-                },
-                {
-                    text: 'Save',
-                    handler: function (data) {
-                        console.log('Saved clicked');
-                    }
-                }
-            ]
+    BuscarLugarPage.prototype.buscarConsecutivo = function (select) {
+        console.log(typeof select.interface);
+        select.open();
+        select.interface.dismiss().then(function () {
+            // let prompt = this.alertCtrl.create({
+            // 	title: 'Login',
+            // 	message: "Enter a name for this new album you're so keen on adding",
+            // 	inputs: [
+            // 		{
+            // 			name: 'title',
+            // 			placeholder: 'Title'
+            // 		},
+            // 	],
+            // 	buttons: [
+            // 		{
+            // 			text: 'Cancel',
+            // 			handler: data => {
+            // 				console.log('Cancel clicked');
+            // 			}
+            // 		},
+            // 		{
+            // 			text: 'Save',
+            // 			handler: data => {
+            // 				console.log('Saved clicked');
+            // 			}
+            // 		}
+            // 	]
+            // });
+            // prompt.present();
         });
-        prompt.present();
     };
     BuscarLugarPage.prototype.cambiarTipoObjetos = function (hola) {
         console.log(typeof hola);
+        //	hola.open();
     };
     BuscarLugarPage = __decorate([
         core_1.Component({
@@ -458,6 +463,7 @@ var ObjetoPerdidoPage = (function () {
             else
                 this.qr = true;
             console.log("qr " + this.qr);
+            console.log("editando " + this.editando);
             this.tags = this.registro.tags;
             var dia = this.registro.fechaRegistro.dia;
             var añoMes = this.registro.fechaRegistro.anoMes;
@@ -927,6 +933,7 @@ var ResultadoLugarPage = (function () {
         }
         this.tipoObjetos = this.navParams.get('tipoObjetos');
         this.registros = this.navParams.get('registros');
+        console.log(this.tipoObjetos);
     }
     ResultadoLugarPage.prototype.ionViewLoaded = function () {
         this.cargarRegistros();
@@ -2215,10 +2222,10 @@ var LogInService = (function () {
     };
     LogInService.prototype.setCorreoTrabajador = function (correo) {
         this.correoTrabajador = correo;
-        console.log("nuevo trabajador " + correo);
+        //console.log("nuevo trabajador "+correo);
     };
     LogInService.prototype.setCorreoLugar = function (correo) {
-        console.log("nuevo lugar " + correo);
+        //console.log("nuevo lugar "+correo);
         this.correoLugar = correo;
     };
     LogInService.prototype.getPuntoTrabajador = function () {
@@ -2227,7 +2234,6 @@ var LogInService = (function () {
     };
     LogInService.prototype.setPuntoTrabajador = function (punto) {
         this.puntoTrabajador = punto;
-        console.log("nuevo punto " + punto);
     };
     LogInService = __decorate([
         core_1.Injectable(), 

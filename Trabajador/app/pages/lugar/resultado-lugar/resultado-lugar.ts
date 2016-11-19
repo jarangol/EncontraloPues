@@ -38,8 +38,8 @@ export class ResultadoLugarPage {
       }
       
       this.tipoObjetos = this.navParams.get('tipoObjetos');
-  
       this.registros= this.navParams.get('registros');
+      console.log(this.tipoObjetos);
     } 
 
 	ionViewLoaded(){

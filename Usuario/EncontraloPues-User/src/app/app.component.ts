@@ -16,6 +16,7 @@ import { Encontrados } from '../pages/encontrados/encontrados';
 import { Notificationes } from '../pages/notificationes/notificationes';
 import { Usuarioprovider } from '../providers/usuarioprovider';
 import { EliminarObjt } from '../pages/eliminar-objt/eliminar-objt';
+import { Encontradosconsecutivo } from '../pages/encontradosconsecutivo/encontradosconsecutivo';
 //
 
 @Component({

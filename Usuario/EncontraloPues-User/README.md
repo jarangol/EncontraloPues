@@ -1,14 +1,5 @@
 
 
-## Installation
-
-Clone the repo and install the dependencies.
-
-```bash
-npm install
-```
-
-
 ## Run the Application
 
 To serve the applicaton in the browser, use `ionic serve`.
@@ -26,6 +17,10 @@ git clone https://github.com/jarangol/EncontraloPues.git
  cd EncontraloPues/Usuario/EncontraloPues-User/
 ```
 
+```bash
+npm install
+```
+
 web
 
 ```bash
@@ -41,16 +36,12 @@ Requiremetes: have a previous sdk Installation
 ```bash
 ionic run android 
 ```
+or
 
 ```bash
 ionic emulate ios --target="iPhone-6"
 ```
-or
 
-
-```bash
-ionic emulate android
-```
 
 ## What is Auth0?
 

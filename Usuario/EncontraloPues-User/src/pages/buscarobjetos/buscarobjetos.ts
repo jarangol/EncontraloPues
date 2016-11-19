@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
 import { Encontrados } from '../encontrados/encontrados';
 import { Buscarusuarioprovider } from '../../providers/buscarusuarioprovider';
+import { Encontradosconsecutivo } from '../encontradosconsecutivo/encontradosconsecutivo';
+
 
 /*
   Generated class for the Buscarobjetos page.
@@ -111,8 +113,8 @@ export class Buscarobjetos {
 
 			this.lugarService.consultarPerdidosCodigo(consulta).subscribe((data) => {
 				if (data.correcto) {
-
-					this.navCtrl.push(Encontrados, {
+					console.log("busquedad con consecutivo")
+					this.navCtrl.push(Encontradosconsecutivo, {
 						consulta: data.mensaje
 					});
 

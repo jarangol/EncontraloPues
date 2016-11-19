@@ -22,9 +22,7 @@ export class ResultadoLugarPage {
   private correoLugar: any;
   private anoMes: any; //año, mes con que se filtra la busqueda
   private registros: any; //resultado d ela busqueda
-  private objetosPerdidos: any;
-  private objetosRetirados: any;
-    private tipoObjetos: any;
+  private tipoObjetos: any;
   private consulta: any;
 
     constructor(private navCtrl: NavController, public lugarService: LugarService,
@@ -34,14 +32,14 @@ export class ResultadoLugarPage {
       
 
       this.consulta = this.navParams.get('consulta');
-      this.correoLugar = this.consulta.correoLugar;
-     
+      if(this.consulta){ 
+        this.correoLugar = this.consulta.correoLugar;
+        this.anoMes = this.consulta.anoMesRegistro;
+      }
+      
       this.tipoObjetos = this.navParams.get('tipoObjetos');
-      this.anoMes = this.consulta.anoMesRegistro;
-      if(this.tipoObjetos == 'retirados')
-       this.objetosRetirados = this.navParams.get('registros');
-      else if (this.tipoObjetos == 'perdidos')
-      this.objetosPerdidos = this.navParams.get('registros');
+  
+      this.registros= this.navParams.get('registros');
     } 
 
 	ionViewLoaded(){

@@ -127,8 +127,6 @@ export class BuscarLugarPage {
 					console.log("fecha retirados: "+data);
 					if(data.correcto){
 						this.navCtrl.push(ResultadoLugarPage,{ 	 		
-							correoLugar: this.correoLugar,
-							anoMes: this.fecha,
 							registros: data.mensaje ,
 							tipoObjetos: this.tipoObjetosFecha,
 							consulta: consulta

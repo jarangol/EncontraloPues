@@ -295,8 +295,6 @@ var BuscarLugarPage = (function () {
                     console.log("fecha retirados: " + data);
                     if (data.correcto) {
                         _this.navCtrl.push(resultado_lugar_1.ResultadoLugarPage, {
-                            correoLugar: _this.correoLugar,
-                            anoMes: _this.fecha,
                             registros: data.mensaje,
                             tipoObjetos: _this.tipoObjetosFecha,
                             consulta: consulta_1
@@ -923,13 +921,12 @@ var ResultadoLugarPage = (function () {
         this.actionSheetCtrl = actionSheetCtrl;
         this.registroService = registroService;
         this.consulta = this.navParams.get('consulta');
-        this.correoLugar = this.consulta.correoLugar;
+        if (this.consulta) {
+            this.correoLugar = this.consulta.correoLugar;
+            this.anoMes = this.consulta.anoMesRegistro;
+        }
         this.tipoObjetos = this.navParams.get('tipoObjetos');
-        this.anoMes = this.consulta.anoMesRegistro;
-        if (this.tipoObjetos == 'retirados')
-            this.objetosRetirados = this.navParams.get('registros');
-        else if (this.tipoObjetos == 'perdidos')
-            this.objetosPerdidos = this.navParams.get('registros');
+        this.registros = this.navParams.get('registros');
     }
     ResultadoLugarPage.prototype.ionViewLoaded = function () {
         this.cargarRegistros();
@@ -2117,7 +2114,6 @@ var RetirarPage = (function () {
                 {
                     text: 'Cancel',
                     handler: function (data) {
-                        //this.tipoBusqueda = "fecha";
                     }
                 },
                 {

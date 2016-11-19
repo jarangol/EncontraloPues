@@ -164,7 +164,6 @@ private correoTrabajador: string;
         {
           text: 'Cancel',
           handler: data => {
-          //this.tipoBusqueda = "fecha";
 
           }
         },

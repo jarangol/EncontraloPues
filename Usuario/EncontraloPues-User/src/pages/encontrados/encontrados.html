@@ -6,13 +6,38 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>encontrados</ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-title>encontrados</ion-title>
+	</ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+	<ion-item>
+		<ion-label>Resultados de {{punto}} </ion-label>
+		<ion-datetime displayFormat="MMM/YYYY" pickerFormat="MMM-YYYY" [(ngModel)]="anoMes" disabled></ion-datetime>
+	</ion-item>
+
+	<ion-list>
+		<ion-list-header>
+			<ion-row>
+				<ion-col>Año/mes</ion-col>
+				<ion-col>Tags </ion-col>
+				<ion-col>Punto</ion-col>
+				<ion-col>Consecutivo</ion-col>        
+			</ion-row>
+		</ion-list-header>
+
+
+		<ion-item *ngFor="let encontrados of consulta" >
+             <ion-row >
+                <ion-col>{{encontrados.puntosRecoleccion.objetosPerdidos.fechaRegistro.anoMes}}</ion-col>
+                <ion-col>{{encontrados.puntosRecoleccion.objetosPerdidos.sinCodigoQR.tags}}</ion-col>
+                <ion-col>{{encontrados.puntosRecoleccion.nombre}}</ion-col>
+                <ion-col>{{encontrados.puntosRecoleccion.objetosPerdidos.codigoBusqueda}}</ion-col>                
+             </ion-row>
+         </ion-item>
+	</ion-list>
 
 </ion-content>

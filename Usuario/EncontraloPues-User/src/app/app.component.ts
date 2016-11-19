@@ -51,7 +51,6 @@ export class AuthApp {
       { title: 'Escanea el QR', component: Escaneoqr },
       { title: 'Buscar', component: Buscarobjetos },
       { title: 'Notificaciones', component: Notificationes },
-      // {title: 'Encontrados', component: Encontrados},                                 
       { title: 'Tus Objetos', component: Objetos }
     ];
 

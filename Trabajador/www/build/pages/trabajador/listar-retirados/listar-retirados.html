@@ -27,17 +27,11 @@
      <button ion-item *ngFor="let registro of registros"  (click)="itemTapped($event,registro)"
      >
         <ion-row>
+            <ion-col>{{registro.puntosRecoleccion.objetosRetirados.fechaRegistro.dia}}</ion-col>
             <ion-col>
-                {{registro.puntosRecoleccion.objetosRetirados.fechaRegistro.dia}}
+                {{registro.puntosRecoleccion.objetosRetirados.retirado.fechaRetiro.anoMes + '-' + registro.puntosRecoleccion.objetosRetirados.retirado.fechaRetiro.dia}}
             </ion-col>
-            
-            <ion-col>
-              {{registro.puntosRecoleccion.objetosRetirados.retirado.fechaRetiro.anoMes + '-' + registro.puntosRecoleccion.objetosRetirados.retirado.fechaRetiro.dia}}
-            </ion-col>
-
-            <ion-col>
-              {{registro.puntosRecoleccion.objetosRetirados.sinCodigoQR.tags}}
-            </ion-col>
+            <ion-col>{{registro.puntosRecoleccion.objetosRetirados.sinCodigoQR.tags}}</ion-col>
       </ion-row>
      </button>
 

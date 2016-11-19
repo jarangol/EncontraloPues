@@ -52,7 +52,8 @@ export class ObjetoPerdidoPage {
            this.qr=false;
          }else this.qr=true;
     	   
-         console.log("qr "+this.qr);   
+         console.log("qr "+this.qr); 
+            console.log("editando "+this.editando);   
           this.tags = this.registro.tags;
           let dia = this.registro.fechaRegistro.dia; 
           let añoMes = this.registro.fechaRegistro.anoMes; 
